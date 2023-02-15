@@ -10,7 +10,7 @@ Lecturers:
 
 -**Team**
     -[Ricardo Vaz Rodriguez](https://github.com/ricardovrodri)
-    -
+    -[Pablo Antonio Perez Ortega](https://github.com/PabPerOrt1)
     -
 -**Project description**: Our proyect look for studying the inherent relations between (...) [Not finished]
 - **Repository**: [gti-sos/SOS2223-](https://github.com/gti-sos/SOS2223-23)
