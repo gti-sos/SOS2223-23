@@ -13,7 +13,7 @@ Lecturers:
     -[Pablo Antonio Perez Ortega](https://github.com/PabPerOrt1)
     -[Agustín Manuel Jiménez Casas](https://github.com/agujimcas)
 -**Project description**: Our sources of information are aimed at analyzing the interconnection in the data between Spanish people hired in Andalusia according to province, type of contract and sex, population density and labor rates of affiliation to social security, new contracts and according to type.
-- **Repository**: [gti-sos/SOS2223-](https://github.com/gti-sos/SOS2223-23)
+- **Repository**: [gti-sos/SOS2223-23](https://github.com/gti-sos/SOS2223-23)
 
 
 
