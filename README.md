@@ -3,7 +3,7 @@ Service Oriented Systems 2022/2023 at the [University of Sevilla](https://www.us
 Lecturers:
 --
  - [Pablo Fernandez](https://github.com/pafmon) (coordinator)
- - [Maria Salas](hhtps://github.com/msurbano)
+ - [Maria Salas](https://github.com/msurbano)
 --
 
 # SOS2223-23
