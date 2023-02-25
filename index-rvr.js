@@ -138,7 +138,7 @@ function filter_by_province_mean_log(province, attributeName, datos){
 
     let filtrado = province_filter(datos, province);
 
-    console.log(`El valor medio que buscamos por ${province} para el dato ${attributeName} es ${filtrado.filtro.map((n) => {
+    console.log(`El valor medio del dato  ${attributeName} que buscamos para ${province} es ${filtrado.filtro.map((n) => {
         if (n.hasOwnProperty(attributeName)){
             return n[attributeName];
         }
