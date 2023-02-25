@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "csvdata": "^2.0.0"
+  }
+}
