@@ -1,5 +1,23 @@
 {
   "dependencies": {
     "csvdata": "^2.0.0"
-  }
+  },
+  "name": "sos2223-23",
+  "description": "Service Oriented Systems 2022/2023 at the [University of Sevilla](https://www.us.es)",
+  "version": "0.0.0",
+  "main": "index-amjc.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gti-sos/SOS2223-23.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gti-sos/SOS2223-23/issues"
+  },
+  "homepage": "https://github.com/gti-sos/SOS2223-23#readme"
 }
