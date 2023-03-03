@@ -5,11 +5,11 @@ var cool = require('cool-ascii-faces');
 var bodyParser = require('body-parser');
 var csvdata = require('csvdata');
 var rvr = require('./samples/rvr');
+const ppo = require('./index-ppo.js')
 
 //______________________Variables_________________________
 var app = express();
 var port = process.env.PORT || 12345;
-
 
 //_______________________Main______________________________
 app.use(bodyParser.json());
@@ -25,6 +25,13 @@ app.get('/samples/rvr', (req, res)=>{
     });
     console.log('New Request to /samples/rvr');
 });
+
+app.get('/samples/ppo', (request,response)=>{
+    var mensaje = ppo()
+    response.json(mensaje)
+    console.log('New Request to /samples/ppo');
+});
+
 
 app.get('/cool', (req, res) => {
     res.json(cool());
