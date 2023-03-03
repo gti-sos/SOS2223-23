@@ -1,15 +1,44 @@
-const csvdata = require('csvdata');
+//______________________Requires________________________
+var express = require('express');
+var cool = require('cool-ascii-faces');
+var bodyParser = require('body-parser');
 
 
-csvdata.load('./data/datos_rvr.csv').then((datos) => {
-    principal(datos);
-}).catch((error) => {
-    console.log(error);
+//______________________Variables_____________________
+var app = express();
+var port = process.env.PORT || 12345;
+
+app.use(bodyParser.json());
+
+app.get('/samples/rvr', (req, res)=>{
+    res.json(rvr());
+    console.log('New Request to /samples/rvr');
+});
+
+app.get('/faces', (req, res) => {
+    res.json(cool());
+    console.log('New request to /faces');
+});
+
+app.listen(port,()=>{
+    console.log(`Server ready in port ${port}`);
 });
 
 
+// ________________________________ Funciones __________________________________
 
-// =========================================FUNCIONES===================================================
+
+const csvdata = require('csvdata');
+
+function rvr(){
+    csvdata.load('./data/datos_rvr.csv').then((datos) => {
+        principal(datos);
+    }).catch((error) => {
+        console.log(error);
+    });
+}
+
+// _____________________________________Funciones_______________________________________
 
 //Con esta funcion hacemos el filtro por provincias de manera que se pueda cambiar llegado el momento
 function province_filter(list, province){
