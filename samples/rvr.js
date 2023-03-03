@@ -1,17 +1,3 @@
-const csvdata = require('csvdata');
-
-function rvr(){
-    csvdata.load('./data/datos_rvr.csv').then((datos) => {
-        let dato = filter_by_province_mean_log('Almeria', 'n_cont_indef', datos);
-        return(dato)
-    }).catch((error) => {
-        console.log(error);
-    });
-}
-var dato = rvr();
-
-console.log(dato);
-
 module.exports = rvr;
 
 // _____________________________________Funciones_______________________________________
@@ -31,8 +17,8 @@ function province_filter(list, province){
 //Para hacer una única vez el filtrado lo realizamos aquí y ya accedemos a sus valores
 
 
-// Con esta funcion mostramos por pantalla el resultado de hacer la media filtrada por provincia de los datos solicitados 
-function filter_by_province_mean_log(province, attributeName, datos){
+// Con esta funcion devolvemos el resultado de hacer la media filtrada por provincia de los datos solicitados 
+function rvr(province, attributeName, datos){
 
     let filtrado = province_filter(datos, province);
 
@@ -44,4 +30,4 @@ function filter_by_province_mean_log(province, attributeName, datos){
         return a + n;
     })/filtrado.filtrados;
 }
-//Esta funcion inmediatamente imprime el dato por pantalla y nos lo muestra, a la vez que realiza el filtrado
+//Esta funcion devuelve el dato, a la vez que realiza el filtrado
