@@ -5,7 +5,8 @@ var cool = require('cool-ascii-faces');
 var bodyParser = require('body-parser');
 var csvdata = require('csvdata');
 var rvr = require('./samples/rvr');
-const ppo = require('./index-ppo.js')
+const ppo = require('./index-ppo.js');
+const amjc = require('./samples/amjc');
 
 //______________________Variables_________________________
 var app = express();
@@ -32,6 +33,11 @@ app.get('/samples/ppo', (request,response)=>{
     console.log('New Request to /samples/ppo');
 });
 
+app.get('/samples/amjc', (request,response)=>{
+    var mensaje = amjc()
+    response.json(mensaje)
+    console.log('New Request to /samples/amjc');
+});
 
 app.get('/cool', (req, res) => {
     res.json(cool());

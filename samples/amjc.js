@@ -1,3 +1,5 @@
+module.exports = amjc;
+
 var array = [{year:2012, province:"Almería", gender:"Hombres", indefinite_contract:2741, single_construction_contract:15494,
     multiple_construction_contract:6002, single_eventual_contract:4743, multiple_eventual_contract:1856},
 {year:2012, province:"Almería", gender:"Mujeres", indefinite_contract:2211, single_construction_contract:12581,
@@ -22,14 +24,13 @@ var array = [{year:2012, province:"Almería", gender:"Hombres", indefinite_contr
     multiple_construction_contract:12801, single_eventual_contract:8332, multiple_eventual_contract:7650}];
 
 
-var filtrar_provincia = array.filter(n => n.province == "Cádiz" && n.year == 2012);
-
-var j = 0;
-
-for(var i=0;i<filtrar_provincia.length;i++){
-    j+=filtrar_provincia[i].indefinite_contract;
+function amjc(province, year){
+    var filtrar_provincia = array.filter(n => n.province == "Cádiz" && n.year == 2012);
+    var j = 0;
+    for(var i=0;i<filtrar_provincia.length;i++){
+        j+=filtrar_provincia[i].indefinite_contract;
+    }
+    var media_contratos_indefinidos = j / filtrar_provincia.length;
+    var mensaje = `La media de contratos indefinidos entre hombres y mujeres en Cádiz durante el año 2012 fue de ${media_contratos_indefinidos} contratos.`
+    return mensaje
 }
-
-var media_contratos_indefinidos = j / filtrar_provincia.length;
-
-console.log(`La media de contratos indefinidos entre hombres y mujeres en Cádiz durante el año 2012 fue de ${media_contratos_indefinidos} contratos`);

@@ -21,7 +21,7 @@ var array = [{year:2012, province:"Almería", gender:"Hombres", indefinite_contr
 {year:2012, province:"Jaén", gender:"Hombres", indefinite_contract:2245, single_construction_contract:12872,
     multiple_construction_contract:12801, single_eventual_contract:8332, multiple_eventual_contract:7650}];
 
-
+    
 var filtrar_provincia = array.filter(n => n.province == "Cádiz" && n.year == 2012);
 
 var j = 0;
