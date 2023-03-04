@@ -5,7 +5,7 @@ var cool = require('cool-ascii-faces');
 var bodyParser = require('body-parser');
 var csvdata = require('csvdata');
 var rvr = require('./samples/rvr');
-const ppo = require('./index-ppo.js');
+const ppo = require('./samples/ppo.js');
 const amjc = require('./samples/amjc');
 
 //______________________Variables_________________________

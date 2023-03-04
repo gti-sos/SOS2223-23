@@ -44,3 +44,5 @@ function return_result(){
     Y para el campo Capital_size es de ${campo_4}`
     return mensaje
 }
+
+module.exports = return_result;
