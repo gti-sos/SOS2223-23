@@ -37,13 +37,19 @@ app.get('/samples/ppo', (request,response)=>{
 });
 
 app.get(BASE_API_URL+'/density-population', (request,response)=>{
-    
+    var mensaje = ppo()
     response.json(mensaje)
     response.status(200)
     console.log('New Request to '+ BASE_API_URL+'/density-population');
 });
 
 app.get('/samples/amjc', (request,response)=>{
+    var mensaje = amjc()
+    response.json(mensaje)
+    console.log('New Request to /samples/amjc');
+});
+
+app.get(BASE_API_URL + 'hired-people', (request,response)=>{
     var mensaje = amjc()
     response.json(mensaje)
     console.log('New Request to /samples/amjc');
