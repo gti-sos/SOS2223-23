@@ -28,9 +28,18 @@ app.get('/samples/rvr', (req, res)=>{
     console.log('New Request to /samples/rvr');
 });
 
-app.get(BASE_API_URL+'/density-population', (request,response)=>{
-    var mensaje = ppo()
+//__________________Pablo___________________
+app.get('/samples/ppo', (request,response)=>{
+    var provincia = "Huelva"
+    var mensaje = ppo(provincia)
     response.json(mensaje)
+    console.log('New Request to /samples/ppo');
+});
+
+app.get(BASE_API_URL+'/density-population', (request,response)=>{
+    
+    response.json(mensaje)
+    response.status(200)
     console.log('New Request to '+ BASE_API_URL+'/density-population');
 });
 

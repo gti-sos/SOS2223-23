@@ -33,11 +33,11 @@ function filter_by_province(provincia,parametro,array){
     return resultado
 }
 
-function return_result(){
-    campo_1=filter_by_province("Huelva","municipality_size_lf_ft",array_data);
-    campo_2=filter_by_province("Huelva","municipality_size_bt_ft_tht",array_data);
-    campo_3=filter_by_province("Huelva","municipality_size_gt_tht",array_data);
-    campo_4=filter_by_province("Huelva","capital_size",array_data);
+function return_result(provincia){
+    campo_1=filter_by_province(provincia,"municipality_size_lf_ft",array_data);
+    campo_2=filter_by_province(provincia,"municipality_size_bt_ft_tht",array_data);
+    campo_3=filter_by_province(provincia,"municipality_size_gt_tht",array_data);
+    campo_4=filter_by_province(provincia,"capital_size",array_data);
     var mensaje = `Dada la provincia elegida la media de valores para el campo Municipality_size_lf_ft es de: ${campo_1} 
     Para el campo Municipality_size_bt_ft_tht es de: ${campo_2} 
     Para el campo Municipality_size_gt_tht es de: ${campo_3} 
