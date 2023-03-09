@@ -11,7 +11,8 @@ const amjc = require('./samples/amjc');
 //______________________Variables_________________________
 var app = express();
 var port = process.env.PORT || 12345;
-
+//______________________URL_________________________
+const BASE_API_URL = '/api/v1'
 //_______________________Main______________________________
 app.use(bodyParser.json());
 
@@ -27,10 +28,10 @@ app.get('/samples/rvr', (req, res)=>{
     console.log('New Request to /samples/rvr');
 });
 
-app.get('/samples/ppo', (request,response)=>{
+app.get(BASE_API_URL+'/density-population', (request,response)=>{
     var mensaje = ppo()
     response.json(mensaje)
-    console.log('New Request to /samples/ppo');
+    console.log('New Request to '+ BASE_API_URL+'/density-population');
 });
 
 app.get('/samples/amjc', (request,response)=>{
