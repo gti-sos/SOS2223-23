@@ -4,30 +4,24 @@ var express = require('express');
 var cool = require('cool-ascii-faces');
 var bodyParser = require('body-parser');
 var csvdata = require('csvdata');
-var rvr = require('./samples/rvr');
+var rvr_backend = require('./samples/rvr.js');
 const ppo = require('./samples/ppo.js');
 const amjc = require('./samples/amjc');
 
 //______________________Variables_________________________
+
 var app = express();
+
 var port = process.env.PORT || 12345;
-//______________________URL_________________________
-const BASE_API_URL = '/api/v1'
+
+const BASE_API_URL = '/api/v1'; //url
+
+
 //_______________________Main______________________________
 app.use(bodyParser.json());
 
-//__________________Ricardo___________________
-app.get('/samples/rvr', (req, res)=>{
-    let province = 'Almeria';
-    let attributeName = 'n_cont_indef'
-    csvdata.load('./data/datos_rvr.csv').then((datos) => {
-        let media = rvr(province, attributeName, datos);
-        res.json(`El valor de la media de los datos ${attributeName} para la provincia ${province} es: ${media}`);
-    }).catch((error) => {
-        res.json(error);
-    });
-    console.log('New Request to /samples/rvr');
-});
+
+rvr_backend(app);
 
 //__________________Pablo___________________
 app.get('/samples/ppo', (request,response)=>{
