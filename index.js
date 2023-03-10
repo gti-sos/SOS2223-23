@@ -16,6 +16,7 @@ const BASE_API_URL = '/api/v1'
 //_______________________Main______________________________
 app.use(bodyParser.json());
 
+//__________________Ricardo___________________
 app.get('/samples/rvr', (req, res)=>{
     let province = 'Almeria';
     let attributeName = 'n_cont_indef'
@@ -43,16 +44,17 @@ app.get(BASE_API_URL+'/density-population', (request,response)=>{
     console.log('New Request to '+ BASE_API_URL+'/density-population');
 });
 
+//__________________Agustín___________________
 app.get('/samples/amjc', (request,response)=>{
     var mensaje = amjc()
     response.json(mensaje)
     console.log('New Request to /samples/amjc');
 });
 
-app.get(BASE_API_URL + 'hired-people', (request,response)=>{
+app.get(BASE_API_URL + '/hired-people', (request,response)=>{
     var mensaje = amjc()
     response.json(mensaje)
-    console.log('New Request to /samples/amjc');
+    console.log('New Request to /api/v1/hired-people');
 });
 
 app.get('/cool', (req, res) => {
