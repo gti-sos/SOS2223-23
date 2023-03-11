@@ -10,19 +10,6 @@ var csvdata = require('csvdata');
 
 
 module.exports = (app) => {
-    
-    // Samples
-    app.get('/samples/rvr', (req, res)=>{
-        let province = 'Almeria';
-        let attributeName = 'n_cont_indef'
-        csvdata.load('./data/datos_rvr.csv').then((datos) => {
-            let media = rvr(province, attributeName, datos);
-            res.json(`El valor de la media de los datos ${attributeName} para la provincia ${province} es: ${media}`);
-        }).catch((error) => {
-            res.json(error);
-        });
-        console.log('New Request to /samples/rvr');
-    });
 
     // LoadInitialData
     app.get(`${BASE_API_URL_ss_affiliates}/loadInitialData`, (req, res) => {
@@ -45,19 +32,65 @@ module.exports = (app) => {
 
     //GET Lista Recursos
     app.get(`${BASE_API_URL_ss_affiliates}`, (req, res) => {
+        let year = req.query.year;
+        let from = req.query.from;
+        let to = req.query.to;
         console.log(`New request to /ss-affiliates`);
-        db.find({}, (err, data) => {
-            if(err){
-                console.log(`Error getting ss-affiliates: ${err}`);
-                res.sendStatus(500);
-            }else{
-                console.log(`Data returned: ${data.length}`);
-                res.json(data.map((c) => {
-                    delete c._id;
-                    return(c);
-                }));
-            }
-        });
+        if(year != undefined){
+            //Get por fecha
+            console.log('Nueva peticion por fecha');
+            db.find({'year' : parseInt(year)}, (err, data) => {
+                if(err){
+                    console.log(`Error getting ss-affiliates?year=${year}: ${err}`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`ss-affiliates?year=${year} not found`);
+                    res.sendStatus(404);
+                }else{
+                    console.log(`Data of ss-affiliates?year=${year} returned: ${data.length}`);
+                    res.json(data.map((c) => {
+                        delete c._id;
+                        return(c);
+                    }));
+                }
+            });
+        }else if(from !== undefined && to !== undefined){
+            //Get por Rango de fechas
+            console.log('Nueva peticion por rango de fecha');
+            db.find({'year' : {$gte: parseInt(from), $lte: parseInt(to)}}, (err, data) => {
+                if(err){
+                    console.log(`Error getting ss-affiliates?from=${from}&to=${to}: ${err}`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`ss-affiliates?from=${from}&to=${to} not found`);
+                    res.sendStatus(404);
+                }else{
+                    console.log(`Data of ss-affiliates?from=${from}&to=${to} returned: ${data.length}`);
+                    res.json(data.map((c) => {
+                        delete c._id;
+                        return(c);
+                    }));
+                }
+            });
+        }else{
+            //Get sin query
+            db.find({}, (err, data) => {
+                if(err){
+                    console.log(`Error getting ss-affiliates: ${err}`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`There aren't any data: ${data.length}`);
+                    res.sendStatus(404);
+                }else{
+                    console.log(`Data returned: ${data.length}`);
+                    res.json(data.map((c) => {
+                        delete c._id;
+                        return(c);
+                    }));
+                }
+            });
+        }
+        
     });
 
 
@@ -78,13 +111,173 @@ module.exports = (app) => {
                 res.json(data.map((c) => {
                     delete c._id;
                     return(c);
-                }))
+                }));
             }
         });
     });
 
-}
-// _____________________________________Funciones_______________________________________
+    //Get Recursos por provincia
+    app.get(`${BASE_API_URL_ss_affiliates}/:province`, (req, res) => {
+        let province = req.params.province;
+        let from = req.query.from;
+        let to = req.query.to;
+        console.log(`New request to /ss-affiliates/${province}`);
+        if(from !== undefined && to !== undefined){
+            //Get por provincia y rango de fechas
+            db.find({'province' : province, year : {$gte: parseInt(from), $lte: parseInt(to)}}, (err, data) => {
+                if(err){
+                    console.log(`Error getting ss-affiliates/${province}?from=${from}&to=${to}: ${err}`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`ss-affiliates/${province}?from=${from}&to=${to} not found`);
+                    res.sendStatus(404);
+                }else{
+                    console.log(`Data of ss-affiliates/${province}?from=${from}&to=${to} returned: ${data.length}`);
+                    res.json(data.map((c) => {
+                        delete c._id;
+                        return(c);
+                    }));
+                }
+            });
+        }else if(from !== undefined){
+            // Get por provincia y fecha de inicio
+            db.find({'province' : province, year : {$gte: parseInt(from)}}, (err, data) => {
+                if(err){
+                    console.log(`Error getting ss-affiliates/${province}?from=${from}: ${err}`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`ss-affiliates/${province}?from=${from} not found`);
+                    res.sendStatus(404);
+                }else{
+                    console.log(`Data of ss-affiliates/${province}?from=${from} returned: ${data.length}`);
+                    res.json(data.map((c) => {
+                        delete c._id;
+                        return(c);
+                    }));
+                }
+            });
+        }else if(to !== undefined){
+            // Get por provincia y fecha de fin
+            db.find({'province' : province, year : {$lte: parseInt(to)}}, (err, data) => {
+                if(err){
+                    console.log(`Error getting ss-affiliates/${province}?to=${to}: ${err}`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`ss-affiliates/${province}?to=${to} not found`);
+                    res.sendStatus(404);
+                }else{
+                    console.log(`Data of ss-affiliates/${province}?to=${to} returned: ${data.length}`);
+                    res.json(data.map((c) => {
+                        delete c._id;
+                        return(c);
+                    }));
+                }
+            });
+        }else{
+            // Get por provincia
+            db.find({'province' : province}, (err, data) => {
+                if(err){
+                    console.log(`Error getting ss-affiliates/${province}: ${err}`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`ss-affiliates/${province} not found`);
+                    res.sendStatus(404);
+                }else{
+                    console.log(`Data of ss-affiliates/${province} returned: ${data.length}`);
+                    res.json(data.map((c) => {
+                        delete c._id;
+                        return(c);
+                    }));
+                }
+            });
+        }
+    });
+
+
+    //Get Recursos por year
+    /*app.get(`${BASE_API_URL_ss_affiliates}`, (req, res) => {
+        var year = req.query.year;
+        console.log(`New request to /ss-affiliates?year=${year}`);
+        db.find({'year' : year}, (err, data) => {
+            if(err){
+                console.log(`Error getting ss-affiliates?year=${year}: ${err}`);
+                res.sendStatus(500);
+            }else if(data.length == 0){
+                console.log(`ss-affiliates?year=${year} not found`);
+                res.sendStatus(404);
+            }else{
+                console.log(`Data of ss-affiliates?year=${year} returned: ${data.length}`);
+                res.json(data.map((c) => {
+                    delete c._id;
+                    return(c);
+                }));
+            }
+        });
+    });
+
+    //Get recursos por rango de fechas
+    app.get(`${BASE_API_URL_ss_affiliates}`, (req, res) => {
+        let from = req.query.from;
+        let to = req.query.to;
+        console.log(`New request to /ss-affiliates?from=${from}&to=${to}`);
+        db.find({'year' : {$gte: from, $lte: to}}, (err, data) => {
+            if(err){
+                console.log(`Error getting ss-affiliates?from=${from}&to=${to}: ${err}`);
+                res.sendStatus(500);
+            }else if(data.length == 0){
+                console.log(`ss-affiliates?from=${from}&to=${to} not found`);
+                res.sendStatus(404);
+            }else{
+                console.log(`Data of ss-affiliates?from=${from}&to=${to} returned: ${data.length}`);
+                res.json(data.map((c) => {
+                    delete c._id;
+                    return(c);
+                }));
+            }
+        });
+    });
+
+    //Get Recursos de provincia por rango de fechas
+    app.get(`${BASE_API_URL_ss_affiliates}/:province`, (req, res) => {
+        let province = req.params.province;
+        let from = req.params.from;
+        let to = req.params.to;
+        console.log(`New request to /ss-affiliates/${province}`);
+        db.find({'province' : province, year : {$gte: from, $lte: to}}, (err, data) => {
+            if(err){
+                console.log(`Error getting ss-affiliates/${province}?from=${from}&to=${to}: ${err}`);
+                res.sendStatus(500);
+            }else if(data.length == 0){
+                console.log(`ss-affiliates/${province}?from=${from}&to=${to} not found`);
+                res.sendStatus(404);
+            }else{
+                console.log(`Data of ss-affiliates/${province}?from=${from}&to=${to} returned: ${data.length}`);
+                res.json(data.map((c) => {
+                    delete c._id;
+                    return(c);
+                }));
+            }
+        });
+    });*/
+
+    // Samples
+    app.get('/samples/rvr', (req, res)=>{
+        let province = 'almeria';
+        let attributeName = 'n_cont_indef'
+        csvdata.load('./data/datos_rvr.csv').then((datos) => {
+            let media = rvr(province, attributeName, datos);
+            res.json(`El valor de la media de los datos ${attributeName} para la provincia ${province} es: ${media}`);
+        }).catch((error) => {
+            console.log(error);
+            res.json(500);
+        });
+        console.log('New Request to /samples/rvr');
+    });
+
+};
+
+
+// _____________________________________Funciones________________________________________
 
 
 
