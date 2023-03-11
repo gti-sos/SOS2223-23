@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var csvdata = require('csvdata');
 var rvr_backend = require('./samples/rvr.js');
 var ppo = require('./samples/ppo');
-const amjc = require('./samples/amjc');
+var amjc = require('./samples/amjc');
 
 //______________________Variables_________________________
 
@@ -16,28 +16,18 @@ var port = process.env.PORT || 12345;
 
 const BASE_API_URL = '/api/v1'; //url
 
-
-//_______________________Main______________________________
+//_______________________Main_____________________
 app.use(bodyParser.json());
-
 
 rvr_backend(app);
 
-//__________________Pablo___________________
+//__________________Pablo_____________________
 ppo.api(app);
 
 //__________________Agustín___________________
-app.get('/samples/amjc', (request,response)=>{
-    var mensaje = amjc()
-    response.json(mensaje)
-    console.log('New Request to /samples/amjc');
-});
+amjc.api(app);
 
-app.get(BASE_API_URL + '/hired-people', (request,response)=>{
-    var mensaje = amjc()
-    response.json(mensaje)
-    console.log('New Request to /api/v1/hired-people');
-});
+//____________________________________________
 
 app.get('/cool', (req, res) => {
     res.json(cool());

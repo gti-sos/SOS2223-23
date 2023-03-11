@@ -1,4 +1,6 @@
-module.exports = amjc;
+const BASE_API_URL = "/api/v1";
+var Datastore = require(`nedb`);
+var db = new Datastore();
 
 var array = [{year:2012, province:"Almería", gender:"Hombres", indefinite_contract:2741, single_construction_contract:15494,
     multiple_construction_contract:6002, single_eventual_contract:4743, multiple_eventual_contract:1856},
@@ -23,8 +25,7 @@ var array = [{year:2012, province:"Almería", gender:"Hombres", indefinite_contr
 {year:2012, province:"Jaén", gender:"Hombres", indefinite_contract:2245, single_construction_contract:12872,
     multiple_construction_contract:12801, single_eventual_contract:8332, multiple_eventual_contract:7650}];
 
-
-function amjc(province, year){
+function result(province, year){
     var filtrar_provincia = array.filter(n => n.province == "Cádiz" && n.year == 2012);
     var j = 0;
     for(var i=0;i<filtrar_provincia.length;i++){
@@ -33,4 +34,24 @@ function amjc(province, year){
     var media_contratos_indefinidos = j / filtrar_provincia.length;
     var mensaje = `La media de contratos indefinidos entre hombres y mujeres en Cádiz durante el año 2012 fue de ${media_contratos_indefinidos} contratos.`
     return mensaje
+}
+
+module.exports = {
+    api: (app) => {
+        //Todos los GET
+            //GET a samples
+            app.get('/samples/amjc', (request,response)=>{
+                var mensaje = result()
+                response.json(mensaje)
+                console.log('New Request to /samples/amjc');
+            });
+            //GET total y querys
+            app.get(BASE_API_URL + '/hired-people', (request,response)=>{
+                var mensaje = result()
+                response.json(mensaje)
+                console.log('New Request to /api/v1/hired-people');
+            });
+
+    }
+    
 }
