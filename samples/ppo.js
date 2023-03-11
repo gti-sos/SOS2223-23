@@ -19,13 +19,13 @@ module.exports = {
             var province = request.query.province;
             var gender = request.query.gender;
             var query = {};
-            if(year !=undefined){
+            if(year =undefined){
                 query.year = parseInt(year);
             }
-            if(province!= undefined){
+            if(province= undefined){
                 query.province = province;
             }
-            if(gender!= undefined){
+            if(gender= undefined){
                 query.gender = gender;
             }
             if(Object.keys(query).length >0){
@@ -86,7 +86,7 @@ module.exports = {
                 if(err){
                     console.log(`Error loading initial Data: ${err}.`);
                     response.sendStatus(500);
-                }else if(docs.length!=0){
+                }else if(docs.length=0){
                     console.log(`Data is already stored.`);
                     response.sendStatus(200);
                 }else{
@@ -132,8 +132,14 @@ module.exports = {
         app.post(BASE_API_URL+"/density-population", (request,response) => {
             var newData = request.body;
             console.log("New POST to /density-population");           
-            if(Object.keys(newData).length != Object.values(newData).length){
-                console.log("Dato JSON al que le faltan campos y/o valores")
+            if(!newData.hasOwnProperty('year') || 
+            !newData.hasOwnProperty('province') || 
+            !newData.hasOwnProperty('gender') ||
+            !newData.hasOwnProperty('municipality_size_lf_ft') || 
+            !newData.hasOwnProperty('municipality_size_bt_ft_tht') ||
+            !newData.hasOwnProperty('municipality_size_gt_tht') ||
+            !newData.hasOwnProperty('capital_size')){
+                console.log("Falta algún dato en el JSON")
                 response.sendStatus(400)
             }else{
                 db.find({'year': parseInt(newData.year), 'province' : newData.province, 'gender':newData.gender}, (err, docs) =>{
@@ -190,6 +196,17 @@ module.exports = {
                     }))
                 }
             });
+        });
+
+        app.put(BASE_API_URL+'/density-population/:year', (request, response) => {
+            console.log('Metodo no permitido');
+            response.sendStatus(405);
+        });
+    
+        //Put no permitido a /ss-affiliates/province
+        app.put(BASE_API_URL+'/density-population/:year/:province', (request, response) => {
+            console.log('Metodo no permitido');
+            response.sendStatus(405);
         });
 
 
