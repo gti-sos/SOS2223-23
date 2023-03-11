@@ -19,7 +19,6 @@ module.exports = {
             var province = request.query.province;
             var gender = request.query.gender;
             var query = {};
-            console.log(`year ${year} province ${province} gender ${gender}`)
             if(year !=undefined){
                 query.year = parseInt(year);
             }
@@ -29,7 +28,6 @@ module.exports = {
             if(gender!= undefined){
                 query.gender = gender;
             }
-            console.log(query)
             if(Object.keys(query).length >0){
                 db.find(query,(err,docs) =>{
                     if(err){
@@ -133,21 +131,46 @@ module.exports = {
         //POST
         app.post(BASE_API_URL+"/density-population", (request,response) => {
             var newData = request.body;
-            console.log(`newdata = ${JSON.stringify(newData,null,2)}`);
-            
-            console.log("New POST to /density-population");
+            console.log("New POST to /density-population");           
+            if(Object.keys(newData).length != Object.values(newData).length){
+                console.log("Dato JSON al que le faltan campos y/o valores")
+                response.sendStatus(400)
+            }else{
+                db.find({'year': parseInt(newData.year), 'province' : newData.province, 'gender':newData.gender}, (err, docs) =>{
+                    if(err){
+                        console.log(`Error getting density-population/${year}/${province}/${gender}: ${err}`);
+                        response.sendStatus(500);
+                    }else if(docs.length == 0){
+                        //Modificamos el tipo de los valores al correcto
+                        newData.year = parseInt(newData.year);
+                        newData.municipality_size_lf_ft = parseInt(newData.municipality_size_lf_ft);
+                        newData.municipality_size_bt_ft_tht = parseInt(newData.municipality_size_bt_ft_tht);
+                        newData.municipality_size_gt_tht = parseInt(newData.municipality_size_gt_tht);
+                        newData.capital_size = parseInt(newData.capital_size);
+
+                        //Guardamos el nuevo dato
+                        db.insert(newData);
     
-            db.insert(newData, (err,newDat) =>{
-                if(err){
-                    console.log(`Error inserting density-population/${year}/${province}/${gender}: ${err}`);
-                    response.sendStatus(500);
-                }else{
-                    console.log(`Data inserted ${newDat}`);
-                    response.sendStatus(201);
-                }
-            }); 
+                        //Avisamos a consola y a usuario
+                        console.log(BASE_API_URL+`/density-population/${newData.year}/${newData.province}`);
+                        response.sendStatus(201);
+    
+                    //Data.length no vacío, ya existe el recurso
+                    }else{
+                        //El recurso a crear ya existe, avisamos
+                        console.log(`Data ss-affiliates/${newData.year}/${newData.province} already exist`);
+                        response.sendStatus(409);
+                    }
+                });
+            }
         });
-        //PUT
+            //POST NO PERMITIDO /density-population/province/year/gender
+        app.post(BASE_API_URL+"/density-population/:year/:province/:gender", (request, response) => {
+            console.log('Metodo no permitido');
+            response.sendStatus(405);
+        });
+
+        //PUT sin terminar
         app.put(BASE_API_URL+'/density-population/:year/:province/:gender', (request,response)=>{
             var year = request.params.year;
             var province = request.params.province;
