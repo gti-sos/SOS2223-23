@@ -5,7 +5,7 @@ var cool = require('cool-ascii-faces');
 var bodyParser = require('body-parser');
 var csvdata = require('csvdata');
 var rvr_backend = require('./samples/rvr.js');
-const ppo = require('./samples/ppo.js');
+var ppo = require('./samples/ppo');
 const amjc = require('./samples/amjc');
 
 //______________________Variables_________________________
@@ -24,19 +24,7 @@ app.use(bodyParser.json());
 rvr_backend(app);
 
 //__________________Pablo___________________
-app.get('/samples/ppo', (request,response)=>{
-    var provincia = "Huelva"
-    var mensaje = ppo(provincia)
-    response.json(mensaje)
-    console.log('New Request to /samples/ppo');
-});
-
-app.get(BASE_API_URL+'/density-population', (request,response)=>{
-    var mensaje = ppo()
-    response.json(mensaje)
-    response.status(200)
-    console.log('New Request to '+ BASE_API_URL+'/density-population');
-});
+ppo.api(app);
 
 //__________________Agustín___________________
 app.get('/samples/amjc', (request,response)=>{
