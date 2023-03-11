@@ -13,21 +13,52 @@ module.exports = {
             response.json(mensaje);
             console.log('New Request to /samples/ppo');
         });
-            //GET total
+            //GET total y querys
         app.get(BASE_API_URL+'/density-population', (request,response)=>{
-            console.log('New request to /density-population');
-            db.find({},(err,docs) =>{
-                if(err){
-                    console.log(`Error getting /density-population ${err}`)
-                    response.sendStatus(500);
-                }else{
-                    console.log(`Data returned`);
-                    response.json(docs.map((c)=>{
-                        delete c._id;
-                        return c;
-                    }));  
-                }
-            });
+            var year = request.query.year;
+            var province = request.query.province;
+            var gender = request.query.gender;
+            var query = {};
+            console.log(`year ${year} province ${province} gender ${gender}`)
+            if(year !=undefined){
+                query.year = parseInt(year);
+            }
+            if(province!= undefined){
+                query.province = province;
+            }
+            if(gender!= undefined){
+                query.gender = gender;
+            }
+            console.log(query)
+            if(Object.keys(query).length >0){
+                db.find(query,(err,docs) =>{
+                    if(err){
+                        console.log(`Error getting /density-population ${err}`)
+                        response.sendStatus(500);
+                    }else{
+                        console.log(`Data returned`);
+                        response.json(docs.map((c)=>{
+                            delete c._id;
+                            return c;
+                        }));  
+                    }
+                });
+            }else{
+                db.find({},(err,docs) =>{
+                    if(err){
+                        console.log(`Error getting /density-population ${err}`)
+                        response.sendStatus(500);
+                    }else{
+                        console.log(`Data returned`);
+                        response.json(docs.map((c)=>{
+                            delete c._id;
+                            return c;
+                        }));  
+                    }
+                });
+            }
+            
+        
         });
             //GET a recurso específico
         app.get(BASE_API_URL+'/density-population/:year/:province/:gender', (request,response)=>{
