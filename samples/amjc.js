@@ -198,17 +198,17 @@ module.exports = {
             });
         //_____________PUT_______________
             //PUT No Permitido /hired-people
-            app.put(`${BASE_API_URL_ss_affiliates}`, (request,response) => {
+            app.put(BASE_API_URL_AMJC, (request,response) => {
                 console.log('Metodo no permitido');
                 response.sendStatus(405);
             });
             //PUT No Permitido a /hired-people/year
-            app.put(`${BASE_API_URL_ss_affiliates}/:year`, (request,response) => {
+            app.put(BASE_API_URL_AMJC + `/:year`, (request,response) => {
                 console.log('Metodo no permitido');
                 response.sendStatus(405);
             });
             //PUT No Permitido a /hired-people/year/province
-            app.put(`${BASE_API_URL_ss_affiliates}/:year/:province`, (request,response) => {
+            app.put(BASE_API_URL_AMJC + `/:year/:province`, (request,response) => {
                 console.log('Metodo no permitido');
                 response.sendStatus(405);
             });
@@ -218,22 +218,33 @@ module.exports = {
                 var year = request.params.year;
                 var province = request.params.province;
                 var gender = request.params.gender;
-                db.find({"year":parseInt(year),"province":province,"gender":gender},{},(error,data)=>{
-                    if(error){
-                        console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}.`)
-                        response.sendStatus(500);
-                    }else if(data.length == 0){
-                        console.log(`/hired-people/${year}/${province}/${gender} not found.`);
-                        response.sendStatus(404);
-                    }else{
-                        console.log(`Data of /hired-people/${year}/${province}/${gender} returned.`);
-                        response.json(data.map((d) => {
-                            delete d._id;
-                            return(d);
-                        }))
-                    }
-                });
-            });
+                let newReq = request.body;
 
+                if(!newReq.hasOwnProperty('year') || !newReq.hasOwnProperty('province') || 
+                    !newReq.hasOwnProperty('gender') || !newReq.hasOwnProperty('indefinite_contract') || 
+                    !newReq.hasOwnProperty('single_construction_contract') || !newReq.hasOwnProperty('multiple_construction_contract') ||
+                    !newReq.hasOwnProperty('single_eventual_contract') || !newReq.hasOwnProperty('multiple_eventual_contract')){
+                    //Falta algún campo
+                    console.log('Some field is missing.');
+                    response.sendStatus(400);
+                }else{
+                    db.find({"year":parseInt(year),"province":province,"gender":gender},{},(error,data)=>{
+                        if(error){
+                            console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}.`)
+                            response.sendStatus(500);
+                        }else if(data.length == 0){
+                            console.log(`/hired-people/${year}/${province}/${gender} not found.`);
+                            response.sendStatus(404);
+                        }else{
+                            console.log(`Data of /hired-people/${year}/${province}/${gender} returned.`);
+                            response.json(data.map((d) => {
+                                delete d._id;
+                                return(d);
+                            }))
+                        }
+                    });
+                }
+
+            });
     }
 }
