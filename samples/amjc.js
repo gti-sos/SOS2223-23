@@ -114,7 +114,7 @@ module.exports = {
                     if(error){
                         console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}`)
                         response.sendStatus(500);
-                    }else if(docs.length == 0){
+                    }else if(data.length == 0){
                         console.log(`/hired-people/${year}/${province}/${gender} not found.`);
                         response.sendStatus(404);
                     }else{
