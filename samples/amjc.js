@@ -40,7 +40,7 @@ module.exports = {
     api: (app) => {
         //_____________GET_______________
             //GET a samples
-            app.get('/samples/amjc', (request,response)=>{
+            app.get('/samples/amjc', (request,response) => {
                 var mensaje = result()
                 response.json(mensaje)
                 console.log('New Request to /samples/amjc.');
@@ -64,7 +64,7 @@ module.exports = {
                 });
             });
             //GET con y sin Query
-            app.get(BASE_API_URL_AMJC, (request,response)=>{
+            app.get(BASE_API_URL_AMJC, (request,response) => {
                 var year = request.query.year;
                 var province = request.query.province;
                 var gender = request.query.gender;
@@ -90,7 +90,7 @@ module.exports = {
                         }
                     });
                 }else{
-                    db.find({},(error,data) =>{
+                    db.find({},(error,data) => {
                         if(error){
                             console.log(`Error getting /hired-people: ${error}.`);
                             response.sendStatus(500);
@@ -106,11 +106,11 @@ module.exports = {
             });
 
             //GET a recurso específico
-            app.get(BASE_API_URL_AMJC + '/:year/:province/:gender', (request,response)=>{
+            app.get(BASE_API_URL_AMJC + '/:year/:province/:gender', (request,response) => {
                 var year = request.params.year;
                 var province = request.params.province;
                 var gender = request.params.gender;
-                db.find({"year":parseInt(year),"province":province,"gender":gender}, (error,data)=>{
+                db.find({"year":parseInt(year),"province":province,"gender":gender}, (error,data) => {
                     if(error){
                         console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}`)
                         response.sendStatus(500);
@@ -136,7 +136,7 @@ module.exports = {
                     console.log("JSON data not complete.");
                     response.sendStatus(400);
                 }else{
-                    db.find({'year': parseInt(newReq.year), 'province' : newReq.province, 'gender':newReq.gender}, (error, data) =>{
+                    db.find({'year': parseInt(newReq.year), 'province' : newReq.province, 'gender':newReq.gender}, (error, data) => {
                         if(error){
                             console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}.`);
                             response.sendStatus(500);
@@ -185,13 +185,13 @@ module.exports = {
                 var year = request.params.year;
                 var province = request.params.province;
                 var gender = request.params.gender;
-                console.log(`New DELETE`);
-                db.remove({"year":parseInt(year),"province":province,"gender":gender},{},(err, numRemoved)=>{
-                    if(err){
-                        console.log(`Error deleting density-population/${year}/${province}/${gender}: ${err}`);
+                console.log(`New specific DELETE.`);
+                db.remove({"year":parseInt(year),"province":province,"gender":gender}, {}, (error, data) => {
+                    if(error){
+                        console.log(`Error deleting /hired-people/${year}/${province}/${gender}: ${error}.`);
                         response.sendStatus(500);
                     }else{
-                        console.log(`Data removed ${numRemoved}`);
+                        console.log(`Data removed: ${data}.`);
                         response.sendStatus(200);
                     }
                 });
