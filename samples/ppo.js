@@ -173,8 +173,8 @@ module.exports = {
             console.log('Metodo no permitido');
             response.sendStatus(405);
         });
-
-        //PUT sin terminar
+        //PUT
+            //PUT bueno
         app.put(BASE_API_URL+"/density-population/:year/:province/:gender", (request, response) => {
             var year = request.params.year;
             var province = request.params.province;
@@ -189,7 +189,7 @@ module.exports = {
             !newData.hasOwnProperty('municipality_size_gt_tht') ||
             !newData.hasOwnProperty('capital_size')){
                 console.log('Falta algun dato');
-                res.sendStatus(400);
+                response.sendStatus(400);
             
             //Si todos los campos están presentes
             }else{
@@ -233,6 +233,12 @@ module.exports = {
                 }
             }
         });
+
+            //PUT no permitido
+        app.put(BASE_API_URL+'/density-population', (request, response) => {
+            console.log('Metodo no permitido');
+            response.sendStatus(405);
+        });
             //PUT no permitido
         app.put(BASE_API_URL+'/density-population/:year', (request, response) => {
             console.log('Metodo no permitido');
@@ -244,8 +250,5 @@ module.exports = {
             console.log('Metodo no permitido');
             response.sendStatus(405);
         });
-
-
-
     }
 }
