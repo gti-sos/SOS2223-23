@@ -132,8 +132,12 @@ module.exports = {
             app.post(BASE_API_URL_AMJC, (request,response) => {
                 var newReq = request.body;
                 console.log("New POST to /hired-people.");           
-                if(Object.keys(newReq).length != Object.values(newReq).length){
-                    console.log("JSON data not complete.");
+                if(!newReq.hasOwnProperty('year') || !newReq.hasOwnProperty('province') || 
+                    !newReq.hasOwnProperty('gender') || !newReq.hasOwnProperty('indefinite_contract') || 
+                    !newReq.hasOwnProperty('single_construction_contract') || !newReq.hasOwnProperty('multiple_construction_contract') ||
+                    !newReq.hasOwnProperty('single_eventual_contract') || !newReq.hasOwnProperty('multiple_eventual_contract')){
+                    //Falta algun dato
+                    console.log("Falta algún dato en el JSON.");
                     response.sendStatus(400);
                 }else{
                     db.find({'year': parseInt(newReq.year), 'province' : newReq.province, 'gender':newReq.gender}, (error, data) => {
@@ -213,7 +217,7 @@ module.exports = {
                 response.sendStatus(405);
             });
 
-            //PUT Correcto ****
+            //PUT Correcto
             app.put(BASE_API_URL_AMJC + '/:year/:province/:gender', (request,response)=>{
                 var year = request.params.year;
                 var province = request.params.province;
@@ -228,23 +232,45 @@ module.exports = {
                     console.log('Some field is missing.');
                     response.sendStatus(400);
                 }else{
-                    db.find({"year":parseInt(year),"province":province,"gender":gender},{},(error,data)=>{
-                        if(error){
-                            console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}.`)
-                            response.sendStatus(500);
-                        }else if(data.length == 0){
-                            console.log(`/hired-people/${year}/${province}/${gender} not found.`);
-                            response.sendStatus(404);
-                        }else{
-                            console.log(`Data of /hired-people/${year}/${province}/${gender} returned.`);
-                            response.json(data.map((d) => {
-                                delete d._id;
-                                return(d);
-                            }))
-                        }
-                    });
+                    if(newReq.year != year || newReq.province != province || newReq.gender != gender){
+                        console.log('Data doesnt match.');
+                        response.sendStatus(400);
+        
+                    }else{
+                        //Vamos a modificar solo si existe, para ellos buscamos el recurso
+                        db.find({'year': parseInt(year), 'province' : province, 'gender':gender}, (error, data) => {
+                            if(error){
+                                //Error al buscar si existe dicho recurso
+                                console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}.`);
+                                response.sendStatus(500); 
+                            //No hay errores, modificar si existe el dato:
+                            }else if(data.length !== 0){
+                                //Modificamos el tipo de los valores al correcto
+                                newReq.year = parseInt(newReq.year);
+                                newReq.indefinite_contract = parseInt(newReq.indefinite_contract);
+                                newReq.single_construction_contract = parseInt(newReq.single_construction_contract);
+                                newReq.multiple_construction_contract = parseInt(newReq.multiple_construction_contract);
+                                newReq.single_eventual_contract = parseInt(newReq.single_eventual_contract);
+                                newReq.multiple_eventual_contract = parseInt(newReq.multiple_eventual_contract);
+        
+                                //Guardamos el nuevo dato
+                                db.update({'year': parseInt(year), 'province' : province, 'gender':gender}, {newReq}, {}, (error, num) => {
+                                    if(error){
+                                        console.log(`Error updating ${BASE_API_URL} "/hired-people/${year}/${province}/${gender}.`);
+                                        response.sendStatus(500);
+                                    }else{
+                                        console.log(`Correctly Updated ${BASE_API_URL} "/hired-people/${year}/${province}/${gender}.`);
+                                        response.sendStatus(200);
+                                    }
+                                }); 
+                            }else{ //Data.length vacío, no existe el recurso
+                                console.log(`Data /hired-people/${year}/${province}/${gender} not exist.`);
+                                response.sendStatus(404);
+                            }
+                        
+                        });
+                    }
                 }
-
             });
     }
 }
