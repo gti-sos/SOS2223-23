@@ -352,8 +352,9 @@ module.exports = (app) => {
                         modifRecurse.n_cont_temporary = parseInt(modifRecurse.n_cont_temporary);
                         modifRecurse.n_cont_eventual = parseInt(modifRecurse.n_cont_eventual);
 
+                        
                         //Guardamos el nuevo dato
-                        db.update({'province': province, 'year': year}, {modifRecurse}, {}, (err, num) => {
+                        db.update({'province': province, 'year': parseInt(year)}, {'province' : province, 'year': parseInt(year),'ss_afiliation':parseInt(modifRecurse.ss_afiliation), 'n_cont_indef':parseInt(modifRecurse.n_cont_indef), 'n_cont_temporary': parseInt(modifRecurse.n_cont_temporary), 'n_cont_eventual':parseInt(modifRecurse.n_cont_eventual) }, {}, (err, num) => {
                             if(err){
                                 console.log(`Error updating ${BASE_API_URL_ss_affiliates}/${province}/${year}`);
                                 res.sendStatus(500);
