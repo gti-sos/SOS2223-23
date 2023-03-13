@@ -256,10 +256,10 @@ module.exports = {
                                 //Guardamos el nuevo dato
                                 db.update({'year': parseInt(year), 'province' : province, 'gender':gender}, {newReq}, {}, (error, num) => {
                                     if(error){
-                                        console.log(`Error updating ${BASE_API_URL} "/hired-people/${year}/${province}/${gender}.`);
+                                        console.log(`Error updating ${BASE_API_URL_AMJC} "/hired-people/${year}/${province}/${gender}.`);
                                         response.sendStatus(500);
                                     }else{
-                                        console.log(`Correctly Updated ${BASE_API_URL} "/hired-people/${year}/${province}/${gender}.`);
+                                        console.log(`Correctly Updated ${BASE_API_URL_AMJC} "/hired-people/${year}/${province}/${gender}.`);
                                         response.sendStatus(200);
                                     }
                                 }); 
