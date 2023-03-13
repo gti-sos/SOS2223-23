@@ -3,8 +3,7 @@
 var express = require('express');
 var cool = require('cool-ascii-faces');
 var bodyParser = require('body-parser');
-var csvdata = require('csvdata');
-var rvr_backend = require('./samples/rvr.js');
+var rvr = require('./samples/rvr.js');
 var ppo = require('./samples/ppo');
 var amjc = require('./samples/amjc');
 
@@ -17,17 +16,14 @@ var port = process.env.PORT || 12345;
 const BASE_API_URL = '/api/v1'; //url
 
 //_______________________Main_____________________
+
 app.use(bodyParser.json());
 
-rvr_backend(app);
+rvr(app); //Ricardo
 
-//__________________Pablo_____________________
-ppo.api(app);
+ppo.api(app); //Pablo
 
-//__________________Agustín___________________
-amjc.api(app);
-
-//____________________________________________
+amjc.api(app); //Agustín
 
 app.get('/cool', (req, res) => {
     res.json(cool());
