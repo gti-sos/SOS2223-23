@@ -1,0 +1,771 @@
+{
+	"info": {
+		"_postman_id": "a31017ad-5088-4a5f-804e-becf2f7c7f72",
+		"name": "ss-affiliates",
+		"description": "**Collection of request, methods and good practices for the API ss-affiliates**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25997396"
+	},
+	"item": [
+		{
+			"name": "/sevilla/2011 - Not found (404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "We will create a new recurse in the Database, but first, we may check that this resource does not exist. This is the right way to check for a recurse in the API."
+			},
+			"response": []
+		},
+		{
+			"name": "/ - Bad request post (400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_afiliation\": 696221,\r\n    \"n_cont_indef\": 34194,\r\n    \"n_cont_eventual\": 199047\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ss-affiliates}}",
+					"host": [
+						"{{ss-affiliates}}"
+					]
+				},
+				"description": "This is not the way of posting a new resource because if we check the body of the request it doesn't have any field name **n_cont_temporary** and it is necessary for the API to have all data required"
+			},
+			"response": []
+		},
+		{
+			"name": "/ - Post new recurse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ss-affiliates}}",
+					"host": [
+						"{{ss-affiliates}}"
+					]
+				},
+				"description": "This is the proper way to do so, all data are given and the URL is the correct one"
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 - Get new recurse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Value returned is...\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0]['province']).to.eql('sevilla');\r",
+							"    pm.expect(jsonData[0]['year']).to.eql(2011);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "We can check that the new resource has been created. And maybe add some tests to check that is the correct one."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla - Get recurses province",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"There are at least 1 data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla"
+					]
+				},
+				"description": "Now we will go through some ways of returning data from the API, this first one checks all data coming from a given province."
+			},
+			"response": []
+		},
+		{
+			"name": "?year=2011 - Get recurses year",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"There are at least 1 data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}?year=2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2011"
+						}
+					]
+				},
+				"description": "This one is for checking all the resources of the same year."
+			},
+			"response": []
+		},
+		{
+			"name": "/seville?from=2011&to=2014 - Get recurses years I",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"There are at least 1 data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla?from=2011&to=2014",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2011"
+						},
+						{
+							"key": "to",
+							"value": "2014"
+						}
+					]
+				},
+				"description": "This one is for a range of years and a given province."
+			},
+			"response": []
+		},
+		{
+			"name": "?from=2011&to=2016 - Get recurses years II",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"There are at least 1 data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}?from=2011&to=2016",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2011"
+						},
+						{
+							"key": "to",
+							"value": "2016"
+						}
+					]
+				},
+				"description": "The same as the last one but not given any province."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 - Get recurse II",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "A unique resource characterizes by its id (province and year)"
+			},
+			"response": []
+		},
+		{
+			"name": "/ - Conflict post (409)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 696221,\r\n    \"n_cont_indef\": 34194,\r\n    \"n_cont_eventual\": 199047,\r\n    \"n_cont_temporary\": 64663\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ss-affiliates}}",
+					"host": [
+						"{{ss-affiliates}}"
+					]
+				},
+				"description": "Now we will try and post a new resource. However, this will be the previously created one, so we will get an error because we can not do that."
+			},
+			"response": []
+		},
+		{
+			"name": "/almeria/2011 - Not allowed (405)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/almeria/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"almeria",
+						"2011"
+					]
+				},
+				"description": "The API does not allow us to post a resource in the URL /province/year because it does not exist yet"
+			},
+			"response": []
+		},
+		{
+			"name": "/almeria/2011 - Get no created recurse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/almeria/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"almeria",
+						"2011"
+					]
+				},
+				"description": "If we check this, we clearly see that the resource has not been created."
+			},
+			"response": []
+		},
+		{
+			"name": "/almeria/2011 - Not found put (404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"almeria\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ss-affiliates}}/almeria/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"almeria",
+						"2011"
+					]
+				},
+				"description": "The API forbids the creation of a new resource with the put method. If it does not exist, it will return an error."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 -  Bad request put (400) I",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 696221,\r\n    \"n_cont_indef\": 34194,\r\n    \"n_cont_eventual\": 199047\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "In the same way as in previous examples, if some data are missing, we receive an error."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 - Bad request put (400) II",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"almeria\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2022",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2022"
+					]
+				},
+				"description": "Check that the body data does not coincide with the URL."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 - Put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 729400,\r\n    \"n_cont_indef\": 106987,\r\n    \"n_cont_eventual\": 75484,\r\n    \"n_cont_temporary\": 53200\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "This is the proper way."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 - Get recurse updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Correctly updated\", function () {\r",
+							"    var jsonData = pm.response.json()[0];\r",
+							"    pm.expect(jsonData[\"ss_affiliation\"]).to.eql(729400);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "It has been created."
+			},
+			"response": []
+		},
+		{
+			"name": "/almeria/2011 - Error delete (404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/almeria/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"almeria",
+						"2011"
+					]
+				},
+				"description": "We can not delete a nonexisting resource."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 - Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "But we can do it if the resource does exist."
+			},
+			"response": []
+		},
+		{
+			"name": "/sevilla/2011 - Recurse deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}/sevilla/2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"path": [
+						"sevilla",
+						"2011"
+					]
+				},
+				"description": "It has been deleted."
+			},
+			"response": []
+		},
+		{
+			"name": "/ - Not allowed (405)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}",
+					"host": [
+						"{{ss-affiliates}}"
+					]
+				},
+				"description": "In the same way, as for the posting method, we can not do a put for the / URL."
+			},
+			"response": []
+		}
+	]
+}

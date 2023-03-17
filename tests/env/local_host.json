@@ -1,0 +1,27 @@
+{
+	"id": "ee594a89-b169-4b18-b4db-14ac322c82c0",
+	"name": "LocalHost",
+	"values": [
+		{
+			"key": "ss-affiliates",
+			"value": "localhost:12345/api/v1/ss-affiliates",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "density-population",
+			"value": "localhost:12345/api/v1/density-population",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "hired-people",
+			"value": "localhost:12345/api/v1/hired-people",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-03-17T20:53:37.106Z",
+	"_postman_exported_using": "Postman/10.12.2-230316-1355"
+}

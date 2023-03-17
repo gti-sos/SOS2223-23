@@ -13,6 +13,12 @@ module.exports = (app) => {
 
 //___________________________________GETS__________________________________
 
+
+    app.get(`${BASE_API_URL_ss_affiliates}/docs`, (req, res) => {
+        console.log('Redirecting to documentation site');
+        res.status(301).redirect("https://documenter.getpostman.com/view/25997396/2s93JzKfdw");
+    });
+
     // GET LoadInitialData
     app.get(`${BASE_API_URL_ss_affiliates}/loadInitialData`, (req, res) => {
         console.log(`New Request to /loadInitialData.`);
@@ -184,7 +190,7 @@ module.exports = (app) => {
         //Comprobamos si tiene todos los campos
         if(!newRecurse.hasOwnProperty('province') || 
         !newRecurse.hasOwnProperty('year') || 
-        !newRecurse.hasOwnProperty('ss_afiliation') ||
+        !newRecurse.hasOwnProperty('ss_affiliation') ||
         !newRecurse.hasOwnProperty('n_cont_indef') || 
         !newRecurse.hasOwnProperty('n_cont_eventual') ||
         !newRecurse.hasOwnProperty('n_cont_temporary')){
@@ -210,7 +216,7 @@ module.exports = (app) => {
 
                     //Modificamos el tipo de los valores al correcto
                     newRecurse.year = parseInt(newRecurse.year);
-                    newRecurse.ss_afiliation = parseInt(newRecurse.ss_afiliation);
+                    newRecurse.ss_affiliation = parseInt(newRecurse.ss_affiliation);
                     newRecurse.n_cont_indef = parseInt(newRecurse.n_cont_indef);
                     newRecurse.n_cont_temporary = parseInt(newRecurse.n_cont_temporary);
                     newRecurse.n_cont_eventual = parseInt(newRecurse.n_cont_eventual);
@@ -312,7 +318,7 @@ module.exports = (app) => {
         //Comprobamos si tiene todos los campos
         if(!modifRecurse.hasOwnProperty('province') || 
         !modifRecurse.hasOwnProperty('year') || 
-        !modifRecurse.hasOwnProperty('ss_afiliation') ||
+        !modifRecurse.hasOwnProperty('ss_affiliation') ||
         !modifRecurse.hasOwnProperty('n_cont_indef') || 
         !modifRecurse.hasOwnProperty('n_cont_eventual') ||
         !modifRecurse.hasOwnProperty('n_cont_temporary')){
@@ -347,14 +353,14 @@ module.exports = (app) => {
 
                         //Modificamos el tipo de los valores al correcto
                         modifRecurse.year = parseInt(modifRecurse.year);
-                        modifRecurse.ss_afiliation = parseInt(modifRecurse.ss_afiliation);
+                        modifRecurse.ss_affiliation = parseInt(modifRecurse.ss_affiliation);
                         modifRecurse.n_cont_indef = parseInt(modifRecurse.n_cont_indef);
                         modifRecurse.n_cont_temporary = parseInt(modifRecurse.n_cont_temporary);
                         modifRecurse.n_cont_eventual = parseInt(modifRecurse.n_cont_eventual);
 
                         
                         //Guardamos el nuevo dato
-                        db.update({'province': province, 'year': parseInt(year)}, {'province' : province, 'year': parseInt(year),'ss_afiliation':parseInt(modifRecurse.ss_afiliation), 'n_cont_indef':parseInt(modifRecurse.n_cont_indef), 'n_cont_temporary': parseInt(modifRecurse.n_cont_temporary), 'n_cont_eventual':parseInt(modifRecurse.n_cont_eventual) }, {}, (err, num) => {
+                        db.update({'province': province, 'year': parseInt(year)}, {'province' : province, 'year': parseInt(year),'ss_affiliation':parseInt(modifRecurse.ss_affiliation), 'n_cont_indef':parseInt(modifRecurse.n_cont_indef), 'n_cont_temporary': parseInt(modifRecurse.n_cont_temporary), 'n_cont_eventual':parseInt(modifRecurse.n_cont_eventual) }, {}, (err, num) => {
                             if(err){
                                 console.log(`Error updating ${BASE_API_URL_ss_affiliates}/${province}/${year}`);
                                 res.sendStatus(500);
@@ -377,56 +383,4 @@ module.exports = (app) => {
         }
     });
 
-
-//________________________Samples_____________________________________
-
-    // Samples
-    app.get('/samples/rvr', (req, res)=>{
-        let province = 'almeria';
-        let attributeName = 'n_cont_indef'
-        csvdata.load('./data/datos_rvr.csv').then((datos) => {
-            let media = rvr(province, attributeName, datos);
-            res.json(`El valor de la media de los datos ${attributeName} para la provincia ${province} es: ${media}`);
-        }).catch((error) => {
-            console.log(error);
-            res.json(500);
-        });
-        console.log('New Request to /samples/rvr');
-    });
-
-};
-
-
-// _____________________________________Funciones________________________________________
-
-
-
-//Con esta funcion hacemos el filtro por provincias de manera que se pueda cambiar llegado el momento
-function province_filter(list, province){
-    lista = list.filter((n) => {
-        return n.province == province;
-    });
-
-    return { 
-        filtro : lista,
-        filtrados : lista.length
-            };
 }
-//La funcion devuelve un diccionario con el array de filtrados y el numero de filtrados
-//Para hacer una única vez el filtrado lo realizamos aquí y ya accedemos a sus valores
-
-
-// Con esta funcion devolvemos el resultado de hacer la media filtrada por provincia de los datos solicitados 
-function rvr(province, attributeName, datos){
-
-    let filtrado = province_filter(datos, province);
-
-    return filtrado.filtro.map((n) => {
-        if (n.hasOwnProperty(attributeName)){
-            return n[attributeName];
-        }
-    }).reduce((a,n) => {
-        return a + n;
-    })/filtrado.filtrados;
-}
-//Esta funcion devuelve el dato, a la vez que realiza el filtrado
