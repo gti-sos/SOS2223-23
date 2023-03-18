@@ -40,11 +40,39 @@ module.exports = (app) => {
 
     //GET /ss-affiliates: Lista de Recursos
     app.get(`${BASE_API_URL_ss_affiliates}`, (req, res) => {
-        let year = req.query.year;
-        let from = req.query.from;
-        let to = req.query.to;
         console.log(`New request to /ss-affiliates`);
-        if(year != undefined){
+        let query = {year: parseInt(req.query.year), 
+                    from: parseInt(req.query.from),
+                    to: parseInt(req.query.to),
+                    province: req.query.province, 
+                    skip: parseInt(req.query.offset),
+                    limit: parseInt(req.query.limit), 
+                    ss_affiliation: parseInt(req.query.ss_affiliation),
+                    n_cont_temporary: parseInt(req.query.n_cont_temporary),
+                    n_cont_eventual: parseInt(req.query.n_cont_eventual),
+                    n_cont_indef: parseInt(req.query.n_cont_indef)};
+        db.find({$or: [ {'year': query.year},
+                        {'year': {$gte: query.from, $lte: query.to}}, 
+                        {'province': query.province},
+                        {'ss_affiliation': {$gte: query.ss_affiliation}},
+                        {'n_cont_temporary': {$gte: query.n_cont_temporary}}, 
+                        {'n_cont_eventual': {$gte: query.n_cont_eventual}},
+                        {'n_cont_indef': {$gte: query.n_cont_indef}}]}, 
+                {_id: 0}).skip(query.skip).limit(query.limit).exec( 
+                (err, data) => {
+                    if(err){
+                        console.log(`Error getting ss-affiliates`);
+                        res.sendStatus(500);
+                    }else if(data.length == 0){
+                        console.log(`ss-affiliates not found`);
+                        res.sendStatus(404);
+                    }else{
+                        console.log(`Data of ss-affiliates returned: ${data.length}`);
+                        res.json(data);
+                    }
+            })
+
+        /*if(year != undefined){
             //Get por fecha
             console.log('Nueva peticion por fecha');
             db.find({'year' : parseInt(year)}, {_id : 0}, (err, data) => {
@@ -89,7 +117,7 @@ module.exports = (app) => {
                 }
             });
         }
-        
+        */
     });
 
 
@@ -360,7 +388,13 @@ module.exports = (app) => {
 
                         
                         //Guardamos el nuevo dato
-                        db.update({'province': province, 'year': parseInt(year)}, {'province' : province, 'year': parseInt(year),'ss_affiliation':parseInt(modifRecurse.ss_affiliation), 'n_cont_indef':parseInt(modifRecurse.n_cont_indef), 'n_cont_temporary': parseInt(modifRecurse.n_cont_temporary), 'n_cont_eventual':parseInt(modifRecurse.n_cont_eventual) }, {}, (err, num) => {
+                        db.update({'province': province, 'year': parseInt(year)}, {'province' : province, 
+                                                                                    'year': parseInt(year),
+                                                                                    'ss_affiliation':parseInt(modifRecurse.ss_affiliation), 
+                                                                                    'n_cont_indef':parseInt(modifRecurse.n_cont_indef), 
+                                                                                    'n_cont_temporary': parseInt(modifRecurse.n_cont_temporary), 
+                                                                                    'n_cont_eventual':parseInt(modifRecurse.n_cont_eventual)}, 
+                                    {}, (err, num) => {
                             if(err){
                                 console.log(`Error updating ${BASE_API_URL_ss_affiliates}/${province}/${year}`);
                                 res.sendStatus(500);
