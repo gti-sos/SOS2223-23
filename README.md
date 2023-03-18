@@ -24,7 +24,7 @@ Lecturers:
 --
   - [http://sos2223-23.appspot.com/api/v1/ss-affiliates/docs](http://sos2223-23.appspot.com/api/v1/ss-affiliates/docs)  (developed by Ricardo Vaz Rodriguez)
   - [http://sos2223-23.appspot.com/api/v1/density-population/docs](empty) (developed by Pablo Antonio Perez Ortega)
-  - [http://sos2223-23.appspot.com/api/v1/hired-people/docs](empty) (developed by Agustín Manuel Jiménez Casas)
+  - [http://sos2223-23.appspot.com/api/v1/hired-people/docs](http://sos2223-23.appspot.com/api/v1/hired-people/docs) (developed by Agustín Manuel Jiménez Casas)
 
 --
 
