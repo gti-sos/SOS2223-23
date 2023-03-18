@@ -1,4 +1,5 @@
 const BASE_API_URL_AMJC = "/api/v1/hired-people";
+var csvdata = require('csvdata');
 var Datastore = require(`nedb`);
 var db = new Datastore();
 
@@ -39,12 +40,12 @@ function result(province, year){
 module.exports = {
     api: (app) => {
         //_____________GET_______________
-            //GET a samples
-            app.get('/samples/amjc', (request,response) => {
-                var mensaje = result()
-                response.json(mensaje)
-                console.log('New Request to /samples/amjc.');
+            //GET a docs
+            app.get(`${BASE_API_URL_AMJC}/docs`, (req, res) => {
+                console.log('Redirecting to documentation site');
+                res.status(301).redirect("https://documenter.getpostman.com/view/26053157/2s93JzLLkZ");
             });
+
             // GET LoadInitialData
             app.get(BASE_API_URL_AMJC + '/loadInitialData', (request, response) => {
                 console.log(`New Request /hired-people/loadInitialData.`);
@@ -56,10 +57,10 @@ module.exports = {
                         console.log(`There are data ${data.length} loaded.`);
                         response.sendStatus(200);
                     }else{
-                        let datos = array;
+                        let datos = await csvdata.load('./data/datos_amjc.csv');
                         db.insert(datos);
                         console.log(`Inserted ${datos.length} data in the database.`);
-                        response.sendStatus(201);
+                        res.sendStatus(201);
                     }
                 });
             });
