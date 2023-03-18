@@ -60,7 +60,7 @@ module.exports = {
                         let datos = await csvdata.load('./data/datos_amjc.csv');
                         db.insert(datos);
                         console.log(`Inserted ${datos.length} data in the database.`);
-                        res.sendStatus(201);
+                        response.sendStatus(201);
                     }
                 });
             });
