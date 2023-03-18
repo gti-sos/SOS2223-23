@@ -311,6 +311,84 @@
 			"response": []
 		},
 		{
+			"name": "?province=sevilla - Get Resource",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"There are at least 1 data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}?province=sevilla",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"query": [
+						{
+							"key": "province",
+							"value": "sevilla"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "?province=sevilla&year=2011 - Get Resource II",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"There are exactly 1 data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.lengthOf(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ss-affiliates}}?province=sevilla&year=2011",
+					"host": [
+						"{{ss-affiliates}}"
+					],
+					"query": [
+						{
+							"key": "province",
+							"value": "sevilla"
+						},
+						{
+							"key": "year",
+							"value": "2011"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/sevilla/2011 - Get recurse II",
 			"event": [
 				{

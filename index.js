@@ -16,6 +16,8 @@ const BASE_API_URL = '/api/v1'; //url
 
 //_______________________Main_____________________
 
+app.use("/", express.static("./public"));
+
 app.use(bodyParser.json());
 
 rvr(app); //Ricardo
