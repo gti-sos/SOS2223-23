@@ -1,17 +1,15 @@
-const ppo_samples = require('./pposamples');
+//const ppo_samples = require('./pposamples');
 const BASE_API_URL = "/api/v1";
+var csvdata = require('csvdata');
 var Datastore = require(`nedb`);
 var db = new Datastore();
 
 module.exports = {     
     api: (app) => {
         //Todos los GET
-            //GET a samples
-        app.get('/samples/ppo', (request,response)=>{
-            var provincia = "Huelva";
-            var mensaje = ppo_samples.funcion(provincia);
-            response.json(mensaje);
-            console.log('New request to /samples/ppo');
+        app.get(BASE_API_URL+'/density-population/docs', (request, response) => {
+            console.log('Redirecting to documentation site of density-population');
+            response.status(301).redirect("https://documenter.getpostman.com/view/26052111/2s93JzLLkf");
         });
             //GET total y querys
         app.get(BASE_API_URL+'/density-population', (request,response)=>{
@@ -19,24 +17,24 @@ module.exports = {
             var province = request.query.province;
             var gender = request.query.gender;
             var query = {};
-            if(year =undefined){
+            if(year !=undefined){
                 query.year = parseInt(year);
             }
-            if(province= undefined){
+            if(province != undefined){
                 query.province = province;
             }
-            if(gender= undefined){
+            if(gender != undefined){
                 query.gender = gender;
             }
+            
             if(Object.keys(query).length >0){
-                db.find(query,(err,docs) =>{
+                db.find(query,{_id: 0},(err,docs) =>{
                     if(err){
                         console.log(`Error getting /density-population ${err}`)
                         response.sendStatus(500);
                     }else{
                         console.log(`Data returned`);
                         response.json(docs.map((c)=>{
-                            delete c._id;
                             return c;
                         }));  
                     }
@@ -90,9 +88,9 @@ module.exports = {
                     console.log(`Data is already stored.`);
                     response.sendStatus(200);
                 }else{
-                    let datos = ppo_samples.array_data
+                    let datos = await csvdata.load('./data/data_p.csv');
                     db.insert(datos);
-                    console.log(`Inserted data in the database.`);
+                    console.log(`Inserted ${datos.length} data in the database.`);
                     response.sendStatus(201);
                 }
             });
