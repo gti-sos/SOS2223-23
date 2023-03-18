@@ -41,25 +41,7 @@ module.exports = (app) => {
     //GET /ss-affiliates: Lista de Recursos
     app.get(`${BASE_API_URL_ss_affiliates}`, (req, res) => {
         console.log(`New request to /ss-affiliates`);
-        let query = {year: parseInt(req.query.year), 
-                    from: parseInt(req.query.from),
-                    to: parseInt(req.query.to),
-                    province: req.query.province, 
-                    skip: parseInt(req.query.offset),
-                    limit: parseInt(req.query.limit), 
-                    ss_affiliation: parseInt(req.query.ss_affiliation),
-                    n_cont_temporary: parseInt(req.query.n_cont_temporary),
-                    n_cont_eventual: parseInt(req.query.n_cont_eventual),
-                    n_cont_indef: parseInt(req.query.n_cont_indef)};
-        db.find({$or: [ {'year': query.year},
-                        {'year': {$gte: query.from, $lte: query.to}}, 
-                        {'province': query.province},
-                        {'ss_affiliation': {$gte: query.ss_affiliation}},
-                        {'n_cont_temporary': {$gte: query.n_cont_temporary}}, 
-                        {'n_cont_eventual': {$gte: query.n_cont_eventual}},
-                        {'n_cont_indef': {$gte: query.n_cont_indef}}]}, 
-                {_id: 0}).skip(query.skip).limit(query.limit).exec( 
-                (err, data) => {
+        db.find({}, {_id: 0}, (err, data) => {
                     if(err){
                         console.log(`Error getting ss-affiliates`);
                         res.sendStatus(500);
@@ -67,8 +49,25 @@ module.exports = (app) => {
                         console.log(`ss-affiliates not found`);
                         res.sendStatus(404);
                     }else{
-                        console.log(`Data of ss-affiliates returned: ${data.length}`);
-                        res.json(data);
+                        let i = -1;
+                        if(!req.query.offset){ var offset = 0;}else{ var offset = parseInt(req.query.offset);}
+                        datos = data.filter((x) => {
+                            return (((req.query.year == undefined)||(parseInt(req.query.year) === x.year))&&
+                            ((req.query.from == undefined)||(parseInt(req.query.from) <= x.year))&&
+                            ((req.query.to == undefined)||(parseInt(req.query.to) >= x.year))&&
+                            ((req.query.province == undefined)||(req.query.province === x.province))&&
+                            ((req.query.ss_affiliation == undefined)||(parseInt(req.query.ss_affiliation) === x.ss_affiliation))&&
+                            ((req.query.n_cont_temporary == undefined)||(parseInt(req.query.n_cont_temporary) === x.n_cont_temporary))&&
+                            ((req.query.n_cont_indef == undefined)||(parseInt(req.query.n_cont_indef) === x.n_cont_indef))&&
+                            ((req.query.n_cont_eventual == undefined)||(parseInt(req.query.n_cont_eventual) == x.n_cont_eventual)));
+
+                        }).filter((x) => {
+                            i = i+1;
+                            if(req.query.limit==undefined){ var cond = true;}else{ var cond = (offset + parseInt(req.query.limit)) >= i;}
+                            return (i>offset)&&cond;
+                        });
+                        res.json(datos);
+                        console.log(`Data of ss-affiliates returned: ${datos.length}`);
                     }
             })
 
