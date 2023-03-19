@@ -3,47 +3,13 @@ var csvdata = require('csvdata');
 var Datastore = require(`nedb`);
 var db = new Datastore();
 
-var array = [{year:2012, province:"Almería", gender:"Hombres", indefinite_contract:2741, single_construction_contract:15494,
-    multiple_construction_contract:6002, single_eventual_contract:4743, multiple_eventual_contract:1856},
-{year:2012, province:"Almería", gender:"Mujeres", indefinite_contract:2211, single_construction_contract:12581,
-    multiple_construction_contract:5174, single_eventual_contract:5397, multiple_eventual_contract:2123},
-{year:2012, province:"Cádiz", gender:"Hombres", indefinite_contract:4606, single_construction_contract:21563,
-    multiple_construction_contract:12906, single_eventual_contract:13624, multiple_eventual_contract:9764},
-{year:2012, province:"Cádiz", gender:"Mujeres", indefinite_contract:3995, single_construction_contract:11653,
-    multiple_construction_contract:4187, single_eventual_contract:15247, multiple_eventual_contract:11675},
-{year:2012, province:"Córdoba", gender:"Hombres", indefinite_contract:2927, single_construction_contract:15314,
-    multiple_construction_contract:12061, single_eventual_contract:7376, multiple_eventual_contract:6809},
-{year:2012, province:"Córdoba", gender:"Mujeres", indefinite_contract:2589, single_construction_contract:13588,
-    multiple_construction_contract:8200, single_eventual_contract:9406, multiple_eventual_contract:8391},
-{year:2012, province:"Granada", gender:"Hombres", indefinite_contract:3483, single_construction_contract:13617,
-    multiple_construction_contract:6607, single_eventual_contract:11453, multiple_eventual_contract:9583},
-{year:2012, province:"Granada", gender:"Mujeres", indefinite_contract:3486, single_construction_contract:10239,
-    multiple_construction_contract:4699, single_eventual_contract:14200, multiple_eventual_contract:13309},
-{year:2012, province:"Huelva", gender:"Hombres", indefinite_contract:1972, single_construction_contract:15383,
-    multiple_construction_contract:13040, single_eventual_contract:3798, multiple_eventual_contract:2175},
-{year:2012, province:"Huelva", gender:"Mujeres", indefinite_contract:1380, single_construction_contract:14092,
-    multiple_construction_contract:8788, single_eventual_contract:4200, multiple_eventual_contract:2574},
-{year:2013, province:"Jaén", gender:"Hombres", indefinite_contract:2245, single_construction_contract:12872,
-    multiple_construction_contract:12801, single_eventual_contract:8332, multiple_eventual_contract:7650}];
-
-function result(province, year){
-    var filtrar_provincia = array.filter(n => n.province == "Cádiz" && n.year == 2012);
-    var j = 0;
-    for(var i=0;i<filtrar_provincia.length;i++){
-        j+=filtrar_provincia[i].indefinite_contract;
-    }
-    var media_contratos_indefinidos = j / filtrar_provincia.length;
-    var mensaje = `La media de contratos indefinidos entre hombres y mujeres en Cádiz durante el año 2012 fue de ${media_contratos_indefinidos} contratos.`
-    return mensaje
-}
-
 module.exports = {
     api: (app) => {
         //_____________GET_______________
             //GET a docs
-            app.get(`${BASE_API_URL_AMJC}/docs`, (req, res) => {
+            app.get(`${BASE_API_URL_AMJC}/docs`, (request, response) => {
                 console.log('Redirecting to documentation site');
-                res.status(301).redirect("https://documenter.getpostman.com/view/26053157/2s93JzLLkZ");
+                response.status(301).redirect("https://documenter.getpostman.com/view/26053157/2s93JzLLkZ");
             });
 
             // GET LoadInitialData
@@ -66,44 +32,61 @@ module.exports = {
             });
             //GET con y sin Query
             app.get(BASE_API_URL_AMJC, (request,response) => {
-                var year = request.query.year;
-                var province = request.query.province;
-                var gender = request.query.gender;
-                var query = {};
+                var year_query = request.query.year;
+                var province_query = request.query.province;
+                var gender_query = request.query.gender;
+                var indefinite_contract_under = request.query.indefinite_contract_under;
+                var single_construction_contract_under = request.query.single_construction_contract_under;
+                var multiple_construction_contract_under = request.query.multiple_construction_contract_under;
+                var single_eventual_contract_under = request.query.single_eventual_contract_under;
+                var multiple_eventual_contract_under = request.query.multiple_eventual_contract_under;
                 console.log(`New request to /hired-people.`);
-                if(year !=undefined){
-                    query.year = parseInt(year);
-                }else if(province!= undefined){
-                    query.province = province;
-                }else if(gender!= undefined){
-                query.gender = gender;
-                }else if(Object.keys(query).length > 0){
-                    db.find(query,(error,data) =>{
-                        if(error){
-                            console.log(`Error getting /hired-people: ${error}.`);
-                            response.sendStatus(500);
+                db.find({}, {_id: 0}, (error, data) => {
+                    if(error){
+                        console.log(`Error getting hired-people.`);
+                        response.sendStatus(500);
+                    }else if(data.length == 0){
+                        console.log(`hired-people not found`);
+                        res.sendStatus(404);
+                    }else{
+                        // Inicializamos un contador (limit) y el offset
+                        let i = -1;
+                        if(!req.query.offset){ 
+                            var offset = -1;
                         }else{
-                            console.log(`Data returned.`);
-                            response.json(data.map((d)=>{
-                                delete d._id;
-                                return d;
-                            }));  
+                            var offset = parseInt(req.query.offset);
                         }
-                    });
-                }else{
-                    db.find({},(error,data) => {
-                        if(error){
-                            console.log(`Error getting /hired-people: ${error}.`);
-                            response.sendStatus(500);
+                        // Filtramos los datos
+                        let datos = data.filter((x) => {
+                            return (((year_query == undefined)||(parseInt(year_query) === x.year))&&
+                            ((province_query == undefined)||(province_query === x.province))&&
+                            ((gender_query == undefined)||(gender_query === x.gender))&&
+                            ((indefinite_contract_under == undefined)||(parseInt(indefinite_contract_under) >= x.indefinite_contract))&&
+                            ((single_construction_contract_under == undefined)||(parseInt(single_construction_contract_under) >= x.single_construction_contract))&&
+                            ((multiple_construction_contract_under == undefined)||(parseInt(multiple_construction_contract_under) >= x.multiple_construction_contract))&&
+                            ((single_eventual_contract_under == undefined)||(parseInt(single_eventual_contract_under) >= x.single_eventual_contract))&&
+                            ((multiple_eventual_contract_under == undefined)||(parseInt(multiple_eventual_contract_under) >= x.multiple_eventual_contract)))
+                        }).filter((x) => {
+                            // Paginación
+                            i = i+1;
+                            if(request.query.limit==undefined){ 
+                                var cond = true;
+                            }else{ 
+                                var cond = (offset + parseInt(request.query.limit)) >= i;
+                            }
+                            return (i>offset)&&cond;
+                        });
+                        // Comprobamos si tras el filtrado sigue habiendo datos, si no hay:
+                        if(datos.length == 0){
+                            console.log(`hired-people not found`);
+                            response.sendStatus(404);
+                        // Si por el contrario encontramos datos
                         }else{
-                            console.log(`Data returned.`);
-                            response.json(data.map((d)=>{
-                                delete d._id;
-                                return d;
-                            }));  
+                            console.log(`Data of hired-people returned: ${datos.length}`);
+                            response.json(datos);
                         }
-                    });
-                }
+                    }
+                })
             });
 
             //GET a recurso específico
@@ -268,7 +251,6 @@ module.exports = {
                                 console.log(`Data /hired-people/${year}/${province}/${gender} not exist.`);
                                 response.sendStatus(404);
                             }
-                        
                         });
                     }
                 }
