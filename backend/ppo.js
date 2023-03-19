@@ -13,49 +13,58 @@ module.exports = {
         });
             //GET total y querys
         app.get(BASE_API_URL+'/density-population', (request,response)=>{
-            var year = request.query.year;
-            var province = request.query.province;
-            var gender = request.query.gender;
-            var query = {};
-            if(year !=undefined){
-                query.year = parseInt(year);
-            }
-            if(province != undefined){
-                query.province = province;
-            }
-            if(gender != undefined){
-                query.gender = gender;
-            }
-            
-            if(Object.keys(query).length >0){
-                db.find(query,{_id: 0},(err,docs) =>{
-                    if(err){
-                        console.log(`Error getting /density-population ${err}`)
+            var year_query = request.query.year;
+            var province_query = request.query.province;
+            var gender_query = request.query.gender;
+            var municipality_size_lt_ft_under = request.query.municipality_size_lt_ft_under;
+            var municipality_size_bt_ft_tht_under = request.query.municipality_size_bt_ft_tht_under;
+            var municipality_size_gt_tht_under = request.query.municipality_size_gt_tht_under;
+            var capital_size_under = request.query.capital_size_under;        
+            console.log(`New request to /density-population.`);
+                db.find({}, {_id: 0}, (error, docs) => {
+                    if(error){
+                        console.log(`Error getting density-population.`);
                         response.sendStatus(500);
+                    }else if(docs.length == 0){
+                        console.log(`Density-population not found`);
+                        response.sendStatus(404);
                     }else{
-                        console.log(`Data returned`);
-                        response.json(docs.map((c)=>{
-                            return c;
-                        }));  
+                        let i = -1;
+                        if(!request.query.offset){ 
+                            var offset = -1;
+                        }else{
+                            var offset = parseInt(request.query.offset);
+                        }
+                        // Filtramos según las query
+                        console.log(municipality_size_lt_ft_under)
+                        let datos = docs.filter((x) => {
+                            return (((year_query == undefined)||(parseInt(year_query) === x.year))&&
+                            ((province_query == undefined)||(province_query === x.province))&&
+                            ((gender_query == undefined)||(gender_query === x.gender))&&
+                            ((municipality_size_lt_ft_under == undefined)||(parseFloat(municipality_size_lt_ft_under) >= x.municipality_size_lt_ft))&&
+                            ((municipality_size_bt_ft_tht_under == undefined)||(parseFloat(municipality_size_bt_ft_tht_under) >= x.municipality_size_bt_ft_tht))&&
+                            ((municipality_size_gt_tht_under == undefined)||(parseFloat(municipality_size_gt_tht_under) >= x.municipality_size_gt_tht))&&
+                            ((capital_size_under == undefined)||(parseFloat(capital_size_under) >= x.capital_size)))
+                        }).filter((x) => {
+                            // Paginación
+                            i=i+1;
+                            if(request.query.limit==undefined){ 
+                                var cond = true;
+                            }else{ 
+                                var cond = (offset + parseInt(request.query.limit)) >= i;
+                            }
+                            return (i>offset)&&cond;
+                        });
+                        if(docs.length == 0){
+                            console.log(`Density-population not found`);
+                            response.sendStatus(404);
+                        }else{
+                            console.log(`Data of Density-population returned: ${docs.length}`);
+                            response.json(datos);
+                        }
                     }
-                });
-            }else{
-                db.find({},(err,docs) =>{
-                    if(err){
-                        console.log(`Error getting /density-population ${err}`)
-                        response.sendStatus(500);
-                    }else{
-                        console.log(`Data returned`);
-                        response.json(docs.map((c)=>{
-                            delete c._id;
-                            return c;
-                        }));  
-                    }
-                });
-            }
-            
-        
-        });
+                })
+            });
             //GET a recurso específico
         app.get(BASE_API_URL+'/density-population/:year/:province/:gender', (request,response)=>{
             var year = request.params.year;
