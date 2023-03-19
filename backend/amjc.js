@@ -47,14 +47,14 @@ module.exports = {
                         response.sendStatus(500);
                     }else if(data.length == 0){
                         console.log(`hired-people not found`);
-                        res.sendStatus(404);
+                        response.sendStatus(404);
                     }else{
                         // Inicializamos un contador (limit) y el offset
                         let i = -1;
-                        if(!req.query.offset){ 
+                        if(!request.query.offset){ 
                             var offset = -1;
                         }else{
-                            var offset = parseInt(req.query.offset);
+                            var offset = parseInt(request.query.offset);
                         }
                         // Filtramos los datos
                         let datos = data.filter((x) => {
