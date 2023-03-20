@@ -1,0 +1,759 @@
+{
+	"info": {
+		"_postman_id": "478b9870-27c4-476a-b7e7-7969e2c42ba2",
+		"name": "hired-people",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26053157"
+	},
+	"item": [
+		{
+			"name": "/hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/loadInitialData",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/loadInitialData",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people?year=2012",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2012",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2012"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people?year=2012&gender=Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2012&gender=Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2012"
+						},
+						{
+							"key": "gender",
+							"value": "Hombres"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people?year=2012&gender=Hombres&province=Sevilla",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2012&gender=Hombres&province=Sevilla",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2012"
+						},
+						{
+							"key": "gender",
+							"value": "Hombres"
+						},
+						{
+							"key": "province",
+							"value": "Sevilla"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people?year=2018&indefinite_contract_under=4000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2018&indefinite_contract_under=4000",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2018"
+						},
+						{
+							"key": "indefinite_contract_under",
+							"value": "4000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people?year=2018&indefinite_contract_under=4000 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?limit=2&offset=10",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "2"
+						},
+						{
+							"key": "offset",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/2012/Cádiz/Hombres",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2012/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2012",
+						"Cádiz",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/2024/Cádiz/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2024/Cádiz/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2024",
+						"Cádiz",
+						"Mujeres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST (409) Conflict",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"gender\": \"Hombres\",\n        \"indefinite_contract\": 3483,\n        \"single_construction_contract\": 13617,\n        \"multiple_construction_contract\": 6607,\n        \"single_eventual_contract\": 11453,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST (405) Not Allowed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {",
+							"    pm.response.to.have.status(405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"gender\": \"Hombres\",\n        \"indefinite_contract\": 3483,\n        \"single_construction_contract\": 13617,\n        \"multiple_construction_contract\": 6607,\n        \"single_eventual_contract\": 11453,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2012/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2012",
+						"Cádiz",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST (400) Bad Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"indefinite_contract\": 3483,\n        \"multiple_construction_contract\": 6607,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2007,\n        \"province\": \"Almería\",\n        \"gender\": \"Mujeres\",\n        \"indefinite_contract\": 2211,\n        \"single_construction_contract\": 12581,\n        \"multiple_construction_contract\": 5174,\n        \"single_eventual_contract\": 5397,\n        \"multiple_eventual_contract\": 2123\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (404) Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"year\":2005, \n    \"province\":\"Cádiz\", \n    \"gender\":\"Mujeres\", \n    \"indefinite_contract\":39925, \n    \"single_construction_contract\":11653,\n    \"multiple_construction_contract\":4187, \n    \"single_eventual_contract\":15247, \n    \"multiple_eventual_contract\":11675\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2005/Cádiz/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2005",
+						"Cádiz",
+						"Mujeres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (400) Bad Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"indefinite_contract\": 3483,\n        \"multiple_construction_contract\": 6607,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2012/Granada/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2012",
+						"Granada",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (405) Not Allowed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {",
+							"    pm.response.to.have.status(405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"indefinite_contract\": 3483,\n        \"multiple_construction_contract\": 6607,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Cádiz\",\n        \"gender\": \"Hombres\",\n        \"indefinite_contract\": 306,\n        \"single_construction_contract\": 21563,\n        \"multiple_construction_contract\": 12906,\n        \"single_eventual_contract\": 13624,\n        \"multiple_eventual_contract\": 9764\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2012/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2012",
+						"Cádiz",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Specific",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2012/Granada/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2012",
+						"Granada",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta tiene menos de 200 elementos\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
