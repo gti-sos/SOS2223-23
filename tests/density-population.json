@@ -1,0 +1,647 @@
+{
+	"info": {
+		"_postman_id": "8b4fee3e-f801-42c1-bbfc-4cf1dd782b25",
+		"name": "density-population",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26052111"
+	},
+	"item": [
+		{
+			"name": "Initial",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}/loadInitialData",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/density-population GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/2012/Almería/Hombres GET recurse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}/2012/Almería/Hombres",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"2012",
+						"Almería",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/2066/Almería/Hombres GET not found 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}/2066/Almería/Hombres",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"2066",
+						"Almería",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "?gender&municipality_size_lt_ft_under=8.5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}?gender=Hombres&municipality_size_lt_ft_under=8.5",
+					"host": [
+						"{{density-population}}"
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "Hombres"
+						},
+						{
+							"key": "municipality_size_lt_ft_under",
+							"value": "8.5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST not allowed 405",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"year\": 2012,\r\n                \"province\": \"Córdoba\",\r\n                \"gender\": \"Mujeres\",\r\n                \"municipality_size_lf_ft\": 13.28,\r\n                \"municipality_size_bt_ft_tht\": 22.5,\r\n                \"municipality_size_gt_tht\": 22.5,\r\n                \"capital_size\": 41.72\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}/2012/Almería/Mujeres",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"2012",
+						"Almería",
+						"Mujeres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Conflict 409",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"year\": 2012,\r\n                \"province\": \"Córdoba\",\r\n                \"gender\": \"Mujeres\",\r\n                \"municipality_size_lf_ft\": 13.28,\r\n                \"municipality_size_bt_ft_tht\": 22.5,\r\n                \"municipality_size_gt_tht\": 22.5,\r\n                \"capital_size\": 41.72\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST bad request 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"year\": 2012,\r\n                \"province\": \"Córdoba\",\r\n                \"gender\": \"Mujeres\",\r\n                \"municipality_size_lf_ft\": 13.28,\r\n                \"municipality_size_gt_tht\": 22.5,\r\n                \"capital_size\": 41.72\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/density-population POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"year\": 2014,\r\n                \"province\": \"Jaen\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lf_ft\": 15.4,\r\n                \"municipality_size_bt_ft_tht\": 22.5,\r\n                \"municipality_size_gt_tht\": 22.5,\r\n                \"capital_size\": 41.72\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT not found 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"year\": 2055,\r\n                \"province\": \"Huelva\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lf_ft\": 10.00,\r\n                \"municipality_size_bt_ft_tht\": 30.00,\r\n                \"municipality_size_gt_tht\": 25.00,\r\n                \"capital_size\": 32.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}/2055/Huelva/Hombres",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"2055",
+						"Huelva",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT bad request 400 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"year\": 2014,\r\n                \"province\": \"Huelva\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lf_ft\": 10.00,\r\n                \"municipality_size_bt_ft_tht\": 30.00,\r\n                \"municipality_size_gt_tht\": 25.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}/2014/Huelva/Hombres",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"2014",
+						"Huelva",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT not allowed 405",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n                \"year\": 2014,\r\n                \"province\": \"Huelva\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lf_ft\": 13.28,\r\n                \"municipality_size_bt_ft_tht\": 30.00,\r\n                \"municipality_size_gt_tht\": 22.5,\r\n                \"capital_size\": 41.72\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/2012/Huelva/Hombres PUT recurse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"year\": 2012,\r\n        \"province\": \"Huelva\",\r\n        \"gender\": \"Hombres\",\r\n        \"municipality_size_lf_ft\": 10.00,\r\n        \"municipality_size_bt_ft_tht\": 30.00,\r\n        \"municipality_size_gt_tht\": 25.00,\r\n        \"capital_size\": 27.63\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{density-population}}/2012/Huelva/Hombres",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"2012",
+						"Huelva",
+						"Hombres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/y/p/g DELETE recurse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}/2012/Almería/Mujeres",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"2012",
+						"Almería",
+						"Mujeres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/density-population",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta tiene almenos 1 elemento\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.above(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/density-population DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/density-population",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initial Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}/loadInitialData",
+					"host": [
+						"{{density-population}}"
+					],
+					"path": [
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/density-population DELETE Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{density-population}}",
+					"host": [
+						"{{density-population}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

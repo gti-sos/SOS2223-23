@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index",
     "test-ss-affiliates": "npx newman run ./tests/ss_affiliates.json -e ./tests/env/local_host.json",
-    "test": "npm run test-ss-affiliates"
+    "test-density-population": "npx newman run ./tests/density-population.json -e ./tests/env/local_host.json",
+    "test": "npm run test-ss-affiliates && npm run test-density-population"
   },
   "author": "",
   "license": "ISC",
