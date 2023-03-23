@@ -90,7 +90,7 @@ module.exports = (app) => {
 
                 console.log(`Data ss-affiliates/${province}/${year} returned`);
                 // Estado 200: Ok
-                res.json(data);
+                res.json(data[0]);
             }
         });
     });
