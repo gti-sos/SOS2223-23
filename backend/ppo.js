@@ -70,7 +70,7 @@ module.exports = {
             var year = request.params.year;
             var province = request.params.province;
             var gender = request.params.gender;
-            db.find({"year":parseInt(year),"province":province,"gender":gender},(err,docs)=>{
+            db.find({"year":parseInt(year),"province":province,"gender":gender},{_id: 0},(err,docs)=>{
                 if(err){
                     console.log(`Error getting density-population/${year}/${province}/${gender}: ${err}`)
                     response.sendStatus(500);
@@ -80,7 +80,6 @@ module.exports = {
                 }else{
                     console.log(`Data of density-population/${year}/${province}/${gender} returned`);
                     response.json(docs.map((c) => {
-                        delete c._id;
                         return(c);
                     }))
                 }
