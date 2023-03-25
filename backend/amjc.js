@@ -96,7 +96,7 @@ module.exports = {
                 var year = request.params.year;
                 var province = request.params.province;
                 var gender = request.params.gender;
-                db.find({"year":parseInt(year),"province":province,"gender":gender}, (error,data) => {
+                db.find({"year":parseInt(year),"province":province,"gender":gender}, {_id: 0}, (error,data) => {
                     if(error){
                         console.log(`Error getting /hired-people/${year}/${province}/${gender}: ${error}`)
                         response.sendStatus(500);
@@ -106,7 +106,6 @@ module.exports = {
                     }else{
                         console.log(`Data of /hired-people/${year}/${province}/${gender} returned`);
                         response.json(data.map((d) => {
-                            delete d._id;
                             return(d);
                         }))
                     }
