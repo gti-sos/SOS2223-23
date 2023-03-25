@@ -59,6 +59,8 @@ module.exports = {
                         // Filtramos los datos
                         let datos = data.filter((x) => {
                             return (((year_query == undefined)||(parseInt(year_query) === x.year))&&
+                            ((request.query.from == undefined)||(parseInt(request.query.from) <= x.year))&&
+                            ((request.query.to == undefined)||(parseInt(request.query.to) >= x.year))&&
                             ((province_query == undefined)||(province_query === x.province))&&
                             ((gender_query == undefined)||(gender_query === x.gender))&&
                             ((indefinite_contract_under == undefined)||(parseInt(indefinite_contract_under) >= x.indefinite_contract))&&
