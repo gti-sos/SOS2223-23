@@ -39,6 +39,8 @@ module.exports = {
                         console.log(municipality_size_lt_ft_under)
                         let datos = docs.filter((x) => {
                             return (((year_query == undefined)||(parseInt(year_query) === x.year))&&
+                            ((request.query.from == undefined)||(parseInt(request.query.from) <= x.year))&&
+                            ((request.query.to == undefined)||(parseInt(request.query.to) >= x.year))&&
                             ((province_query == undefined)||(province_query === x.province))&&
                             ((gender_query == undefined)||(gender_query === x.gender))&&
                             ((municipality_size_lt_ft_under == undefined)||(parseFloat(municipality_size_lt_ft_under) >= x.municipality_size_lt_ft))&&
