@@ -906,6 +906,35 @@
 			"response": []
 		},
 		{
+			"name": "/hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta tiene mínimo 1 elemento\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.lengthOf.above(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Realizaremos GET a los datos de **hired-people** para comprobar que exíste al menos 1 dato. Si se cumple dicha comprobación, nos lo confirmará por pantalla."
+			},
+			"response": []
+		},
+		{
 			"name": "PUT (404) Not Found",
 			"event": [
 				{
@@ -1197,35 +1226,6 @@
 					]
 				},
 				"description": "Realizaremos DELETE a los 4 datos diferentes que creamos para esta demostración. Dado que existen y se hace buena petición, nos mostrará por pantalla un código de estado **200 (OK).**"
-			},
-			"response": []
-		},
-		{
-			"name": "/hired-people",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"La respuesta tiene menos de 10 elementos\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.length).to.be.below(10);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{hired-people}}",
-					"host": [
-						"{{hired-people}}"
-					]
-				},
-				"description": "Realizaremos GET a los datos de **hired-people** para comprobar que el número de datos es menor a 10. Si se cumple dicha comprobación, nos lo confirmará por pantalla."
 			},
 			"response": []
 		},
