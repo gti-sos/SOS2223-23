@@ -105,9 +105,7 @@ module.exports = {
                         response.sendStatus(404);
                     }else{
                         console.log(`Data of /hired-people/${year}/${province}/${gender} returned`);
-                        response.json(data.map((d) => {
-                            return(d);
-                        }))
+                        response.json(data[0]);
                     }
                 });
             });
