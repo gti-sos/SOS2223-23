@@ -9,7 +9,7 @@ module.exports = {
         //Todos los GET
         app.get(BASE_API_URL+'/density-population/docs', (request, response) => {
             console.log('Redirecting to documentation site of density-population');
-            response.status(301).redirect("https://documenter.getpostman.com/view/26052111/2s93JzLLkf");
+            response.status(301).redirect("https://documenter.getpostman.com/view/26052111/2s93RNzFGX");
         });
             //GET total y querys
         app.get(BASE_API_URL+'/density-population', (request,response)=>{
@@ -81,9 +81,7 @@ module.exports = {
                     response.sendStatus(404);
                 }else{
                     console.log(`Data of density-population/${year}/${province}/${gender} returned`);
-                    response.json(docs.map((c) => {
-                        return(c);
-                    }))
+                    response.json(docs[0]);
                 }
             });
         });
