@@ -1,0 +1,1918 @@
+{
+	"info": {
+		"_postman_id": "a31017ad-5088-4a5f-804e-becf2f7c7f72",
+		"name": "ss-affiliates",
+		"description": "**En esta documentación se tratará sobre el manejo de errores y prohibiciones y de la forma correcta de acceder a los datos de la API de afiliados a la seguridad social y nuevos contratos en Andalucía, de la que disponemos datos desde 2012 en adelante. La estructura de la API es muy sencilla, se dispone de una base de datos de recursos con la siguiente información cada uno:**\n\n_________________________________________________________________________________________________________________\n\n- province: Nombre de la provincia a la que pertenece el dato\n- year: Número entero con el año al que pertenece el dato\n- ss_affiliation: Número entero que representa el número total de nuevos afiliados a la seguridad social durante ese año.\n- n_cont_indef: Número de nuevos contratos indefinidos firmados durante ese año, en dicha provincia\n- n_cont_temporary: Número de nuevos contratos temporales firmados durante ese año, en dicha provincia. Llamamos contrato temporal a cualquier contrato con una fecha de vencimiento de menos de seis meses pero que no constituye una servicio eventual.\n- n_cont_eventual: Número de contratos eventuales firmados durante ese año, en esa provincia.\n    \n\n__________________________________________________________________________________________________________________\n\nComo se puede deducir los campos **(province, year)** conforman un identificador único de cada registro, de forma que no podemos tener dos registros del mismo año y la misma provincia a la vez que sean diferentes entre sí.\n\nEsta documentación en Postman incluye los ejemplos necesarios para mostrar este hecho. Esta dividida en varios sectores para hacer más entendible la ejecucción, pero están pensados para ser ejecutados en el orden propuesto, debido a que en su conjunto conforman un test estático y por separados no tienen una lógica per se.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25997396"
+	},
+	"item": [
+		{
+			"name": "Initial State",
+			"item": [
+				{
+					"name": "/sevilla/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "Aprovechamos estos ejemplos para demostrar la forma sencilla de acceder a un recurso identificado de forma única, y lo que debería devolver en el caso que nos trata al no existir dicho recurso en la base de datos es simplemente el estado **404** (not found). Así se comprueba en todos los tests iniciales, de forma que si alguna llamada no devolviera ese estado lo sabriamos."
+					},
+					"response": []
+				},
+				{
+					"name": "/almeria/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jaen/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/jaen/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"jaen",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/huelva/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/huelva/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"huelva",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cadiz/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cadiz/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cadiz",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/granada/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/granada/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"granada",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/malaga/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/malaga/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"malaga",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cordoba/2011 - Not found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cordoba/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cordoba",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Bad request post (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_afiliation\": 696221,\r\n    \"n_cont_indef\": 34194,\r\n    \"n_cont_eventual\": 199047\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						},
+						"description": "Para poder realizar las pruebas vamos a crear los citados recursos para el año 2011, pero antes vamos a ver que sucedería si al intentar crear un recurso no pasaramos todos los datos solicitados. El recurso no debería crearse y además se debería devolver un código de estado **400 (bad request).** En este caso al observar el body se puede ver que el campo **n_cont_temporary** no se especifica. La API no permite la funcionalidad de dar valores por defecto ni de permitir valores perdidos, si algún valor estuviera perdido debería hacerse un tratamiento del mismo, varias opciones son dejarlo a cero, hacer una media de los demás datos del año, de los demás datos de la provincia o ambos en conjunto, pero nunca se permitirá no pasar un dato numérico."
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (sevilla)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						},
+						"description": "Esta sí es la forma de hacer un post al pasar correctamente todos los datos solicitados, el recurso debe ser creado en este caso y el estado devuelto debe ser el **201 (created).** Vamos a crear todos los datos con valor igual a 0 para poder observar después correctamente las actualizaciones de datos.\n\nDespués de este ejemplo, se inicializan los datos de todas las demás provincias para poder comprobar funcionalidades como la paginación o las búsquedas."
+					},
+					"response": []
+				},
+				{
+					"name": "/sevilla/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('sevilla');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "Comprobamos que el recurso efectivamente se ha creado y que tiene los valores esperados de provincia y año. El código de estado en este caso debe ser **200 (ok)**. De nuevo nos sirve para ver como se haría una búsqueda de un recurso concreto. Es importante ver, ahora que sí hay datos que este método no devuelve un array como si hará cualquier búsqueda, aunque solo devuelva un dato, sino que en este caso se devuelve un único objeto en formato json. Este es el motivo por el que en el test podemos comprobar directamente el valor del json de la response sin acceder a ningún indice (como sí tendremos que hacer en búsquedas)."
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (jaen)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"jaen\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jaen/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('jaen');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/jaen/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"jaen",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (almeria)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"almeria\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/almeria/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('almeria');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (malaga)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"malaga\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/malaga/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('malaga');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/malaga/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"malaga",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (granada)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"granada\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/granada/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('granada');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/granada/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"granada",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (cordoba)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"cordoba\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cordoba/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('cordoba');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cordoba/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cordoba",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (huelva)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"huelva\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/huelva/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('huelva');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/huelva/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"huelva",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Post new recurse (cadiz)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"cadiz\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cadiz/2011 - Get new recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Value returned is...\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData['province']).to.eql('cadiz');\r",
+									"    pm.expect(jsonData['year']).to.eql(2011);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cadiz/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cadiz",
+								"2011"
+							]
+						},
+						"description": "Tras comprobar que se han creado todos los recursos vamos a pasar a la segunda carpeta o módulo donde vamos a probar a obtener datos de la API, de distintas formas.\n\n---\n\n---"
+					},
+					"response": []
+				}
+			],
+			"description": "Podemos comenzar comprobando el estado de la base de datos. Todos los ejemplos de la documentación son ficticios de forma que no coincidan con los datos que podrían existir en la base de datos y de forma que al final del test pueda recuperarse el estado de la base de datos en el que se encontraba antes de empezar. Para hacer datos ficticios, debido a que los datos reales van desde 2012 en adelante, se usan solo los identificadores de 2011 hacia detrás, no pudiendo asegurar que en caso de usarse datos posteriores pudieran llegarse a errores en la ejecución del test, al romper la estaticidad del mismo.\n\n_____________________________________________________________________________________________________________________\n\nComenzamos comprobando que efectivamente no existen ninguno de los datos del año 2011 en nuestra base de datos para ninguna de las provincias andaluzas.\n\nEn el siguiente orden se comprueban: **Sevilla, Almeria, Jaen, Huelva, Cadiz, Granada, Malaga y Cordoba**"
+		},
+		{
+			"name": "Retrieving Data",
+			"item": [
+				{
+					"name": "/sevilla - Get recurses province",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 1 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla"
+							]
+						},
+						"description": "En este primer ejemplo vemos como encontrar todos los datos de una misma provincia para todos los años que se tengan en la base de datos. Si la base de datos no está vacía, esta búsqueda devolverá tantos recursos como tuviera más uno (al crear nosotros uno antes), en todo caso deberá devolver al menos un dato que es el que se ha creado para Sevilla y el año 2011."
+					},
+					"response": []
+				},
+				{
+					"name": "?year=2011 - Get recurses year",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 8 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(7);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?year=2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2011"
+								}
+							]
+						},
+						"description": "Aquí vemos como acceder a todos los recursos del mismo año. Podemos observar como la forma de hacerlo es ligeramente diferente a la anterior, dado que está no está implementada como una url sino como una búsqueda. Se puede ver y es importante, que el nombre que hay que darle al parámetro de la query es _**year**_\n\nAquí esperamos recibir al menos 8 datos que son los que hemos creado para el año 2011, aunque no sabemos si en la base de datos podría haber datos de otras provincias (en principio no porque estos datos son de Andalucía y hemos creado datos para todas sus provincias)."
+					},
+					"response": []
+				},
+				{
+					"name": "?year=2011 - Get recurses year (pagination)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 4 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?year=2011&limit=4&offset=2",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2011"
+								},
+								{
+									"key": "limit",
+									"value": "4"
+								},
+								{
+									"key": "offset",
+									"value": "2"
+								}
+							]
+						},
+						"description": "En este ejemplo vemos dos parámetros más, **limit** y **offset**, que implementan la paginación en nuestra API, al pasarlos se consigue que la API solo devuelva los datos que se encuentran al buscar, entre la posición offset y la posición offset + limit. Si no se pasa ninguno por defecto se devuelven todos los datos, es decir offset es 0 y limit no existe. Si solo pasáramos uno de los parámetros de igual forma offset sería cero por defecto y limit no existiría por lo que obedecería al parámetro pasado, dejando el otro por defecto."
+					},
+					"response": []
+				},
+				{
+					"name": "/seville?from=2011&to=2014 - Get recurses years I",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 1 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla?from=2011&to=2014",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2011"
+								},
+								{
+									"key": "to",
+									"value": "2014"
+								}
+							]
+						},
+						"description": "Aquí podemos ver como se haría una búsqueda más complicada en un rango de fechas y para solo una provincia. No sabemos si esta query devolverá más de un recurso al no saber el estado de la base de datos pero en todo caso debe devolver al menos uno y nunca más de cuatro, ya que la igualdad está contemplada. Es importante ver que la nomenclatura de los parámetros es **from** y **to.**"
+					},
+					"response": []
+				},
+				{
+					"name": "?from=2011&to=2016 - Get recurses years II",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 8 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(7);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?from=2011&to=2016",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2011"
+								},
+								{
+									"key": "to",
+									"value": "2016"
+								}
+							]
+						},
+						"description": "Y aquí la misma que la anterior pero sin una provincia dada lo que implica que se hace para todas las provincias."
+					},
+					"response": []
+				},
+				{
+					"name": "?from=2011&to=2016 - Get recurses years II (Pagination)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 4 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?from=2011&to=2016&limit=4&offset=2",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2011"
+								},
+								{
+									"key": "to",
+									"value": "2016"
+								},
+								{
+									"key": "limit",
+									"value": "4"
+								},
+								{
+									"key": "offset",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Paginando la última búsqueda."
+					},
+					"response": []
+				},
+				{
+					"name": "?province=sevilla - Get Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 1 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?province=sevilla",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "province",
+									"value": "sevilla"
+								}
+							]
+						},
+						"description": "Aquí podemos observar que la API ofrece en realidad dos formas distintas de hacer lo mismo, dado que el campo **province** tambien es un campo permitido en los parámetros de la query lo que tiene la misma funcionalidad que /province, esto hace que si las búsquedas van a tener muchos parámetros, podamos al menos pasar la provincia a la url."
+					},
+					"response": []
+				},
+				{
+					"name": "?province=sevilla&year=2011 - Get Resource II",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are exactly 1 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?province=sevilla&year=2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "province",
+									"value": "sevilla"
+								},
+								{
+									"key": "year",
+									"value": "2011"
+								}
+							]
+						},
+						"description": "De igual forma esto es otra manera de obtener un único recurso, pero en este caso aunque sabemos que el recurso a devolver tiene que ser único, se va a devolver un array y no un solo recurso, al haberse usado la nomenclatura de query, que en principio podría haber dado más objetos (aunque en este caso evidentemente no debería devolver nada más)"
+					},
+					"response": []
+				}
+			],
+			"description": "En esta sección vamos a pasar por encima de todas las formas que ofrece la API para acceder a los recursos, mediante busquedas, paginación y urls. En estos casos a diferencia de los del primer bloque, las respuestas vendrán dadas por un array debido a que aunque solo se encuentre una respuesta, no se está solicitando un recurso único sino una búsqueda que da solo un elemento como respuesta pero podría dar más."
+		},
+		{
+			"name": "Uncorrectly Posting Data",
+			"item": [
+				{
+					"name": "/sevilla/2011 - Get recurse II",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "Para empezar vamos a ver que no se puede hacer un post si el recurso ya existe y para eso usamos uno de los recursos creados con anterioridad, y lo devolvemos para ver que efectivamente existe."
+					},
+					"response": []
+				},
+				{
+					"name": "/ - Conflict post (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 696221,\r\n    \"n_cont_indef\": 34194,\r\n    \"n_cont_eventual\": 199047,\r\n    \"n_cont_temporary\": 64663\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						},
+						"description": "Como el recurso existe, esta orden no tiene ningún sentido en la lógica de la API y por tanto da un código de estado por un conflicto en la petición **409 (Conflict)**. Cabe destacar que esto sin embargo no es lo primero que se comprueba sino que si además faltara algún dato en la petición el error sería 405 bad request ya que es lo primero que se comprueba, al hacer un post."
+					},
+					"response": []
+				},
+				{
+					"name": "/almeria/2010 - Not allowed (405)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {\r",
+									"    pm.response.to.have.status(405);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2010",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2010"
+							]
+						},
+						"description": "Esto es otra forma incorrecta de hacer un post, dado que el recurso a crear no debería existir la propia sintaxis de /province/year carece de sentido alguno, por lo que no se permite crear un recurso con la url /province/year sino que todos los post se hacen sobre la url de la API, donde los recursos se alojan. Este método erroneo dará como código de estado el **405 (Not Allowed)**."
+					},
+					"response": []
+				},
+				{
+					"name": "/almeria/2010 - Get no created recurse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2010",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2010"
+							]
+						},
+						"description": "Podemos comprobar que el recurso no se ha creado.\n\n___"
+					},
+					"response": []
+				}
+			],
+			"description": "En esta sección vamos a ver una serie de test y pruebas para comprender como no debe hacerse un post en nuestros datos, y como ya hemos visto, durante la primera sección, la forma correcta de hacerlo, esa será la única permitida."
+		},
+		{
+			"name": "Putting Data (Correctly and Errors)",
+			"item": [
+				{
+					"name": "/ - Not allowed (405)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 405\", function () {\r",
+									"    pm.response.to.have.status(405);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}",
+							"host": [
+								"{{ss-affiliates}}"
+							]
+						},
+						"description": "Esta petición muestra que la API no permite la actualización en bloque de los recursos, por lo que no tiene sentido pedir un put a la ruta global de la API, porque se devuelve un código de estado **405** (not allowed). Las actualizaciones se hacen sobre recursos concretos usando la url /province/year.\n\nLa url /province no existe para hacer puts, ni posts, por lo que se devolverá un 404 dado que esa ruta no existe."
+					},
+					"response": []
+				},
+				{
+					"name": "/almeria/2010 - Not found put (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2010,\r\n    \"province\": \"almeria\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2010",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2010"
+							]
+						},
+						"description": "Tampoco se permite crear un nuevo recurso usando el método put, si el recurso no existe (y siempre que antes de eso se ha comprobado que se han pasado todos los parámetros necesarios) la solicitud nos devolverá un código de estado **404** porque el recurso pedido no existe."
+					},
+					"response": []
+				},
+				{
+					"name": "/sevilla/2011 -  Bad request put (400) I",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 696221,\r\n    \"n_cont_indef\": 34194,\r\n    \"n_cont_eventual\": 199047\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "Como hemos comentado en el ejemplo anterior, en realidad lo primero que se comprueba es que se pasen en el body todos los datos solicitados. Si esto no es así se devolverá un código **400 (Bad request)**"
+					},
+					"response": []
+				},
+				{
+					"name": "/sevilla/2011 - Bad request put (400) II",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"almeria\",\r\n    \"ss_affiliation\": 0,\r\n    \"n_cont_indef\": 0,\r\n    \"n_cont_eventual\": 0, \r\n    \"n_cont_temporary\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2022",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2022"
+							]
+						},
+						"description": "Antes de la actualización se hace una última comprobación por si se ha cometido un error copiando el body de otra actualizacion y no coinciden la url del recurso con el identificador del recurso en el body. Se devolverá un código **400 (Bad Request)**"
+					},
+					"response": []
+				},
+				{
+					"name": "/sevilla/2011 - Put",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2011,\r\n    \"province\": \"sevilla\",\r\n    \"ss_affiliation\": 729400,\r\n    \"n_cont_indef\": 106987,\r\n    \"n_cont_eventual\": 75484,\r\n    \"n_cont_temporary\": 53200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "Finalmente tenemos un ejemplo de la forma correcta de hacer la actualización, se pasan todos los datos necesarios, existe el recurso y coinciden la url y el body."
+					},
+					"response": []
+				},
+				{
+					"name": "/sevilla/2011 - Get recurse updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Correctly updated\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[\"ss_affiliation\"]).to.eql(729400);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "Podemos comprobar que el recurso ha sido creado efectivamente."
+					},
+					"response": []
+				}
+			],
+			"description": "En este módulo vamos a comprobar como se pueden hacer actualizaciones de recursos en la API, y como maneja esta los errores y métodos mal solicitados. Para hacer una actualización a un recurso se debe tener su identificador único, la API no comprueba realmente que se actualice el dato, lo que sí comprueba es que se pasan todos los datos que se necesitan para crear el recurso ya que no permite la actualización de solo algún valor del recurso. Por lo que si se quisiera actualizar un solo registro y no se conocen los demás primero hay que realizar una búsqueda para obtener esos datos ya que en caso de no pasarlos no se permitirá la actualización."
+		},
+		{
+			"name": "Removing Data & Final State",
+			"item": [
+				{
+					"name": "/almeria/2010 - Error delete (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2010",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2010"
+							]
+						},
+						"description": "Lo primero es ver que no está permitido borrar un elemento que no existe."
+					},
+					"response": []
+				},
+				{
+					"name": "/sevilla/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "La forma correcta de hacer el borrado sería esta. A partir de aquí se van a borrar todos los recursos creados al principio, para proceder a comprobar que el estaod final es igual que el inicial."
+					},
+					"response": []
+				},
+				{
+					"name": "/jaen/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/jaen/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"jaen",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/huelva/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/huelva/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"huelva",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/malaga/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/malaga/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"malaga",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cadiz/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cadiz/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cadiz",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cordoba/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cordoba/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cordoba",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/granada/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/granada/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"granada",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/almeria/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "?year=2011 - Recurses deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?year=2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2011"
+								}
+							]
+						},
+						"description": "Podemos comprobar que efectivamente se han borrado los datos, no quedando ningún dato en el año 2011"
+					},
+					"response": []
+				}
+			],
+			"description": "Por último y para dejar la base de datos en el estado en que se encontraba, vamos a ver como podemos borrar recursos concretos (también se puede borrar la base de datos entera pero eso no dejaría la base de datos en el estado en que estaba así que no lo probaremos)."
+		}
+	]
+}
