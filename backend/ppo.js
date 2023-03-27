@@ -197,7 +197,7 @@ module.exports = {
                 console.log('Falta algun dato');
                 response.sendStatus(400);
             
-            //Si todos los campos están presentes
+            //Si todos los campos están presentes 
             }else{
                 //Comprobamos que la query y el body coinciden
                 if(newData.year != year || newData.province != province || newData.gender != gender){
