@@ -8,6 +8,245 @@
 	},
 	"item": [
 		{
+			"name": "Removing Data We Are Going to Use",
+			"item": [
+				{
+					"name": "/sevilla/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/sevilla/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"sevilla",
+								"2011"
+							]
+						},
+						"description": "La forma correcta de hacer el borrado sería esta. A partir de aquí se van a borrar todos los recursos creados al principio, para proceder a comprobar que el estaod final es igual que el inicial."
+					},
+					"response": []
+				},
+				{
+					"name": "/jaen/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/jaen/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"jaen",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/huelva/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/huelva/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"huelva",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/malaga/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/malaga/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"malaga",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cadiz/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cadiz/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cadiz",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cordoba/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/cordoba/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"cordoba",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/granada/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/granada/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"granada",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/almeria/2011 - Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}/almeria/2011",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"path": [
+								"almeria",
+								"2011"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Por último y para dejar la base de datos en el estado en que se encontraba, vamos a ver como podemos borrar recursos concretos (también se puede borrar la base de datos entera pero eso no dejaría la base de datos en el estado en que estaba así que no lo probaremos)."
+		},
+		{
 			"name": "Initial State",
 			"item": [
 				{
@@ -947,6 +1186,44 @@
 								{
 									"key": "year",
 									"value": "2011"
+								}
+							]
+						},
+						"description": "Aquí vemos como acceder a todos los recursos del mismo año. Podemos observar como la forma de hacerlo es ligeramente diferente a la anterior, dado que está no está implementada como una url sino como una búsqueda. Se puede ver y es importante, que el nombre que hay que darle al parámetro de la query es _**year**_\n\nAquí esperamos recibir al menos 8 datos que son los que hemos creado para el año 2011, aunque no sabemos si en la base de datos podría haber datos de otras provincias (en principio no porque estos datos son de Andalucía y hemos creado datos para todas sus provincias)."
+					},
+					"response": []
+				},
+				{
+					"name": "?ss_affiliation_under=200000 - Get recurses by under ss-affiliation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"There are at least 8 data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.lengthOf.above(7);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ss-affiliates}}?ss_affiliation_under=20",
+							"host": [
+								"{{ss-affiliates}}"
+							],
+							"query": [
+								{
+									"key": "ss_affiliation_under",
+									"value": "20"
 								}
 							]
 						},
