@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "description": "Service Oriented Systems 2022/2023 at the [University of Sevilla](https://www.us.es)",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index",
-    "test-density-population-changeData":"npx newman run ./tests/density-population-changeData.json -e ./tests/env/local_host.json",
+    "start": "node index.js",
+    "test-density-population-changeData": "npx newman run ./tests/density-population-changeData.json -e ./tests/env/local_host.json",
     "test-ss-affiliates": "npx newman run ./tests/ss-affiliates.json -e ./tests/env/local_host.json",
     "test-density-population": "npx newman run ./tests/density-population.json -e ./tests/env/local_host.json",
     "test-hired-people": "npx newman run ./tests/hired-people.json -e ./tests/env/local_host.json",
@@ -14,8 +15,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csvdata": "^2.0.0",
     "express": "^4.18.2",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "papaparse": "^5.4.1"
   }
 }

@@ -1,15 +1,19 @@
 //_______________________________Constants and Requires__________________________________
 
 const BASE_API_URL_ss_affiliates = `/api/v1/ss-affiliates`;
-var Datastore = require(`nedb`);
+import Datastore from 'nedb';
+import { data_rvr } from '../data/data_rvr.js';
+import { config } from '../data/config.js';
+import Papa from 'papaparse';
 var db = new Datastore();
-var csvdata = require('csvdata');
+
+    
 
 
 //_____________________________________Export____________________________________________
 
 
-module.exports = (app) => {
+function rvr(app){
 
 //___________________________________GETS__________________________________
 
@@ -46,10 +50,10 @@ module.exports = (app) => {
             }else{
 
                 // Cargamos los datos del csv
-                let datos = await csvdata.load('./data/datos_rvr.csv');
+                let datos = await Papa.parse(data_rvr, config);
 
                 // Los insertamos en la base de datos
-                db.insert(datos);
+                db.insert(datos.data);
 
                 console.log(`Inserted ${datos.length} data in the database.`);
 
@@ -497,5 +501,6 @@ module.exports = (app) => {
             }
         }
     });
-
 }
+
+export { rvr }
