@@ -20,7 +20,7 @@
             <DropdownMenu>
                 <DropdownItem href = "https://sos2223-23.ew.r.appspot.com/api/v1/ss-affiliates">ss-affiliates (Ricardo)</DropdownItem>
                 <DropdownItem href = "https://sos2223-23.ew.r.appspot.com/api/v1/hired-people">hired-people (Agustín)</DropdownItem>
-                <DropdownItem href = "htps://sos2223-23.ew.r.appspot.com/api/v1/density-population">density-people (Pablo)</DropdownItem>
+                <DropdownItem href = "https://sos2223-23.ew.r.appspot.com/api/v1/density-population">density-people (Pablo)</DropdownItem>
             </DropdownMenu>
         </Dropdown>
         <Dropdown nav autoClose={true}>

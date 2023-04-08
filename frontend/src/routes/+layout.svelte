@@ -8,3 +8,10 @@
     <slot></slot>
     <Footer/>
 </main>
+
+<style>
+    main {
+        position: relative;
+        min-height: 100%;
+    }
+</style>

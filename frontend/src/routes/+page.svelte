@@ -1,5 +1,6 @@
 <main>
-    <h1>SOS2223-23</h1>
+    <br>
+    <h1 style="padding-left: 10px;">SOS2223-23</h1>
     <ul>
         <li><b>Equipo:</b></li>
         <br>
