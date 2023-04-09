@@ -93,10 +93,15 @@
         }
 
         async function loadInitialData() {
-            let currentUrl = window.location.href;
-            window.location.href = "http://localhost:12345/api/v1/hired-people/loadInitialData";
-            await new Promise(resolve => setTimeout(resolve, 10));
-            window.location.replace(currentUrl);
+            resultStatus = result = "";
+            const res = await fetch(API+'/loadInitialData', {
+                method: 'GET'
+            });
+            const status = await res.status;
+            resultStatus = status;
+            if(status==201){
+                getHired(); 
+            }	
         }
 
         async function deleteAllData() {

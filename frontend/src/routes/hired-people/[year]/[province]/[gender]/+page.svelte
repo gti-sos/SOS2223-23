@@ -19,14 +19,14 @@
         if(dev)
             API = 'http://localhost:12345'+API
             
-        let updatedYear = 'year';
-        let updatedProvince = 'province';
-        let updatedGender = 'gender';
-        let updatedIndefinite_contract = 'indefinite_contract';
-        let updatedSingle_construction_contract = 'single_construction_contract';
-        let updatedMultiple_construction_contract = 'multiple_construction_contract';
-        let updatedSingle_eventual_contract = 'single_eventual_contract';
-        let updatedMultiple_eventual_contract = 'multiple_eventual_contract';
+        let updatedYear = year;
+        let updatedProvince = province;
+        let updatedGender = gender;
+        let updatedIndefinite_contract = 0;
+        let updatedSingle_construction_contract = 0;
+        let updatedMultiple_construction_contract = 0;
+        let updatedSingle_eventual_contract = 0;
+        let updatedMultiple_eventual_contract = 0;
         
         let result = "";
         let resultStatus = "";
