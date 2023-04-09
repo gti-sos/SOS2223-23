@@ -37,7 +37,6 @@ function ppo(app){
                         var offset = parseInt(request.query.offset);
                     }
                     // Filtramos según las query
-                    console.log(municipality_size_lt_ft_under)
                     let datos = docs.filter((x) => {
                         return (((year_query == undefined)||(parseInt(year_query) === x.year))&&
                         ((request.query.from == undefined)||(parseInt(request.query.from) <= x.year))&&
