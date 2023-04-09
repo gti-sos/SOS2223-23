@@ -93,7 +93,7 @@ function ppo(app){
             if(err){
                 console.log(`Error loading initial Data: ${err}.`);
                 response.sendStatus(500);
-            }else if(docs.length==0){
+            }else if(docs.length!=0){
                 console.log(`Data is already stored.`);
                 response.sendStatus(200);
             }else{
