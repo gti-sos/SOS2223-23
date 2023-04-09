@@ -1,15 +1,20 @@
 <script>
     // @ts-nocheck
-        import { ButtonToolbar } from 'sveltestrap';
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, Table } from 'sveltestrap';
-        import { Modal,ModalBody,ModalFooter,ModalHeader } from 'sveltestrap';
+        import { Button, Table,ButtonToolbar } from 'sveltestrap';
+        import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
 
         
-        let open = false;
         const toggle = () => (open = !open);
 
+        let warning = "";
+        let info = "";
+        let v_info = false;
+        let v_warning = false;
+        let errores = "";
+        let v_errores = false;
+        let open = false;
 
         onMount(async () => {
             getData();
@@ -25,28 +30,44 @@
 
         let density = [];
 
-        let newYear = 'year';
-        let newProvince = 'province';
-        let newGender = 'gender';
-        let newMunicipality_size_lt_ft = 0;
-        let newMunicipality_size_bt_ft_tht= 0;
-        let newMunicipality_size_gt_tht = 0;
-        let newCapital_size = 0
+        let newYear = '';
+        let newProvince = '';
+        let newGender = '';
+        let newMunicipality_size_lt_ft = '';
+        let newMunicipality_size_bt_ft_tht= '';
+        let newMunicipality_size_gt_tht = '';
+        let newCapital_size = '';
     
         let result = "";
         let resultStatus = "";
     
         async function loadData() {
-            let currentUrl = window.location.href;
-            
-            // Redirigimos al usuario a la URL deseada
-            window.location.href = "http://localhost:12345/api/v1/density-population/loadInitialData";
-            
-            // Esperamos a que se complete la redirección y se carguen los datos
-            await new Promise(resolve => setTimeout(resolve, 5));
-            
-            // Redirigimos al usuario de vuelta a la URL original
-            window.location.replace(currentUrl);
+            resultStatus = result = "";
+            const res = await fetch(API+'/loadInitialData', {
+                method: 'GET'
+            });
+            const status = await res.status;
+            resultStatus = status;
+            if(status==201){
+
+                getData(); 
+
+                info = "La base de datos se ha cargado correctamente"
+
+                v_info = true;
+
+            }else if(status==200){
+
+                info = "La base de datos ya está cargada, si quiere cargar los datos iniciales, borre los datos existentes";
+
+                v_info = true;
+
+            }else if(status == 500){
+
+                error = "Ha ocurrido un error en el servidor";
+
+                v_error = true;
+            }
         }
 
 
@@ -64,11 +85,17 @@
             }
             const status = await res.status;
             resultStatus = status;	
+            if(status==404){
+                warning = "No hay datos cargados en la base de datos";
+                v_warning = true;
+            } 
+            if(status==201 || status ==200){
+                info = `Los datos han sido cargados`;
+                v_info = true;
+            } 
+            
         }
       
-        async function editData(){
-            return null;
-        }
 
         async function deleteData(data){
             resultStatus = result = "";
@@ -77,23 +104,30 @@
             });
             const status = await res.status;
             resultStatus = status;	           
-            if(status==200){
+            if(status===200){
                 getData();
-                console.log("Dato borrado: "+data) 
+                console.log("Dato borrado: "+data)
+                info = `Se ha borrado correctamente el dato ${data}`;
+                v_info = true;
             }
         }
 
         async function deleteAllData() {
-            
+            resultStatus = result = "";
             try {
                 const res = await fetch(API, {
                 method: 'DELETE',
                 });
                 const status = await res.status;
-                if (status === 204) {
-                console.log('Todos los datos han sido eliminados.');
+                if (status === 204 || status === 204) {
+                    info = "Todos los datos han sido borrados";
+                    v_info = true;
+
                 }
             } catch (err) {
+                errores = error
+                v_errores = true;
+                resultStatus = 'Ha ocurrido un error al eliminar los datos: ', err;
                 console.error('Ha ocurrido un error al eliminar los datos: ', err);
             }
         }
@@ -101,6 +135,13 @@
 
         async function createData () {
             resultStatus = result = "";
+            if(newYear == "" || newProvince == "" || newMunicipality_size_lt_ft == "" ||newMunicipality_size_bt_ft_tht == "" ||
+            newMunicipality_size_gt_tht == "" ||newCapital_size == ""){
+                resultStatus = 404
+                warning = `Es necesario rellenar todos los campos para crear un recurso`;
+                v_warning = true;
+                return resultStatus
+            } 
             const res = await fetch(API, {
                 method: 'POST',
                 headers:{
@@ -117,18 +158,37 @@
                 })
             });
             const status = await res.status;
-            resultStatus = status;	           
+            resultStatus = status;
+                     
             if(status==201){
                 getData();
-                location.reload()
+                location.reload();
+                info = `El dato ${newYear} ${newProvince} se ha creado correctamente`;
+                v_info = true;
+            }
+            else if(status==409){
+                warning = `El dato /${year}/${province} ya existe en la base de datos`;
+                v_warning = true;
+            }else if(status==400){
+                warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
+                v_warning = true;
             }
         }
     
 </script>
 <main>
-    <h1>Api of density-population</h1>
+    <h1>Listado de datos: density-population</h1>
     <hr>
 
+    {#if errores != ""}
+    <Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert>
+    {/if}
+    {#if warning != ""}
+    <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
+    {/if}
+    {#if info != ""}
+    <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
+    {/if}
     
     <div class="botones">
         <ButtonToolbar>
@@ -155,25 +215,25 @@
         <Table hover>
             <thead>
               <tr>
-                <th>Year</th>
-                <th>Province</th>
-                <th>Gender</th>
+                <th>Año</th>
+                <th>Provincia</th>
+                <th>Género</th>
                 <th>Municipality_size_lt_ft</th>
                 <th>Municipality_size_bt_ft_tht</th>
                 <th>Municipality_size_gt_tht</th>
                 <th>Capital_size</th>
-                <th>Action</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
                <tr>
-                    <td><input bind:value={newYear}></td>
-                    <td><input bind:value={newProvince}></td>
-                    <td><input bind:value={newGender}></td>
-                    <td><input bind:value={newMunicipality_size_lt_ft}></td>
-                    <td><input bind:value={newMunicipality_size_bt_ft_tht}></td>
-                    <td><input bind:value={newMunicipality_size_gt_tht}></td>
-                    <td><input bind:value={newCapital_size}></td>
+                    <td><input placeholder="year" bind:value={newYear}></td>
+                    <td><input placeholder="province" bind:value={newProvince}></td>
+                    <td><input placeholder="gender" bind:value={newGender}></td>
+                    <td><input placeholder="0" bind:value={newMunicipality_size_lt_ft}></td>
+                    <td><input placeholder="0" bind:value={newMunicipality_size_bt_ft_tht}></td>
+                    <td><input placeholder="0" bind:value={newMunicipality_size_gt_tht}></td>
+                    <td><input placeholder="0" bind:value={newCapital_size}></td>
                     <td><Button on:click={createData}>Crear</Button></td>
                     
                 </tr>
@@ -187,10 +247,10 @@
                 <td>{datos.municipality_size_bt_ft_tht}</td>
                 <td>{datos.municipality_size_gt_tht}</td>
                 <td>{datos.capital_size}</td>
-                <td>
+                <td class="botones-accion">
                 <ButtonToolbar>
-                    <Button on:click={editData}>Editar</Button>
-                    <Button on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Borrar</Button>
+                    <Button><a id="enlace_edit" href="/density-population/{datos.year}/{datos.province}/{datos.gender}">Editar</a></Button>
+                    <Button id="delete_button" on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Borrar</Button>
                 </ButtonToolbar>
                 </td>
                 <td>&nbsp</td>
@@ -200,15 +260,6 @@
           </Table>
     
           
-        {#if resultStatus != ""}
-            <p>
-                Result:
-            </p>
-            <pre>
-    {resultStatus}
-    {result}
-            </pre>
-        {/if}
     </div>
     
 </main>
@@ -219,5 +270,9 @@
     .botones{
         display: flex; 
         justify-content: center;
+    }
+    #enlace_edit{
+        text-decoration: none;
+        color: aquamarine;
     }
 </style>
