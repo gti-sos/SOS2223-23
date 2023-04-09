@@ -24,13 +24,14 @@
             
 
         let density = [];
+
         let newYear = 'year';
         let newProvince = 'province';
         let newGender = 'gender';
-        let newMunicipality_size_lt_ft = "newMunicipality_size_lt_ft";
-        let newMunicipality_size_bt_ft_tht= "newMunicipality_size_bt_ft_tht";
-        let newMunicipality_size_gt_tht = "newMunicipality_size_gt_tht";
-        let newCapital_size = "newCapital_size"
+        let newMunicipality_size_lt_ft = 0;
+        let newMunicipality_size_bt_ft_tht= 0;
+        let newMunicipality_size_gt_tht = 0;
+        let newCapital_size = 0
     
         let result = "";
         let resultStatus = "";
@@ -42,7 +43,7 @@
             window.location.href = "http://localhost:12345/api/v1/density-population/loadInitialData";
             
             // Esperamos a que se complete la redirección y se carguen los datos
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 5));
             
             // Redirigimos al usuario de vuelta a la URL original
             window.location.replace(currentUrl);
@@ -69,20 +70,18 @@
             return null;
         }
 
-        async function deleteData(){
-            return null;
+        async function deleteData(data){
+            resultStatus = result = "";
+            const res = await fetch(API+"/"+data, {
+                method: 'DELETE'
+            });
+            const status = await res.status;
+            resultStatus = status;	           
+            if(status==200){
+                getData();
+                console.log("Dato borrado: "+data) 
+            }
         }
-        
-        
-        // <Button color="primary" on:click={toggle}>Hello World!</Button>
-        // <Modal body {isOpen} {toggle} header="Hello World!">
-        // <p>There's a song that we're singing. Come on</p>
-        // <img
-        //     src="https://i.ytimg.com/vi/NUJIRujygvY/hqdefault.jpg"
-        //     alt="Come on Get Happy"
-        //     class="img-fluid"
-        // />
-        // </Modal>
 
         async function deleteAllData() {
             
@@ -108,16 +107,21 @@
                     "Content-Type" : "application/json"
                 },
                 body:JSON.stringify({
-                    name: newContactName,
-                    phone: newContactPhone
+                    year: newYear,
+                    province: newProvince,
+                    gender: newGender,
+                    municipality_size_lt_ft: newMunicipality_size_lt_ft,
+                    municipality_size_bt_ft_tht: newMunicipality_size_bt_ft_tht,
+                    municipality_size_gt_tht: newMunicipality_size_gt_tht,
+                    capital_size: newCapital_size 
                 })
             });
             const status = await res.status;
             resultStatus = status;	           
             if(status==201){
                 getData();
+                location.reload()
             }
-
         }
     
 </script>
@@ -170,7 +174,7 @@
                     <td><input bind:value={newMunicipality_size_bt_ft_tht}></td>
                     <td><input bind:value={newMunicipality_size_gt_tht}></td>
                     <td><input bind:value={newCapital_size}></td>
-                    <td><Button on:click={createData}>Create</Button></td>
+                    <td><Button on:click={createData}>Crear</Button></td>
                     
                 </tr>
         
@@ -185,8 +189,8 @@
                 <td>{datos.capital_size}</td>
                 <td>
                 <ButtonToolbar>
-                    <Button on:click={editData}>Edit</Button>
-                    <Button on:click={deleteData}>Delete</Button>
+                    <Button on:click={editData}>Editar</Button>
+                    <Button on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Borrar</Button>
                 </ButtonToolbar>
                 </td>
                 <td>&nbsp</td>

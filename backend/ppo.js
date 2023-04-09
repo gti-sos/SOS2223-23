@@ -142,7 +142,7 @@ function ppo(app){
         if(!newData.hasOwnProperty('year') || 
         !newData.hasOwnProperty('province') || 
         !newData.hasOwnProperty('gender') ||
-        !newData.hasOwnProperty('municipality_size_lf_ft') || 
+        !newData.hasOwnProperty('municipality_size_lt_ft') || 
         !newData.hasOwnProperty('municipality_size_bt_ft_tht') ||
         !newData.hasOwnProperty('municipality_size_gt_tht') ||
         !newData.hasOwnProperty('capital_size')){
@@ -156,7 +156,7 @@ function ppo(app){
                 }else if(docs.length == 0){
                     //Modificamos el tipo de los valores al correcto
                     newData.year = parseInt(newData.year);
-                    newData.municipality_size_lf_ft = parseInt(newData.municipality_size_lf_ft);
+                    newData.municipality_size_lt_ft = parseInt(newData.municipality_size_lt_ft);
                     newData.municipality_size_bt_ft_tht = parseInt(newData.municipality_size_bt_ft_tht);
                     newData.municipality_size_gt_tht = parseInt(newData.municipality_size_gt_tht);
                     newData.capital_size = parseInt(newData.capital_size);
@@ -191,7 +191,7 @@ function ppo(app){
         if(!newData.hasOwnProperty('year') || 
         !newData.hasOwnProperty('province') ||
         !newData.hasOwnProperty('gender') || 
-        !newData.hasOwnProperty('municipality_size_lf_ft') ||
+        !newData.hasOwnProperty('municipality_size_lt_ft') ||
         !newData.hasOwnProperty('municipality_size_bt_ft_tht') || 
         !newData.hasOwnProperty('municipality_size_gt_tht') ||
         !newData.hasOwnProperty('capital_size')){
@@ -216,7 +216,7 @@ function ppo(app){
                     }else if(docs.length !== 0){
                         //Modificamos el tipo de los valores al correcto
                         newData.year = parseInt(newData.year);
-                        newData.municipality_size_lf_ft = parseInt(newData.municipality_size_lf_ft);
+                        newData.municipality_size_lt_ft = parseInt(newData.municipality_size_lt_ft);
                         newData.municipality_size_bt_ft_tht = parseInt(newData.municipality_size_bt_ft_tht);
                         newData.municipality_size_gt_tht = parseInt(newData.municipality_size_gt_tht);
                         newData.capital_size = parseInt(newData.capital_size);
