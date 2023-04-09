@@ -4,12 +4,21 @@
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
         import { Button, Table } from 'sveltestrap';
+        import { Modal,ModalBody,ModalFooter,ModalHeader } from 'sveltestrap';
+
+        
+        let open = false;
+        const toggle = () => (open = !open);
+
 
         onMount(async () => {
             getData();
         });
         
-        let API = 'http://localhost:12345/api/v1/density-population';
+        let API = '/api/v1/density-population';
+        
+        if(dev)
+            API = 'http://localhost:12345'+API
         
         
             
@@ -63,6 +72,33 @@
         async function deleteData(){
             return null;
         }
+        
+        
+        // <Button color="primary" on:click={toggle}>Hello World!</Button>
+        // <Modal body {isOpen} {toggle} header="Hello World!">
+        // <p>There's a song that we're singing. Come on</p>
+        // <img
+        //     src="https://i.ytimg.com/vi/NUJIRujygvY/hqdefault.jpg"
+        //     alt="Come on Get Happy"
+        //     class="img-fluid"
+        // />
+        // </Modal>
+
+        async function deleteAllData() {
+            
+            try {
+                const res = await fetch(API, {
+                method: 'DELETE',
+                });
+                const status = await res.status;
+                if (status === 204) {
+                console.log('Todos los datos han sido eliminados.');
+                }
+            } catch (err) {
+                console.error('Ha ocurrido un error al eliminar los datos: ', err);
+            }
+        }
+
 
         async function createData () {
             resultStatus = result = "";
@@ -84,7 +120,7 @@
 
         }
     
-    </script>
+</script>
 <main>
     <h1>Api of density-population</h1>
     <hr>
@@ -92,10 +128,24 @@
     
     <div class="botones">
         <ButtonToolbar>
-            <Button outline on:click={loadData}>loadInitialData</Button>
-            <Button outline on:click={editData}>DeleteAll</Button>
+            <Button outline on:click={loadData}>Cargar Datos Iniciales</Button>
+            <Button outline on:click={toggle}>Borrar todos los datos</Button>
+            <Modal isOpen={open} {toggle}>
+            <ModalHeader {toggle}>Eliminar Datos</ModalHeader>
+            <ModalBody>
+                ¿Estás seguro que quieres eliminar todos los datos?
+            </ModalBody>
+            <ModalFooter>
+                <Button color="danger" on:click={() => { deleteAllData(); toggle(); location.reload()}}>Eliminar</Button>
+                <Button color="secondary" on:click={toggle}>Cancelar</Button>
+            </ModalFooter>
+            </Modal>
         </ButtonToolbar>
     </div>
+
+    <div>
+        
+      </div>
     
     <div class="tabla">
         <Table hover>
