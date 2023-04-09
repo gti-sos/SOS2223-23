@@ -1,4 +1,5 @@
 <script>
+    import { dev } from '$app/environment';
     import {
     Nav,
     NavItem,
@@ -9,6 +10,9 @@
     NavLink
   } from 'sveltestrap';
 
+  let API = '/api/v1';
+    if (dev)
+        API = 'http://localhost:12345'+API;
 
 </script>
 
@@ -18,9 +22,9 @@
         <Dropdown nav autoClose={true}>
             <DropdownToggle nav class="nav-link" caret>APIS</DropdownToggle>
             <DropdownMenu>
-                <DropdownItem href = "https://sos2223-23.ew.r.appspot.com/api/v1/ss-affiliates">ss-affiliates (Ricardo)</DropdownItem>
-                <DropdownItem href = "https://sos2223-23.ew.r.appspot.com/api/v1/hired-people">hired-people (Agustín)</DropdownItem>
-                <DropdownItem href = "https://sos2223-23.ew.r.appspot.com/api/v1/density-population">density-people (Pablo)</DropdownItem>
+                <DropdownItem href = "{API}/ss-affiliates">ss-affiliates (Ricardo)</DropdownItem>
+                <DropdownItem href = "{API}/hired-people">hired-people (Agustín)</DropdownItem>
+                <DropdownItem href = "{API}/density-population">density-people (Pablo)</DropdownItem>
             </DropdownMenu>
         </Dropdown>
         <Dropdown nav autoClose={true}>
@@ -38,6 +42,14 @@
                 <DropdownItem href = "/ss-affiliates">ss-affiliates (Ricardo)</DropdownItem>
                 <DropdownItem href = "/hired-people">hired-people (Agustín)</DropdownItem>
                 <DropdownItem href = "/density-population">density-people (Pablo)</DropdownItem>
+            </DropdownMenu>
+        </Dropdown>
+        <Dropdown nav autoClose={true}>
+            <DropdownToggle nav class="nav-link" caret>Documentaciones</DropdownToggle>
+            <DropdownMenu>
+                <DropdownItem href = "{API}/ss-affiliates/docs">ss-affiliates (Ricardo)</DropdownItem>
+                <DropdownItem href = "{API}/hired-people/docs">hired-people (Agustín)</DropdownItem>
+                <DropdownItem href = "{API}/density-population/docs">density-people (Pablo)</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     </Nav>
