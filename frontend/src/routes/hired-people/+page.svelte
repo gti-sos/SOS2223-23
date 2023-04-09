@@ -3,16 +3,11 @@
     
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, Table } from 'sveltestrap';
-        import { ButtonToolbar } from 'sveltestrap';
-        import { Modal,ModalBody,ModalFooter,ModalHeader } from 'sveltestrap';
+        import { Button, Table, ButtonToolbar, Modal, ModalBody, ModalFooter, ModalHeader, Alert } from 'sveltestrap';
 
         onMount(async () => {
             getHired();
         });
-
-        let open = false;
-        const toggle = () => (open = !open);
         
         let API = '/api/v1/hired-people';
         
@@ -20,6 +15,7 @@
             API = 'http://localhost:12345'+API
             
         let hireds = [];
+
         let newYear = 'year';
         let newProvince = 'province';
         let newGender = 'gender';
@@ -28,7 +24,15 @@
         let newMultiple_construction_contract = 'multiple_construction_contract';
         let newSingle_eventual_contract = 'single_eventual_contract';
         let newMultiple_eventual_contract = 'multiple_eventual_contract';
-        let message = "";
+
+        let info = "";
+        let v_info = false;
+        let warning = "";
+        let v_warning = false;
+        let errores = "";
+        let v_errores = false;
+        let open = false;
+        const toggle = () => (open = !open);
     
         let result = "";
         let resultStatus = "";
@@ -48,11 +52,29 @@
             const status = await res.status;
             resultStatus = status;	
             if(status==404){
-                resultStatus = "No hay datos cargados.";
-            } 
-            if(status==201 || status ==200){
-                resultStatus = "Los datos han sido cargados.";
-            } 
+                warning = "La base de datos se encuentra vacía.";
+                v_warning = true;
+            }
+        }
+
+        async function loadInitialData() {
+            resultStatus = result = "";
+            const res = await fetch(API+'/loadInitialData', {
+                method: 'GET'
+            });
+            const status = await res.status;
+            resultStatus = status;
+            if(status==201){
+                getHired(); 
+                info = "La base de datos ha sido cargada de forma exitosa."
+                v_info = true;
+            }else if(status==200){
+                info = "La base da datos ha sido cargada anteriormente.";
+                v_info = true;
+            }else if(status == 500){
+                error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema.";
+                v_error = true;
+            }
         }
       
         async function createHired() {
@@ -73,11 +95,19 @@
                     multiple_eventual_contract: newMultiple_eventual_contract
                 })
             });
-            const status = await res.status;	           
+            const status = await res.status;	 
+            resultStatus = status;	             
             if(status==201){
                 getHired();
-                resultStatus = "El dato ha sido creado.";
-            } 
+                info = `El datos ${newYear} ${newProvince} ${newGender} se ha creado correctamente.`;
+                v_info = true;
+            } else if(status==409){
+                warning = `El recurso ${year} ${province} ${gender} ya existe en la base de datos.`;
+                v_warning = true;
+            }else if(status==400){
+                warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo.`;
+                v_warning = true;
+            }
         }
 
         async function deleteHired(hiredPeople) {
@@ -85,23 +115,13 @@
             const res = await fetch(API+"/"+hiredPeople, {
                 method: 'DELETE'
             });
-            const status = await res.status;          
+            const status = await res.status;
+            resultStatus = status;	           
             if(status==200){
                 getHired(); 
-                resultStatus = `El dato ${hiredPeople} ha sido borrado.`;	 
+                info = `Se ha borrado correctamente el dato ${hiredPeople}.`;
+                v_info = true;
             }
-        }
-
-        async function loadInitialData() {
-            resultStatus = result = "";
-            const res = await fetch(API+'/loadInitialData', {
-                method: 'GET'
-            });
-            const status = await res.status;
-            resultStatus = status;
-            if(status==201){
-                getHired(); 
-            }	
         }
 
         async function deleteAllData() {
@@ -112,18 +132,34 @@
                 });
                 const status = await res.status;
                 if (status === 204) {
-                resultStatus = "Todos los datos han sido borrados.";
-                console.log('Todos los datos han sido borrados.');
+                    info = "Todos los datos han sido borrados";
+                    v_info = true;
+                    resultStatus = "Todos los datos han sido borrados";
+                    console.log('Todos los datos han sido borrados.');
                 }
             } catch (error) {
+                errores = error
+                v_errores = true;
                 resultStatus = "Error borrando todos los datos.";
                 console.error(`Error borrando todos los datos: ${error}`);
             }
         }
     
-    </script>
+</script>
+
+<main>
     
     <h1> Listado de datos: hired-people</h1>
+
+    {#if errores != ""}
+    <Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert>
+    {/if}
+    {#if warning != ""}
+    <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
+    {/if}
+    {#if info != ""}
+    <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
+    {/if}
     
     <div class="botones">
         <ButtonToolbar>
@@ -185,25 +221,9 @@
           {/each} 
         </tbody>
       </Table>
-
-      {#if message != ""}
-      <h1 style="color:red">{message}</h1>
-      {/if}
-      
-    {#if resultStatus != ""}
-        <p>
-            Resultado:
-        </p>
-        <pre>
-{resultStatus}
-{result}
-        </pre>
-    {/if}
+</main>
 
 <style>
-    a{
-        text-decoration : none;
-    }
     .botones{
         display: flex; 
         justify-content: center;
