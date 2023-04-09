@@ -1,7 +1,7 @@
 //______________________Requires________________________
 
 import express from 'express';
-import cors  from "cors";
+import cors from 'cors';
 import { rvr } from './backend/rvr.js';
 import { ppo }  from'./backend/ppo.js';
 import { amjc } from './backend/amjc.js';
