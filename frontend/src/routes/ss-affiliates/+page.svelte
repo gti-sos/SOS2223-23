@@ -26,16 +26,15 @@
         let resultStatus = "";
     
         async function loadData() {
-            let currentUrl = window.location.href;
-            
-            // Redirigimos al usuario a la URL deseada
-            window.location.href = `${API}/loadInitialData`;
-            
-            // Esperamos a que se complete la redirección y se carguen los datos
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Redirigimos al usuario de vuelta a la URL original
-            window.location.replace(currentUrl);
+            resultStatus = result = "";
+            const res = await fetch(API+'/loadInitialData', {
+                method: 'GET'
+            });
+            const status = await res.status;
+            resultStatus = status;
+            if(status==201){
+                getAffiliation(); 
+            }	
         }
 
         async function getAffiliation() {
