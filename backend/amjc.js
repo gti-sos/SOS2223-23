@@ -26,7 +26,7 @@ function amjc(app){
                 }else{
                     let datos = await Papa.parse(data_amjc, config);
                     db.insert(datos.data);
-                    console.log(`Inserted ${datos.length} data in the database.`);
+                    console.log(`Inserted ${datos.data.length} data in the database.`);
                     response.sendStatus(201);
                 }
             });
