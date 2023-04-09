@@ -4,7 +4,7 @@
 		"name": "density-population - NoAfectaADatos",
 		"description": "### **Presentación de la API:**\n\n###### Esta API nos permitirá el manejo de datos sobre la densidad de población en Andalucía, de la que disponemos de datos desde 2012 hasta 2022. Los datos que manejamos están divididos en las siguientes propiedades:\n\n- year: Año al que pertenece el dato.\n- province: Provincia a la que pertenece el dato.\n- gender: Género al que pertenece el dato.\n- municipaliy_size_lt_ft: La densidad de población cuando se mide en un municipio de menos de 5000 habitantes.\n- municipality_size_bt_ft_tht: La densidad de población cuando se mide en un municipio con una población entre 5000 y 20000 habitantes.\n- municipality_size_gt_tht: La densidad de población cuando se mide en un municipio de más de 20000 habitantes. (Sin contar las capitales)\n- capital_size: La densidad de población cuando se mide en una capital.\n    \n\nEl identificador único está compuesto de los campos 'year', 'province' y 'gender' en ese mismo orden.\n\n### Esta colección:\n\n> Esta colección de llamadas nos mostrará el funcionamiento de la API sin alterar los datos que se almacenen en esta. \n  \n\nPodremos encontrar cualquier casuística exitosa como son los métodos CRUD correctamente implementados, querys posibles y paginación. También encontraremos todos los codigos de estado que marcan un funcionamiento erroneo de la API como son: 400, 404, 405 y 409.\n\nEstá pensada para ejecutarse en el orden por defecto y debería de resultar en el mismo estado que con el que empezó.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26052111"
+		"_exporter_id": "25997396"
 	},
 	"item": [
 		{
@@ -60,7 +60,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n                \"year\": 2011,\r\n                \"province\": \"Málaga\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lf_ft\": 12.4,\r\n                \"municipality_size_bt_ft_tht\": 20.5,\r\n                \"municipality_size_gt_tht\": 20.5,\r\n                \"capital_size\": 39.72\r\n}\r\n",
+					"raw": "{\r\n                \"year\": 2011,\r\n                \"province\": \"Málaga\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lt_ft\": 12.4,\r\n                \"municipality_size_bt_ft_tht\": 20.5,\r\n                \"municipality_size_gt_tht\": 20.5,\r\n                \"capital_size\": 39.72\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -97,7 +97,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n                \"year\": 2012,\r\n                \"province\": \"Jaén\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lf_ft\": 15.4,\r\n                \"municipality_size_bt_ft_tht\": 22.5,\r\n                \"municipality_size_gt_tht\": 22.5,\r\n                \"capital_size\": 41.72\r\n}\r\n",
+					"raw": "{\r\n                \"year\": 2012,\r\n                \"province\": \"Jaén\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lt_ft\": 15.4,\r\n                \"municipality_size_bt_ft_tht\": 22.5,\r\n                \"municipality_size_gt_tht\": 22.5,\r\n                \"capital_size\": 41.72\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -133,7 +133,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n                \"year\": 2012,\r\n                \"province\": \"Huelva\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lf_ft\": 16.4,\r\n                \"municipality_size_bt_ft_tht\": 23.5,\r\n                \"municipality_size_gt_tht\": 23.5,\r\n                \"capital_size\": 42.72\r\n}\r\n",
+					"raw": "{\r\n                \"year\": 2012,\r\n                \"province\": \"Huelva\",\r\n                \"gender\": \"Hombres\",\r\n                \"municipality_size_lt_ft\": 16.4,\r\n                \"municipality_size_bt_ft_tht\": 23.5,\r\n                \"municipality_size_gt_tht\": 23.5,\r\n                \"capital_size\": 42.72\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -169,7 +169,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n                \"year\": 2013,\r\n                \"province\": \"Málaga\",\r\n                \"gender\": \"Mujeres\",\r\n                \"municipality_size_lf_ft\": 17.4,\r\n                \"municipality_size_bt_ft_tht\": 24.5,\r\n                \"municipality_size_gt_tht\": 24.5,\r\n                \"capital_size\": 43.72\r\n}\r\n",
+					"raw": "{\r\n                \"year\": 2013,\r\n                \"province\": \"Málaga\",\r\n                \"gender\": \"Mujeres\",\r\n                \"municipality_size_lt_ft\": 17.4,\r\n                \"municipality_size_bt_ft_tht\": 24.5,\r\n                \"municipality_size_gt_tht\": 24.5,\r\n                \"capital_size\": 43.72\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -205,7 +205,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n                \"year\": 2013,\r\n                \"province\": \"Huelva\",\r\n                \"gender\": \"Mujeres\",\r\n                \"municipality_size_lf_ft\": 18.4,\r\n                \"municipality_size_bt_ft_tht\": 25.5,\r\n                \"municipality_size_gt_tht\": 25.5,\r\n                \"capital_size\": 44.72\r\n}\r\n",
+					"raw": "{\r\n                \"year\": 2013,\r\n                \"province\": \"Huelva\",\r\n                \"gender\": \"Mujeres\",\r\n                \"municipality_size_lt_ft\": 18.4,\r\n                \"municipality_size_bt_ft_tht\": 25.5,\r\n                \"municipality_size_gt_tht\": 25.5,\r\n                \"capital_size\": 44.72\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -256,7 +256,7 @@
 			"response": []
 		},
 		{
-			"name": "/2012/Almería/Hombres GET recurse",
+			"name": "/2012/Huelva/Hombres GET recurse",
 			"event": [
 				{
 					"listen": "test",
