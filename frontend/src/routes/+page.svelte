@@ -30,7 +30,7 @@
         <li><b>Repositorio de GitHub: </b><a href="https://github.com/gti-sos/SOS2223-23">gti-sos/SOS2223-23</a></li>
         <br>
         <br>
-        <li><b>URL de la API: </b><a href="https://sos2223-23.ew.r.appspot.com">gti-sos/SOS2223-23/API</a></li>
+        <li><b>URL de la API: </b><a href='{API}'>gti-sos/SOS2223-23/API</a></li>
         <br>
         <br>
         <li><b>Documentacion de las APIS:</b></li>
@@ -44,9 +44,9 @@
         <li><b>Frontends de las APIS:</b></li>
         <br>
         <ul>
-            <li><a href="{API}/ss-affiliates">Frontend de ss-affiiates</a> (developed by Ricardo Vaz Rodriguez)</li>
-            <li><a href="{API}/density-population">Frontend de density-population</a> (developed by Pablo Antonio Perez Ortega)</li>
-            <li><a href="{API}/hired-people">Frontend de hired-people</a> (developed by Agustín Manuel Jiménez Casas)</li>
+            <li><a href="/ss-affiliates">Frontend de ss-affiiates</a> (developed by Ricardo Vaz Rodriguez)</li>
+            <li><a href="/density-population">Frontend de density-population</a> (developed by Pablo Antonio Perez Ortega)</li>
+            <li><a href="/hired-people">Frontend de hired-people</a> (developed by Agustín Manuel Jiménez Casas)</li>
         </ul>
     </ul>
 </main>
