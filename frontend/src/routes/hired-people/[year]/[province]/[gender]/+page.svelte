@@ -1,13 +1,15 @@
 <script>
     // @ts-nocheck
-    
+
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, Table } from 'sveltestrap';
         import { page } from '$app/stores';
+        import { Button, Table } from 'sveltestrap';
+        
         onMount(async () => {
             getHired();
         });
+
         
         let year = $page.params.year;
         let province = $page.params.province;
@@ -73,12 +75,13 @@
             const status = await res.status;
             resultStatus = status;	           
             if(status==200){
-                getContact();
+                getHired();
             }
         }
+
     </script>
     <h1> Contact Details</h1>
-    
+
     <Table>
         <thead>
             <tr>
@@ -102,7 +105,7 @@
                 <td><input bind:value={updatedMultiple_construction_contract}></td>
                 <td><input bind:value={updatedSingle_eventual_contract}></td>
                 <td><input bind:value={updatedMultiple_eventual_contract}></td>
-                <td><Button on:click={updateHired}>Update</Button></td>
+                <td><Button on:click={updateHired}>Actualizar</Button></td>
             </tr>
      </tbody>
       </Table>
