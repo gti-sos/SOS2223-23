@@ -222,7 +222,14 @@ function ppo(app){
                         newData.capital_size = parseInt(newData.capital_size);
 
                         //Guardamos el nuevo dato
-                        db.update({'year': parseInt(year), 'province' : province, 'gender':gender}, {newData}, {}, (err, num) => {
+                        db.update({'year': parseInt(year), 'province' : province, 'gender':gender}, {'province' : province, 
+                                                                                                    'year': parseInt(year),
+                                                                                                    'gender':gender, 
+                                                                                                    'municipality_size_lt_ft':parseInt(newData.municipality_size_lt_ft), 
+                                                                                                    'municipality_size_bt_ft_tht': parseInt(newData.municipality_size_bt_ft_tht), 
+                                                                                                    'municipality_size_gt_tht':parseInt(newData.municipality_size_gt_tht),
+                                                                                                    'capital_size':parseInt(newData.capital_size)},
+                                    {}, (err, num) => {
                             if(err){
                                 console.log(`Error updating ${BASE_API_URL} "/density-population/${year}/${province}/${gender}`);
                                 response.sendStatus(500);

@@ -238,7 +238,14 @@ function amjc(app){
                             newReq.multiple_eventual_contract = parseInt(newReq.multiple_eventual_contract);
     
                             //Guardamos el nuevo dato
-                            db.update({'year': parseInt(year), 'province' : province, 'gender':gender}, {newReq}, {}, (error, num) => {
+                            db.update({'year': parseInt(year), 'province' : province, 'gender':gender}, {'province' : province, 
+                                                                                                        'year': parseInt(year),
+                                                                                                        'gender':gender, 
+                                                                                                        'indefinite_contract':parseInt(newReq.indefinite_contract), 
+                                                                                                        'single_construction_contract': parseInt(newReq.multiple_construction_contract), 
+                                                                                                        'single_eventual_contract':parseInt(newReq.single_eventual_contract),
+                                                                                                        'multiple_eventual_contract':parseInt(newReq.multiple_eventual_contract)},
+                             {}, (error, num) => {
                                 if(error){
                                     console.log(`Error updating ${BASE_API_URL_AMJC} "/hired-people/${year}/${province}/${gender}.`);
                                     response.sendStatus(500);
