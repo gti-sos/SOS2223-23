@@ -32,7 +32,7 @@
             window.location.href = `${API}/loadInitialData`;
             
             // Esperamos a que se complete la redirección y se carguen los datos
-            await new Promise(resolve => setTimeout(resolve, 10));
+            await new Promise(resolve => setTimeout(resolve, 1000));
             
             // Redirigimos al usuario de vuelta a la URL original
             window.location.replace(currentUrl);
