@@ -1,6 +1,7 @@
 //______________________Requires________________________
 
 import express from 'express';
+import cors from 'cors';
 import { rvr } from './backend/rvr.js';
 import { ppo }  from'./backend/ppo.js';
 import { amjc } from './backend/amjc.js';
@@ -10,6 +11,8 @@ import { handler } from "./frontend/build/handler.js"
 //______________________Variables_________________________
 
 var app = express();
+
+app.use(cors());
 
 var port = process.env.PORT || 12345;
 
