@@ -242,7 +242,8 @@ function amjc(app){
                                                                                                         'year': parseInt(year),
                                                                                                         'gender':gender, 
                                                                                                         'indefinite_contract':parseInt(newReq.indefinite_contract), 
-                                                                                                        'single_construction_contract': parseInt(newReq.multiple_construction_contract), 
+                                                                                                        'single_construction_contract': parseInt(newReq.single_construction_contract), 
+                                                                                                        'multiple_construction_contract':parseInt(newReq.multiple_construction_contract),
                                                                                                         'single_eventual_contract':parseInt(newReq.single_eventual_contract),
                                                                                                         'multiple_eventual_contract':parseInt(newReq.multiple_eventual_contract)},
                              {}, (error, num) => {
