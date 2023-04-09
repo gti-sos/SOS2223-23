@@ -93,13 +93,13 @@ function ppo(app){
             if(err){
                 console.log(`Error loading initial Data: ${err}.`);
                 response.sendStatus(500);
-            }else if(docs.length=0){
+            }else if(docs.length==0){
                 console.log(`Data is already stored.`);
                 response.sendStatus(200);
             }else{
                 let datos = await Papa.parse(data_ppo, config);
                 db.insert(datos.data);
-                console.log(`Inserted ${datos.length} data in the database.`);
+                console.log(`Inserted ${datos.data.length} data in the database.`);
                 response.sendStatus(201);
             }
         });

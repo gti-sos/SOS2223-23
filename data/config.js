@@ -6,7 +6,7 @@ const config = {
 	escapeChar: '"',
 	header: true,
 	transformHeader: undefined,
-	dynamicTyping: false,
+	dynamicTyping: true,
 	preview: 0,
 	encoding: "",
 	worker: false,

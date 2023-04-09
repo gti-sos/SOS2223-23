@@ -52,10 +52,11 @@ function rvr(app){
                 // Cargamos los datos del csv
                 let datos = await Papa.parse(data_rvr, config);
 
+                
                 // Los insertamos en la base de datos
                 db.insert(datos.data);
 
-                console.log(`Inserted ${datos.length} data in the database.`);
+                console.log(`Inserted ${datos.data.length} data in the database.`);
 
                 // Si se crean datos el estado es 201: Created
                 res.sendStatus(201);
