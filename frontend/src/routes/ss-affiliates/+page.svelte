@@ -29,7 +29,7 @@
             let currentUrl = window.location.href;
             
             // Redirigimos al usuario a la URL deseada
-            window.location.href = "http://localhost:12345/api/v1/ss-affiliates/loadInitialData";
+            window.location.href = `${API}/loadInitialData`;
             
             // Esperamos a que se complete la redirección y se carguen los datos
             await new Promise(resolve => setTimeout(resolve, 5));
