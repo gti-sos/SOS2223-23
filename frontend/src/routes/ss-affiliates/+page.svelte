@@ -32,7 +32,7 @@
             window.location.href = `${API}/loadInitialData`;
             
             // Esperamos a que se complete la redirección y se carguen los datos
-            await new Promise(resolve => setTimeout(resolve, 5));
+            await new Promise(resolve => setTimeout(resolve, 10));
             
             // Redirigimos al usuario de vuelta a la URL original
             window.location.replace(currentUrl);
@@ -98,7 +98,7 @@
     
     <div class="botones">
         <ButtonToolbar>
-            <Button outline on:click={loadData}>loadInitialData</Button>
+            <Button outline on:click={loadData}>Cargar Datos Iniciales</Button>
         </ButtonToolbar>
     </div>
 
@@ -121,7 +121,7 @@
                 <td><input bind:value={newN_cont_indef}></td>
                 <td><input bind:value={newN_cont_eventual}></td>
                 <td><input bind:value={newN_cont_temporary}></td>
-                <td><Button on:click={createAffiliation}>Create</Button></td>
+                <td><Button on:click={createAffiliation}>Crear</Button></td>
             </tr>
     
         {#each affiliates as affiliate}
@@ -133,7 +133,7 @@
             <td>{affiliate.n_cont_eventual}</td>
             <td>{affiliate.n_cont_temporary}</td>
             <td><Button><a href='ss-affiliates/{affiliate.province}/{affiliate.year}'>Editar</a></Button></td>
-            <td><Button on:click={deleteAffiliation(`${affiliate.province}/${affiliate.year}`)}>Delete</Button></td>
+            <td><Button on:click={deleteAffiliation(`${affiliate.province}/${affiliate.year}`)}>Borrar</Button></td>
             <td>&nbsp</td>
           </tr>
           {/each} 
@@ -146,7 +146,7 @@
       
     {#if resultStatus != ""}
         <p>
-            Result:
+            Resultado:
         </p>
         <pre>
 {resultStatus}

@@ -101,7 +101,7 @@
 
     {#if resultStatus != ""}
         <p>
-            Result:
+            Resultado:
         </p>
         <pre>
 {resultStatus}
