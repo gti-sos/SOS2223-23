@@ -119,7 +119,7 @@
             <td>{hired.multiple_construction_contract}</td>
             <td>{hired.single_eventual_contract}</td>
             <td>{hired.multiple_eventual_contract}</td>
-            <td><Button><a href="http://localhost:12345/api/v1/hired-people/{hired.year}/{hired.province}/{hired.gender}">Editar</a></Button></td>
+            <td><Button><a href="/hired-people/{hired.year}/{hired.province}/{hired.gender}">Editar</a></Button></td>
             <td><Button on:click={deleteHired(`${hired.year}/${hired.province}/${hired.gender}`)}>Delete</Button></td>
             <td>&nbsp</td>
           </tr>
