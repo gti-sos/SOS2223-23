@@ -4,7 +4,7 @@
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
         import { page } from '$app/stores';
-        import { Button, Table, Card, CardBody, CardFooter, CardHeader, CardSubtitle, CardText, CardTitle } from 'sveltestrap';
+        import { Button, Table, Card, CardBody, CardFooter, CardHeader, CardSubtitle, CardText, CardTitle, Alert } from 'sveltestrap';
         
         onMount(async () => {
             getHired();
@@ -37,6 +37,13 @@
         let newSingle_eventual_contract = 0;
         let newMultiple_eventual_contract = 0;
         
+        let info = "";
+        let v_info = false;
+        let warning = "";
+        let v_warning = false;
+        let errores = "";
+        let v_errores = false;
+
         let result = "";
         let resultStatus = "";
     
@@ -89,6 +96,8 @@
                 resultStatus = status;	           
                 if(status==200){
                     getHired();
+                    info = "El dato ha sido actualizado correctamente."
+                    v_info = true;
                 }
             }
         }
@@ -98,6 +107,16 @@
 <main>
 
     <h1> Detalles del Recurso</h1>
+
+    {#if errores != ""}
+    <Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert>
+    {/if}
+    {#if warning != ""}
+    <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
+    {/if}
+    {#if info != ""}
+    <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
+    {/if}
 
     <Table>
         <thead>
@@ -117,11 +136,11 @@
                 <td>{updatedYear}</td>
                 <td>{updatedProvince}</td>
                 <td>{updatedGender}</td>
-                <td><input bind:value={updatedIndefinite_contract}></td>
-                <td><input bind:value={updatedSingle_construction_contract}></td>
-                <td><input bind:value={updatedMultiple_construction_contract}></td>
-                <td><input bind:value={updatedSingle_eventual_contract}></td>
-                <td><input bind:value={updatedMultiple_eventual_contract}></td>
+                <td><input placeholder='0' bind:value={updatedIndefinite_contract}></td>
+                <td><input placeholder='0' bind:value={updatedSingle_construction_contract}></td>
+                <td><input placeholder='0' bind:value={updatedMultiple_construction_contract}></td>
+                <td><input placeholder='0' bind:value={updatedSingle_eventual_contract}></td>
+                <td><input placeholder='0' bind:value={updatedMultiple_eventual_contract}></td>
                 <td><Button on:click={updateHired}>Actualizar</Button></td>
             </tr>
      </tbody>
