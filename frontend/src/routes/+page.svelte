@@ -1,6 +1,6 @@
 <script>
     import { dev } from '$app/environment';
-    let API = '/api/v1';
+    let API = '/api/v2';
     if (dev)
         API = 'http://localhost:12345'+API;
 
