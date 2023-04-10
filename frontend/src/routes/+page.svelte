@@ -21,9 +21,9 @@
         <li><dl>
             <dt><b>Descripción del proyecto:</b></dt>
             <br>
-            <di>Our sources of information are aimed at analyzing the interconnection in the data between Spanish <br>
-                people hired in Andalusia according to province, type of contract and sex, population density and labor rates <br>
-                of affiliation to social security, new contracts and according to type. </di>
+            <di>Nuestras fuentes de informacion estan orientadas a analizar la interconexion en los datos entre las <br>
+                personas españolas contratadas en Andalucia según provincia, tipologia de contratos y sexo, la densidad de poblacion <br>
+                y los indices laborales de afiliacion a la seguridad social, nuevos contratos y según tipo. </di>
         </dl></li>
         <br>
         <br>
@@ -33,26 +33,26 @@
         <li><b>Enlaces a las APIs: </b></li>
         <br>
         <ul>
-            <li><a href="{API}/ss-affiliates">Ss-affiliates</a> (developed by Ricardo Vaz Rodriguez)</li>
-            <li><a href="{API}/density-population">Density-population</a> (developed by Pablo Antonio Perez Ortega)</li>
-            <li><a href="{API}/hired-people">Hired-people</a> (developed by Agustín Manuel Jiménez Casas)</li>
+            <li><a href="{API}/ss-affiliates">Ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
+            <li><a href="{API}/density-population">Density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
+            <li><a href="{API}/hired-people">Hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
         </ul>
         <br>
         <br>
         <li><b>Documentacion de las APIS:</b></li>
         <br>
         <ul>
-            <li><a href="{API}/ss-affiliates/docs">Documentacion ss-affiliates</a> (developed by Ricardo Vaz Rodriguez)</li>
-            <li><a href="{API}/density-population/docs">Documentacion density-population</a> (developed by Pablo Antonio Perez Ortega)</li>
-            <li><a href="{API}/hired-people/docs">Documentacion hired-people</a> (developed by Agustín Manuel Jiménez Casas)</li>
+            <li><a href="{API}/ss-affiliates/docs">Documentacion ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
+            <li><a href="{API}/density-population/docs">Documentacion density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
+            <li><a href="{API}/hired-people/docs">Documentacion hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
         </ul>
         <br>
         <li><b>Frontends de las APIS:</b></li>
         <br>
         <ul>
-            <li><a href="/ss-affiliates">Frontend de ss-affiiates</a> (developed by Ricardo Vaz Rodriguez)</li>
-            <li><a href="/density-population">Frontend de density-population</a> (developed by Pablo Antonio Perez Ortega)</li>
-            <li><a href="/hired-people">Frontend de hired-people</a> (developed by Agustín Manuel Jiménez Casas)</li>
+            <li><a href="/ss-affiliates">Frontend de ss-affiiates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
+            <li><a href="/density-population">Frontend de density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
+            <li><a href="/hired-people">Frontend de hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
         </ul>
     </ul>
     <br>
