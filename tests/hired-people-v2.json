@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "21c34532-2c57-4503-b65e-a2733637549a",
-		"name": "hired-people v2",
+		"name": "hired-people-v2",
 		"description": "**En esta documentación trataremos las comprobaciones sobre el uso correcto y erróneo de peticiones a nuestros datos de la API sobre el tipo de contrato de personas españolas en Andalucía por año, provincia y género. Nuestro Dataset corresponde desde el año 2012 hasta 2022, pero para las comprobaciones hemos usado datos de 2010 y 2011.** Los campos que conforman el Dataset corresponden a:\n\n- year: Año al que pertenece el dato (Integer).\n- province: Nombre de la provincia a la que pertenece el dato (String).\n- gender: Nombre del genero al que pertenece el dato (Hombres o Mujeres / String).\n- indefinite_contract: Número de personas con contrato indefinido (Integer).\n- single_construction_contract: Número de personas con contrato único de construcción (Integer).\n- multiple_construction_contract: Número de personas con contrato múltiple de construcción (Integer).\n- single_eventual_contract: Número de personas con contrato único eventual (Integer).\n- multiple_eventual_contract: Número de personas con contrato múltiple eventual (Integer).",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26053157"
