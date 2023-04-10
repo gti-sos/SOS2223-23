@@ -16,14 +16,14 @@
             
         let hireds = [];
 
-        let newYear = 'year';
-        let newProvince = 'province';
-        let newGender = 'gender';
-        let newIndefinite_contract = 'indefinite_contract';
-        let newSingle_construction_contract = 'single_construction_contract';
-        let newMultiple_construction_contract = 'multiple_construction_contract';
-        let newSingle_eventual_contract = 'single_eventual_contract';
-        let newMultiple_eventual_contract = 'multiple_eventual_contract';
+        let newYear = '';
+        let newProvince = '';
+        let newGender = '';
+        let newIndefinite_contract = '';
+        let newSingle_construction_contract = '';
+        let newMultiple_construction_contract = '';
+        let newSingle_eventual_contract = '';
+        let newMultiple_eventual_contract = '';
 
         let info = "";
         let v_info = false;
@@ -69,7 +69,7 @@
                 info = "La base de datos ha sido cargada de forma exitosa."
                 v_info = true;
             }else if(status==200){
-                info = "La base da datos ha sido cargada anteriormente.";
+                info = "La base de datos ha sido cargada anteriormente.";
                 v_info = true;
             }else if(status == 500){
                 error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema.";
@@ -132,9 +132,9 @@
                 });
                 const status = await res.status;
                 if (status === 204) {
-                    info = "Todos los datos han sido borrados";
+                    info = "Todos los datos han sido borrados.";
                     v_info = true;
-                    resultStatus = "Todos los datos han sido borrados";
+                    resultStatus = "Todos los datos han sido borrados.";
                     console.log('Todos los datos han sido borrados.');
                 }
             } catch (error) {
@@ -193,14 +193,14 @@
         </thead>
         <tbody>
            <tr>
-                <td><input bind:value={newYear}></td>
-                <td><input bind:value={newProvince}></td>
-                <td><input bind:value={newGender}></td>
-                <td><input bind:value={newIndefinite_contract}></td>
-                <td><input bind:value={newSingle_construction_contract}></td>
-                <td><input bind:value={newMultiple_construction_contract}></td>
-                <td><input bind:value={newSingle_eventual_contract}></td>
-                <td><input bind:value={newMultiple_eventual_contract}></td>
+                <td><input placeholder="año" bind:value={newYear}></td>
+                <td><input placeholder="provincia" bind:value={newProvince}></td>
+                <td><input placeholder="genero" bind:value={newGender}></td>
+                <td><input placeholder='0' bind:value={newIndefinite_contract}></td>
+                <td><input placeholder='0' bind:value={newSingle_construction_contract}></td>
+                <td><input placeholder='0' bind:value={newMultiple_construction_contract}></td>
+                <td><input placeholder='0' bind:value={newSingle_eventual_contract}></td>
+                <td><input placeholder='0' bind:value={newMultiple_eventual_contract}></td>
                 <td><Button on:click={createHired}>Crear</Button></td>
             </tr>
     
@@ -214,7 +214,7 @@
             <td>{hired.multiple_construction_contract}</td>
             <td>{hired.single_eventual_contract}</td>
             <td>{hired.multiple_eventual_contract}</td>
-            <td><Button><a href="/hired-people/{hired.year}/{hired.province}/{hired.gender}">Editar</a></Button></td>
+            <td><Button><a id="enlace_edit" href="/hired-people/{hired.year}/{hired.province}/{hired.gender}">Editar</a></Button></td>
             <td><Button on:click={deleteHired(`${hired.year}/${hired.province}/${hired.gender}`)}>Borrar</Button></td>
             <td>&nbsp</td>
           </tr>
@@ -227,5 +227,9 @@
     .botones{
         display: flex; 
         justify-content: center;
+    }
+    #enlace_edit{
+        text-decoration: none;
+        color: aquamarine;
     }
 </style>
