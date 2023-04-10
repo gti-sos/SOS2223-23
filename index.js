@@ -2,10 +2,11 @@
 
 import express from 'express';
 import cors from 'cors';
-import { rvr } from './backend/rvr.js';
+import { rvrv2 } from './backend/rvrv2.js';
+import { rvrv1 } from './backend/rvrv2.js';
 import { ppo }  from'./backend/ppo.js';
 import { amjc } from './backend/amjc.js';
-import { handler } from "./frontend/build/handler.js"
+import { handler } from "./frontend/build/handler.js";
 
 
 //______________________Variables_________________________
@@ -22,7 +23,9 @@ var port = process.env.PORT || 12345;
 
 app.use(express.json());
 
-rvr(app); //Ricardo
+rvrv1(app);
+
+rvrv2(app); //Ricardo
 
 ppo(app); //Pablo
 
