@@ -16,7 +16,7 @@
     
     //_____________________________Variables de ruta______________________________________
         
-        let API = '/api/v1/ss-affiliates';
+        let API = '/api/v2/ss-affiliates';
         
         if(dev)
             API = 'http://localhost:12345'+API
@@ -130,54 +130,59 @@
       
         async function createAffiliation() {
             resultStatus = result = "";
-            const res = await fetch(API, {
-                method: 'POST',
-                headers:{
-                    "Content-Type" : "application/json"
-                },
-                body:JSON.stringify({
-                    year: newYear,
-                    province: newProvince,
-                    ss_affiliation: newSs_affiliation,
-                    n_cont_indef: newN_cont_indef,
-                    n_cont_eventual: newN_cont_eventual,
-                    n_cont_temporary: newN_cont_temporary
-                })
-            });
-            const status = await res.status;
-            resultStatus = status;	           
-            if(status==201){
-
-                getAffiliation();
-
-                info2 = `El dato ${newProvince} ${newYear} se ha creado correctamente`;
-
-                v_info2 = true;
-
-                f_info2();
-
-            }else if(status==409){
-
-                warning = `El dato con identificador ${province} ${year} ya existe en la base de datos`;
-
+            if(newSs_affiliation=="" || newN_cont_indef==""|| newN_cont_eventual==""||  newN_cont_temporary==""){
+                warning = "No se puede actualizar si el dato no se pasa completo";
                 v_warning = true;
+            }else{
+                const res = await fetch(API, {
+                    method: 'POST',
+                    headers:{
+                        "Content-Type" : "application/json"
+                    },
+                    body:JSON.stringify({
+                        year: newYear,
+                        province: newProvince,
+                        ss_affiliation: newSs_affiliation,
+                        n_cont_indef: newN_cont_indef,
+                        n_cont_eventual: newN_cont_eventual,
+                        n_cont_temporary: newN_cont_temporary
+                    })
+                });
+                const status = await res.status;
+                resultStatus = status;	           
+                if(status==201){
 
-                f_warning();
+                    getAffiliation();
 
-            }else if(status==400){
+                    info2 = `El dato ${newProvince} ${newYear} se ha creado correctamente`;
 
-                warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
-                
-                v_warning = true;
+                    v_info2 = true;
 
-                f_warning();
+                    f_info2();
 
-            }else if(status == 500){
+                }else if(status==409){
 
-                error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+                    warning = `El dato con identificador ${province} ${year} ya existe en la base de datos`;
 
-                v_error = true;
+                    v_warning = true;
 
+                    f_warning();
+
+                }else if(status==400){
+
+                    warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
+                    
+                    v_warning = true;
+
+                    f_warning();
+
+                }else if(status == 500){
+
+                    error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+
+                    v_error = true;
+
+                }
             }
         }
 

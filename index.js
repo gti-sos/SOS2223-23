@@ -2,7 +2,8 @@
 
 import express from 'express';
 import cors from 'cors';
-import { rvr } from './backend/rvr.js';
+import { rvrv2 } from './backend/rvrv2.js';
+import rvrv1 from './backend/rvrv2.js';
 import { ppo }  from'./backend/ppo.js';
 import { ppo2 }  from'./backend/ppo2.js';
 import { amjc } from './backend/amjc.js';
@@ -24,7 +25,9 @@ var port = process.env.PORT || 12345;
 
 app.use(express.json());
 
-rvr(app); //Ricardo
+rvrv1(app);
+
+rvrv2(app); //Ricardo
 
 ppo(app); //Pablo v1
 ppo2(app); //Pablo v2
