@@ -14,7 +14,7 @@
         let year = $page.params.year;
         let province = $page.params.province;
         let gender = $page.params.gender;
-        let API = `/api/v1/hired-people/${year}/${province}/${gender}`;
+        let API = `/api/v2/hired-people/${year}/${province}/${gender}`;
         
         if(dev)
             API = 'http://localhost:12345'+API

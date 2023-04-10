@@ -3,17 +3,29 @@
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
         import { Button, Table, } from 'sveltestrap';
-        import { Toast,ToastHeader,ToastBody } from 'sveltestrap';
+        import { Toast,ToastHeader,ToastBody, Alert } from 'sveltestrap';
         import { page } from '$app/stores';
 
         onMount(async () => {
             getData();
         });
 
+        const toggle = () => (open = !open);
+
+        let warning = "";
+        let info = "";
+        let v_info = false;
+        let v_warning = false;
+        let errores = "";
+        let v_errores = false;
+        let open = false;
+        let success = "";
+        let v_success = false;
+
         let year = $page.params.year;
         let province = $page.params.province;
         let gender = $page.params.gender;
-        let API = `/api/v1/density-population/${year}/${province}/${gender}`;
+        let API = `/api/v2/density-population/${year}/${province}/${gender}`;
 
         if(dev)
             API = 'http://localhost:12345'+API
@@ -28,6 +40,7 @@
 
         let Province = province;
         let Year = year;
+        let Gender = gender;
         let Municipality_size_lt_ft = 0;
         let Municipality_size_bt_ft_tht = 0;
         let Municipality_size_gt_tht = 0;
@@ -83,6 +96,8 @@
                 resultStatus = status;	           
                 if(status==200){
                     getData();
+                    success = `El dato ${updatedYear}/${updatedProvince}/${updatedGender} se ha actualizado correctamente`;
+                    v_success = true;
                 }
             }
         }
@@ -91,6 +106,16 @@
 <main>
     <h1> Detalles del recurso:</h1>
     
+    {#if errores != ""}
+    <Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert>
+    {/if}
+    {#if warning != ""}
+    <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
+    {/if}
+    {#if success != ""}
+    <Alert color="success" isOpen={v_success} toggle={() => (v_success = false)}>{success}</Alert>
+    {/if}
+
     <Table>
         <thead>
           <tr>
@@ -120,7 +145,7 @@
 
       <div class="p-3 mb-3">
         <Toast>
-          <ToastHeader icon=primary>Dato para {Year} en {Province}</ToastHeader>
+          <ToastHeader icon=primary>Dato para {Year} en {Province} siendo {Gender}</ToastHeader>
           <ToastBody>
             Densidad de poblacion en municipios pequeños: {Municipality_size_lt_ft} <br>
             Densidad de poblacion en municipios medianos: {Municipality_size_bt_ft_tht} <br>

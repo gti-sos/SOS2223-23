@@ -1,0 +1,27 @@
+{
+	"id": "362a94fe-348b-493c-8d14-1c3a9fb3bdca",
+	"name": "GCloud",
+	"values": [
+		{
+			"key": "ss-affiliates",
+			"value": "https://sos2223-23.ew.r.appspot.com/api/v2/ss-affiliates",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "density-population",
+			"value": "https://sos2223-23.ew.r.appspot.com/api/v2/density-population",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "hired-people",
+			"value": "https://sos2223-23.ew.r.appspot.com/api/v2/hired-people",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-03-17T20:54:27.479Z",
+	"_postman_exported_using": "Postman/10.12.2-230316-1355"
+}
