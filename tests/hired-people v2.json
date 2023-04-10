@@ -1,0 +1,1393 @@
+{
+	"info": {
+		"_postman_id": "21c34532-2c57-4503-b65e-a2733637549a",
+		"name": "hired-people v2",
+		"description": "**En esta documentación trataremos las comprobaciones sobre el uso correcto y erróneo de peticiones a nuestros datos de la API sobre el tipo de contrato de personas españolas en Andalucía por año, provincia y género. Nuestro Dataset corresponde desde el año 2012 hasta 2022, pero para las comprobaciones hemos usado datos de 2010 y 2011.** Los campos que conforman el Dataset corresponden a:\n\n- year: Año al que pertenece el dato (Integer).\n- province: Nombre de la provincia a la que pertenece el dato (String).\n- gender: Nombre del genero al que pertenece el dato (Hombres o Mujeres / String).\n- indefinite_contract: Número de personas con contrato indefinido (Integer).\n- single_construction_contract: Número de personas con contrato único de construcción (Integer).\n- multiple_construction_contract: Número de personas con contrato múltiple de construcción (Integer).\n- single_eventual_contract: Número de personas con contrato único eventual (Integer).\n- multiple_eventual_contract: Número de personas con contrato múltiple eventual (Integer).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26053157"
+	},
+	"item": [
+		{
+			"name": "NF 2010/Cádiz/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2010/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Cádiz",
+						"Hombres"
+					]
+				},
+				"description": "En primer lugar realizaremos GET a 4 datos diferentes para comprobar que no existen, y por lo tanto, no se encuentan **404(Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "NF 2011/Sevilla/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2011/Sevilla/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2011",
+						"Sevilla",
+						"Hombres"
+					]
+				},
+				"description": "En primer lugar realizaremos GET a 4 datos diferentes para comprobar que no existen, y por lo tanto, no se encuentan **404(Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "NF 2010/Huelva/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2010/Huelva/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Huelva",
+						"Mujeres"
+					]
+				},
+				"description": "En primer lugar realizaremos GET a 4 datos diferentes para comprobar que no existen, y por lo tanto, no se encuentan **404(Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "NF 2011/Granada/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2011/Granada/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2011",
+						"Granada",
+						"Mujeres"
+					]
+				},
+				"description": "En primer lugar realizaremos GET a 4 datos diferentes para comprobar que no existen, y por lo tanto, no se encuentan **404(Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "2010/Cádiz/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"year\": 2010,\n    \"province\": \"Cádiz\",\n    \"gender\": \"Hombres\",\n    \"indefinite_contract\": 4606,\n    \"single_construction_contract\": 21563,\n    \"multiple_construction_contract\": 12906,\n    \"single_eventual_contract\": 13624,\n    \"multiple_eventual_contract\": 9764\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Tras los GETs, realizaremos POST de los diferentes datos para poder añadirlos a **hired-people**. Como no existen, no deberíamos tener problema alguno, y por lo tanto, recibiríamos un código de estado **201 (Created).**"
+			},
+			"response": []
+		},
+		{
+			"name": "2011/Sevilla/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"year\": 2011,\n    \"province\": \"Sevilla\",\n    \"gender\": \"Hombres\",\n    \"indefinite_contract\": 9376,\n    \"single_construction_contract\": 37095,\n    \"multiple_construction_contract\": 28377,\n    \"single_eventual_contract\": 18127,\n    \"multiple_eventual_contract\": 10968\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Tras los GETs, realizaremos POST de los diferentes datos para poder añadirlos a **hired-people**. Como no existen, no deberíamos tener problema alguno, y por lo tanto, recibiríamos un código de estado **201 (Created).**"
+			},
+			"response": []
+		},
+		{
+			"name": "2010/Huelva/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"year\": 2010,\n    \"province\": \"Huelva\",\n    \"gender\": \"Mujeres\",\n    \"indefinite_contract\": 1380,\n    \"single_construction_contract\": 14092,\n    \"multiple_construction_contract\": 8788,\n    \"single_eventual_contract\": 4200,\n    \"multiple_eventual_contract\": 2574\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Tras los GETs, realizaremos POST de los diferentes datos para poder añadirlos a **hired-people**. Como no existen, no deberíamos tener problema alguno, y por lo tanto, recibiríamos un código de estado **201 (Created).**"
+			},
+			"response": []
+		},
+		{
+			"name": "2011/Granada/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"year\": 2011,\n    \"province\": \"Granada\",\n    \"gender\": \"Mujeres\",\n    \"indefinite_contract\": 3486,\n    \"single_construction_contract\": 10239,\n    \"multiple_construction_contract\": 4699,\n    \"single_eventual_contract\": 14200,\n    \"multiple_eventual_contract\": 13309\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Tras los GETs, realizaremos POST de los diferentes datos para poder añadirlos a **hired-people**. Como no existen, no deberíamos tener problema alguno, y por lo tanto, recibiríamos un código de estado **201 (Created).**"
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Con este GET, comprobamos que los datos se han añadido de forma correcta a nuestra página principal. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2010",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2010",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2010"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2010. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2011&gender=Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2011&gender=Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2011"
+						},
+						{
+							"key": "gender",
+							"value": "Hombres"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2011 y cuyo género es \"Hombres\". Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2011&gender=Hombres&province=Sevilla",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2011&gender=Hombres&province=Sevilla",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2011"
+						},
+						{
+							"key": "gender",
+							"value": "Hombres"
+						},
+						{
+							"key": "province",
+							"value": "Sevilla"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2011, cuyo género es \"Hombres\" y la provincia a la que se refieren es \"Sevilla\". Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2010&indefinite_contract_under=4000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2010&indefinite_contract_under=4000",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2010"
+						},
+						{
+							"key": "indefinite_contract_under",
+							"value": "4000"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2010, cuyo número de contratos indefinidos es menor a 4000. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2010&single_construction_contract=30000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2010&single_construction_contract=30000",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2010"
+						},
+						{
+							"key": "single_construction_contract",
+							"value": "30000"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2010, cuyo número de contratos únicos de construcción es menor a 30000. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2010&multiple_construction_contract=10000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2010&multiple_construction_contract=10000",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2010"
+						},
+						{
+							"key": "multiple_construction_contract",
+							"value": "10000"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2010, cuyo número de contratos de construcción múltiples es menor a 10000. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2010&single_eventual_contract=15000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2010&single_eventual_contract=15000",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2010"
+						},
+						{
+							"key": "single_eventual_contract",
+							"value": "15000"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2010, cuyo número de contratos eventuales únicos es menor a 15000. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "year=2010&multiple_eventual_contract=5000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?year=2010&multiple_eventual_contract=5000",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2010"
+						},
+						{
+							"key": "multiple_eventual_contract",
+							"value": "5000"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden al año 2010, cuyo número de contratos eventuales únicos es menor a 5000. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "limit & offset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?limit=2&offset=1",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "2"
+						},
+						{
+							"key": "offset",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que comienzan desde el dato 1 y nos mostrará una cantidad de 2 datos. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "from & to",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}?from=2010&to=2015",
+					"host": [
+						"{{hired-people}}"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2010"
+						},
+						{
+							"key": "to",
+							"value": "2015"
+						}
+					]
+				},
+				"description": "Con este GET, comprobamos aquellos datos que corresponden a los años entre 2010 y 2015. Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "/2010/Cádiz/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2010/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Cádiz",
+						"Hombres"
+					]
+				},
+				"description": "Con este GET, comprobamos un recurso específico del dato que corresponde al año 2010, de la provincia \"Cádiz\" y cuyo género es \"Hombres\". Recibiremos un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "/2024/Cádiz/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2024/Cádiz/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2024",
+						"Cádiz",
+						"Mujeres"
+					]
+				},
+				"description": "Con este GET, comprobamos un recurso específico del dato que corresponde al año 2024, de la provincia \"Cádiz\" y cuyo género es \"Mujeres\". Debido a que no existe, recibiremos un código de estado **404 (Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "POST (409) Conflict",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"year\": 2010,\n    \"province\": \"Cádiz\",\n    \"gender\": \"Hombres\",\n    \"indefinite_contract\": 4606,\n    \"single_construction_contract\": 21563,\n    \"multiple_construction_contract\": 12906,\n    \"single_eventual_contract\": 13624,\n    \"multiple_eventual_contract\": 9764\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Con este POST, trataremos de crear un recurso del año 2010, cuya provincia es \"Cádiz\" y el género al que se refiere es \"Hombres\". Debido a que este ya existe, nos mostrará por pantalla un código de estado **409 (Conflict).**"
+			},
+			"response": []
+		},
+		{
+			"name": "POST (405) Not Allowed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {",
+							"    pm.response.to.have.status(405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"gender\": \"Hombres\",\n        \"indefinite_contract\": 3483,\n        \"single_construction_contract\": 13617,\n        \"multiple_construction_contract\": 6607,\n        \"single_eventual_contract\": 11453,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2012/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2012",
+						"Cádiz",
+						"Hombres"
+					]
+				},
+				"description": "Con este POST, trataremos de crear un recurso del año 2012, cuya provincia es \"Granada\" y el género al que se refiere es \"Hombres\". Debido a que se intenta crear en una ruta específica, y esto no está permitido, nos mostrará por pantalla un código de estado **405 (Not Allowed).**"
+			},
+			"response": []
+		},
+		{
+			"name": "POST (400) Bad Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"indefinite_contract\": 3483,\n        \"multiple_construction_contract\": 6607,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Con este POST, trataremos de crear un recurso del año 2012 y cuya provincia es \"Granada\". Debido a que faltan campos en el Body, nos mostrará por pantalla un código de estado **400 (Bad Request).**"
+			},
+			"response": []
+		},
+		{
+			"name": "/hired-people",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta tiene mínimo 1 elemento\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.lengthOf.above(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Realizaremos GET a los datos de **hired-people** para comprobar que exíste al menos 1 dato. Si se cumple dicha comprobación, nos lo confirmará por pantalla."
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (404) Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"year\":2005, \n    \"province\":\"Cádiz\", \n    \"gender\":\"Mujeres\", \n    \"indefinite_contract\":39925, \n    \"single_construction_contract\":11653,\n    \"multiple_construction_contract\":4187, \n    \"single_eventual_contract\":15247, \n    \"multiple_eventual_contract\":11675\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2005/Cádiz/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2005",
+						"Cádiz",
+						"Mujeres"
+					]
+				},
+				"description": "Con este PUT tratamos de actualizar el recurso cuyo año es 2005, la provincia es \"Cádiz\" y el género es \"Mujeres\". Debido a que no existe, nos mostrará por pantalla un código de estado **404 (Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (400) Bad Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"indefinite_contract\": 3483,\n        \"multiple_construction_contract\": 6607,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2012/Granada/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2012",
+						"Granada",
+						"Hombres"
+					]
+				},
+				"description": "Con este PUT tratamos de actualizar el recurso cuyo año es 2012 y la provincia es \"Granada\". Debido a que faltan campos en el Body, nos mostrará por pantalla un código de estado **400 (Bad Request).**"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (405) Not Allowed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {",
+							"    pm.response.to.have.status(405);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2012,\n        \"province\": \"Granada\",\n        \"indefinite_contract\": 3483,\n        \"multiple_construction_contract\": 6607,\n        \"multiple_eventual_contract\": 9583\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}",
+					"host": [
+						"{{hired-people}}"
+					]
+				},
+				"description": "Con este PUT tratamos de actualizar el recurso cuyo año es 2012 y la provincia es \"Granada\". Debido a que se intenta actualizar en la ruta base de **hired-people,** y esto no esta permitido, nos mostrará por pantalla un código de estado **405 (Not Allowed).**"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT (200)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"year\": 2010,\n        \"province\": \"Cádiz\",\n        \"gender\": \"Hombres\",\n        \"indefinite_contract\": 306,\n        \"single_construction_contract\": 21563,\n        \"multiple_construction_contract\": 12906,\n        \"single_eventual_contract\": 13624,\n        \"multiple_eventual_contract\": 9764\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hired-people}}/2010/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Cádiz",
+						"Hombres"
+					]
+				},
+				"description": "Con este PUT tratamos de actualizar el recurso cuyo año es 2010, la provincia es \"Cádiz\" y el género es \"Hombres\". Como se realiza de forma correcta, nos mostrará por pantalla un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE 2010/Cádiz/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2010/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Cádiz",
+						"Hombres"
+					]
+				},
+				"description": "Realizaremos DELETE a los 4 datos diferentes que creamos para esta demostración. Dado que existen y se hace buena petición, nos mostrará por pantalla un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE 2011/Sevilla/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2011/Sevilla/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2011",
+						"Sevilla",
+						"Hombres"
+					]
+				},
+				"description": "Realizaremos DELETE a los 4 datos diferentes que creamos para esta demostración. Dado que existen y se hace buena petición, nos mostrará por pantalla un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE 2010/Huelva/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2010/Huelva/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Huelva",
+						"Mujeres"
+					]
+				},
+				"description": "Realizaremos DELETE a los 4 datos diferentes que creamos para esta demostración. Dado que existen y se hace buena petición, nos mostrará por pantalla un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE 2011/Granada/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{hired-people}}/2011/Granada/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2011",
+						"Granada",
+						"Mujeres"
+					]
+				},
+				"description": "Realizaremos DELETE a los 4 datos diferentes que creamos para esta demostración. Dado que existen y se hace buena petición, nos mostrará por pantalla un código de estado **200 (OK).**"
+			},
+			"response": []
+		},
+		{
+			"name": "NF 2011/Granada/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2011/Granada/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2011",
+						"Granada",
+						"Mujeres"
+					]
+				},
+				"description": "Finalmente realizaremos GET a los 4 datos diferentes que hemos empleado en esta demostración para afirmar que no existen, y por lo tanto, no se encuentan. Nos mostrará por pantalla un código de estado **404(Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "NF 2010/Huelva/Mujeres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2010/Huelva/Mujeres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Huelva",
+						"Mujeres"
+					]
+				},
+				"description": "Finalmente realizaremos GET a los 4 datos diferentes que hemos empleado en esta demostración para afirmar que no existen, y por lo tanto, no se encuentan. Nos mostrará por pantalla un código de estado **404(Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "NF 2011/Sevilla/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2011/Sevilla/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2011",
+						"Sevilla",
+						"Hombres"
+					]
+				},
+				"description": "Finalmente realizaremos GET a los 4 datos diferentes que hemos empleado en esta demostración para afirmar que no existen, y por lo tanto, no se encuentan. Nos mostrará por pantalla un código de estado **404(Not Found).**"
+			},
+			"response": []
+		},
+		{
+			"name": "NF 2010/Cádiz/Hombres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{hired-people}}/2010/Cádiz/Hombres",
+					"host": [
+						"{{hired-people}}"
+					],
+					"path": [
+						"2010",
+						"Cádiz",
+						"Hombres"
+					]
+				},
+				"description": "Finalmente realizaremos GET a los 4 datos diferentes que hemos empleado en esta demostración para afirmar que no existen, y por lo tanto, no se encuentan. Nos mostrará por pantalla un código de estado **404(Not Found).**"
+			},
+			"response": []
+		}
+	]
+}

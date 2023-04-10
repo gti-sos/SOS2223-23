@@ -10,7 +10,7 @@ function amjc2(app){
         //GET a docs
         app.get(`${BASE_API_URL_AMJC}/docs`, (request, response) => {
             console.log('Redirecting to documentation site');
-            response.status(301).redirect("https://documenter.getpostman.com/view/26053157/2s93JzLLkZ");
+            response.status(301).redirect("https://documenter.getpostman.com/view/26053157/2s93Xtzk4e");
         });
 
         // GET LoadInitialData

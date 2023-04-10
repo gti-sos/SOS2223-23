@@ -18,7 +18,7 @@ function rvrv2(app){
     // Ruta de la documentacion de la API
     app.get(`${BASE_API_URL_ss_affiliates}/docs`, (req, res) => {
         console.log('Redirecting to documentation site');
-        res.status(301).redirect("https://documenter.getpostman.com/view/25997396/2s93JzKfdw");
+        res.status(301).redirect("https://documenter.getpostman.com/view/25997396/2s93Xtzk4d");
     });
 
     // GET LoadInitialData
