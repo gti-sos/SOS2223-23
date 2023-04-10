@@ -22,9 +22,17 @@ Lecturers:
 
 - **APIS DOCUMENTATION**: 
 --
-  - [http://sos2223-23.appspot.com/api/v1/ss-affiliates/docs](http://sos2223-23.appspot.com/api/v1/ss-affiliates/docs)  (developed by Ricardo Vaz Rodriguez)
-  - [http://sos2223-23.appspot.com/api/v1/density-population/docs](http://sos2223-23.appspot.com/api/v1/density-population/docs) (developed by Pablo Antonio Perez Ortega)
-  - [http://sos2223-23.appspot.com/api/v1/hired-people/docs](http://sos2223-23.appspot.com/api/v1/hired-people/docs) (developed by Agustín Manuel Jiménez Casas)
-
+  - **V1 (developed by Ricardo Vaz Rodriguez)** 
+  [http://sos2223-23.appspot.com/api/v1/ss-affiliates/docs](http://sos2223-23.appspot.com/api/v1/ss-affiliates/docs) 
+  - **V2 (developed by Ricardo Vaz Rodriguez)** 
+  [http://sos2223-23.appspot.com/api/v2/ss-affiliates/docs](http://sos2223-23.appspot.com/api/v2/ss-affiliates/docs)
+  - **V1 (developed by Pablo Antonio Perez Ortega)** 
+  [http://sos2223-23.appspot.com/api/v1/density-population/docs](http://sos2223-23.appspot.com/api/v1/density-population/docs)
+  - **V2 (developed by Pablo Antonio Perez Ortega)** 
+  [http://sos2223-23.appspot.com/api/v2/density-population/docs](http://sos2223-23.appspot.com/api/v2/density-population/docs)
+  - **V1 (developed by Agustín Manuel Jiménez Casas)** 
+  [http://sos2223-23.appspot.com/api/v1/hired-people/docs](http://sos2223-23.appspot.com/api/v1/hired-people/docs)
+  - **V2 (developed by Agustín Manuel Jiménez Casas)** 
+  [http://sos2223-23.appspot.com/api/v2/hired-people/docs](http://sos2223-23.appspot.com/api/v2/hired-people/docs)
 --
 
