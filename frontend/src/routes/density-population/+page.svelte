@@ -170,7 +170,7 @@
                 v_success = true;
             }
             else if(status==409){
-                warning = `El dato /${year}/${province} ya existe en la base de datos`;
+                warning = `El dato /${newYear}/${newProvince} ya existe en la base de datos`;
                 v_warning = true;
             }else if(status==400){
                 warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
@@ -180,7 +180,7 @@
     
 </script>
 <main>
-    <h1>Listado de datos: density-population</h1>
+    <h1>Listado de datos: Densidad de Poblacion</h1>
     <hr>
 
     {#if errores != ""}
@@ -224,10 +224,10 @@
                 <th>Año</th>
                 <th>Provincia</th>
                 <th>Género</th>
-                <th>Municipality_size_lt_ft</th>
-                <th>Municipality_size_bt_ft_tht</th>
-                <th>Municipality_size_gt_tht</th>
-                <th>Capital_size</th>
+                <th>Densidad de poblacion en municipios pequeños</th>
+                <th>Densidad de poblacion en municipios medianos</th>
+                <th>Densidad de poblacion en municipios grandes</th>
+                <th>Densidad de poblacion en capitales</th>
                 <th>Acción</th>
               </tr>
             </thead>
