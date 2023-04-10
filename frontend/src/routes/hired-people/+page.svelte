@@ -9,7 +9,7 @@
             getHired();
         });
         
-        let API = '/api/v1/hired-people';
+        let API = '/api/v2/hired-people';
         
         if(dev)
             API = 'http://localhost:12345'+API

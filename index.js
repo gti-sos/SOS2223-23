@@ -6,6 +6,7 @@ import { rvr } from './backend/rvr.js';
 import { ppo }  from'./backend/ppo.js';
 import { ppo2 }  from'./backend/ppo2.js';
 import { amjc } from './backend/amjc.js';
+import { amjc2 } from './backend/amjc2.js';
 import { handler } from "./frontend/build/handler.js"
 
 
@@ -29,6 +30,7 @@ ppo(app); //Pablo v1
 ppo2(app); //Pablo v2
 
 amjc(app); //Agustín
+amjc2(app); //Agustín v2
 
 app.use(handler);
 
