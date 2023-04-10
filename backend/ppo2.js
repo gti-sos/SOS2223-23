@@ -10,7 +10,7 @@ function ppo2(app){
     //Todos los GET
     app.get(BASE_API_URL+'/density-population/docs', (request, response) => {
         console.log('Redirecting to documentation site of density-population');
-        response.status(301).redirect("https://documenter.getpostman.com/view/26052111/2s93RNzFGX");
+        response.status(301).redirect("https://documenter.getpostman.com/view/26052111/2s93Xtzk4f");
     });
         //GET total y querys
     app.get(BASE_API_URL+'/density-population', (request,response)=>{
