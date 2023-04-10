@@ -7,12 +7,8 @@ import { rvrv1 } from './backend/rvrv2.js';
 import { ppo }  from'./backend/ppo.js';
 import { ppo2 }  from'./backend/ppo2.js';
 import { amjc } from './backend/amjc.js';
-<<<<<<< HEAD
-import { handler } from "./frontend/build/handler.js";
-=======
 import { amjc2 } from './backend/amjc2.js';
 import { handler } from "./frontend/build/handler.js"
->>>>>>> c96c56707fcd9d6bbd06ba041de21e14f2344d60
 
 
 //______________________Variables_________________________
