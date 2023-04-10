@@ -1,8 +1,10 @@
 <script>
     import { dev } from '$app/environment';
-    let API = '/api/v2';
+    let API_v2 = '/api/v2';
+    let API_v1 = '/api/v1';
     if (dev)
-        API = 'http://localhost:12345'+API;
+        API_v2 = 'http://localhost:12345'+API_v2;
+        API_v1 = 'http://localhost:12345'+API_v1;
 
 </script>
 <main>
@@ -33,18 +35,27 @@
         <li><b>Enlaces a las APIs: </b></li>
         <br>
         <ul>
-            <li><a href="{API}/ss-affiliates">Ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
-            <li><a href="{API}/density-population">Density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
-            <li><a href="{API}/hired-people">Hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
+            <li><a href="{API_v2}/ss-affiliates">Ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
+            <li><a href="{API_v2}/density-population">Density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
+            <li><a href="{API_v2}/hired-people">Hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
         </ul>
         <br>
         <br>
-        <li><b>Documentacion de las APIS:</b></li>
+        <li><b>Documentacion de las APIS v2:</b></li>
         <br>
         <ul>
-            <li><a href="{API}/ss-affiliates/docs">Documentacion ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
-            <li><a href="{API}/density-population/docs">Documentacion density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
-            <li><a href="{API}/hired-people/docs">Documentacion hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
+            <li><a href="{API_v2}/ss-affiliates/docs">Documentacion ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
+            <li><a href="{API_v2}/density-population/docs">Documentacion density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
+            <li><a href="{API_v2}/hired-people/docs">Documentacion hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
+        </ul>
+        <br>
+        <br>
+        <li><b>Documentacion de las APIS v1:</b></li>
+        <br>
+        <ul>
+            <li><a href="{API_v1}/ss-affiliates/docs">Documentacion ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
+            <li><a href="{API_v1}/density-population/docs">Documentacion density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
+            <li><a href="{API_v1}/hired-people/docs">Documentacion hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
         </ul>
         <br>
         <li><b>Frontends de las APIS:</b></li>
