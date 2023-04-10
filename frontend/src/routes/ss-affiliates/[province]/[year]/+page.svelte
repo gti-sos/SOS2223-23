@@ -36,7 +36,7 @@
         
         let province = $page.params.province;
         let year = $page.params.year;
-        let API = `/api/v1/ss-affiliates/${province}/${year}`;
+        let API = `/api/v2/ss-affiliates/${province}/${year}`;
         
         if(dev)
             API = 'http://localhost:12345'+API

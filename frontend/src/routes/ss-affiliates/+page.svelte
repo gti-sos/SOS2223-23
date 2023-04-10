@@ -16,7 +16,7 @@
     
     //_____________________________Variables de ruta______________________________________
         
-        let API = '/api/v1/ss-affiliates';
+        let API = '/api/v2/ss-affiliates';
         
         if(dev)
             API = 'http://localhost:12345'+API
