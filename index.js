@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import { rvr } from './backend/rvr.js';
 import { ppo }  from'./backend/ppo.js';
+import { ppo2 }  from'./backend/ppo2.js';
 import { amjc } from './backend/amjc.js';
 import { handler } from "./frontend/build/handler.js"
 
@@ -24,7 +25,8 @@ app.use(express.json());
 
 rvr(app); //Ricardo
 
-ppo(app); //Pablo
+ppo(app); //Pablo v1
+ppo2(app); //Pablo v2
 
 amjc(app); //Agustín
 

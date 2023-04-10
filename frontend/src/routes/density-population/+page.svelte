@@ -25,7 +25,7 @@
             getData();
         });
         
-        let API = '/api/v1/density-population';
+        let API = '/api/v2/density-population';
         
         if(dev)
             API = 'http://localhost:12345'+API
