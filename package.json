@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "test-density-population-changeData": "npx newman run ./tests/density-population-changeData.json -e ./tests/env/local_host.json",
-    "test-ss-affiliates": "npx newman run ./tests/ss-affiliates.json -e ./tests/env/local_host.json",
-    "test-density-population": "npx newman run ./tests/density-population.json -e ./tests/env/local_host.json",
-    "test-hired-people": "npx newman run ./tests/hired-people.json -e ./tests/env/local_host.json",
+    "test-density-population-changeData": "npx newman run ./tests/density-population-changeData.json -e ./tests/env/local_host_v2.json",
+    "test-ss-affiliates": "npx newman run ./tests/ss-affiliates.json -e ./tests/env/local_host_v2.json",
+    "test-density-population": "npx newman run ./tests/density-population.json -e ./tests/env/local_host_v2.json",
+    "test-hired-people": "npx newman run ./tests/hired-people.json -e ./tests/env/local_host_v2.json",
     "test": "npm run test-ss-affiliates && npm run test-density-population && npm run test-hired-people"
   },
   "author": "",

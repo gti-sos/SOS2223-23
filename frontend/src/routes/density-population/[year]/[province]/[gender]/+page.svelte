@@ -13,8 +13,6 @@
         const toggle = () => (open = !open);
 
         let warning = "";
-        let info = "";
-        let v_info = false;
         let v_warning = false;
         let errores = "";
         let v_errores = false;
@@ -66,6 +64,8 @@
                 Capital_size = data.capital_size;           
             }catch(error){
                 console.log(`Error parsing result: ${error}`);
+                error = "No existe el recurso";
+                v_errores = true;
             }
             const status = await res.status;
             resultStatus = status;	
