@@ -4,11 +4,8 @@
         import { dev } from '$app/environment';
         import { Button, Table,ButtonToolbar } from 'sveltestrap';
         import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
-
         
         const toggle = () => (open = !open);
-        const myToggle = () => (modalOpen = !modalOpen);
-
 
         let warning = "";
         let info = "";
@@ -19,8 +16,7 @@
         let success = "";
         let v_success = false;
         let open = false;
-        let modalOpen = false;
-
+        
         onMount(async () => {
             getData();
         });
