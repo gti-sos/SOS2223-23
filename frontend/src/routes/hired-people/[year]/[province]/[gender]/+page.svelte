@@ -65,6 +65,8 @@
                 newMultiple_eventual_contract = data.multiple_eventual_contract;            
             }catch(error){
                 console.log(`Error parsing result: ${error}`);
+                errores = `No existe un recurso con los valores ${year}/${province}/${gender}`;
+                v_errores = true;
             }
             const status = await res.status;
             resultStatus = status;	

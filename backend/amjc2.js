@@ -5,7 +5,7 @@ import Papa from 'papaparse';
 import Datastore from 'nedb';
 var db = new Datastore();
 
-function amjc(app){
+function amjc2(app){
     //_____________GET_______________
         //GET a docs
         app.get(`${BASE_API_URL_AMJC}/docs`, (request, response) => {
@@ -264,4 +264,4 @@ function amjc(app){
             }
         });
 }
-export { amjc };
+export { amjc2 };
