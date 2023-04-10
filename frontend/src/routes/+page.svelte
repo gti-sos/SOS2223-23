@@ -21,8 +21,8 @@
         <li><dl>
             <dt><b>Descripción del proyecto:</b></dt>
             <br>
-            <di>Our sources of information are aimed at analyzing the interconnection in the data between Spanish 
-                people hired in Andalusia according to province, type of contract and sex, population density and labor rates
+            <di>Our sources of information are aimed at analyzing the interconnection in the data between Spanish <br>
+                people hired in Andalusia according to province, type of contract and sex, population density and labor rates <br>
                 of affiliation to social security, new contracts and according to type. </di>
         </dl></li>
         <br>
@@ -30,7 +30,13 @@
         <li><b>Repositorio de GitHub: </b><a href="https://github.com/gti-sos/SOS2223-23">gti-sos/SOS2223-23</a></li>
         <br>
         <br>
-        <li><b>URL de la API: </b><a href='{API}'>gti-sos/SOS2223-23/API</a></li>
+        <li><b>Enlaces a las APIs: </b></li>
+        <br>
+        <ul>
+            <li><a href="{API}/ss-affiliates">Ss-affiliates</a> (developed by Ricardo Vaz Rodriguez)</li>
+            <li><a href="{API}/density-population">Density-population</a> (developed by Pablo Antonio Perez Ortega)</li>
+            <li><a href="{API}/hired-people">Hired-people</a> (developed by Agustín Manuel Jiménez Casas)</li>
+        </ul>
         <br>
         <br>
         <li><b>Documentacion de las APIS:</b></li>
@@ -49,4 +55,6 @@
             <li><a href="/hired-people">Frontend de hired-people</a> (developed by Agustín Manuel Jiménez Casas)</li>
         </ul>
     </ul>
+    <br>
+    <br>
 </main>

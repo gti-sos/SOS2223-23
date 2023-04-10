@@ -8,11 +8,11 @@
             Table,
             Card,
             CardBody,
-            CardFooter,
             CardHeader,
-            CardSubtitle,
             CardText,
-            CardTitle
+            CardTitle, 
+            FormGroup, 
+            Input
         } from 'sveltestrap';
         import { page } from '$app/stores';
 
@@ -103,9 +103,9 @@
             <th>Provincia</th>
             <th>Año</th>
             <th>Afiliados a la Seguridad Social</th>
-            <th>Nuevos Contratos Indefinidos</th>
-            <th>Nuevos Contratos Eventuales</th>
-            <th>Nuevos contratos Temporales</th>
+            <th>Contratos Indefinidos</th>
+            <th>Contratos Eventuales</th>
+            <th>Contratos Temporales</th>
             <th>Accion</th>
           </tr>
         </thead>
@@ -113,10 +113,18 @@
            <tr>
                 <td>{updatedRecurseProvince}</td>
                 <td>{updatedRecurseYear}</td>
-                <td><input bind:value={updatedRecurseSs_affiliation}></td>
-                <td><input bind:value={updatedRecurseN_cont_eventual}></td>
-                <td><input bind:value={updatedRecurseN_cont_indef}></td>
-                <td><input bind:value={updatedRecurseN_cont_temporary}></td>
+                <td><FormGroup floating label="Nuevos Afiliados">
+                    <Input bind:value={updatedRecurseSs_affiliation} placeholder="Nuevos Afiliados"/>
+                </FormGroup></td>
+                <td><FormGroup floating label="Nuevos Contratos eventuales">
+                    <Input bind:value={updatedRecurseN_cont_eventual} placeholder="Nuevos Contratos eventuales"/>
+                </FormGroup></td>
+                <td><FormGroup floating label="Nuevos Contratos indefinidos">
+                    <Input bind:value={updatedRecurseN_cont_indef} placeholder="Nuevos Contratos indefinidos"/>
+                </FormGroup></td>
+                <td><FormGroup floating label="Nuevos Contratos temporales">
+                    <Input bind:value={updatedRecurseN_cont_temporary} placeholder="Nuevos Contratos temporales"/>
+                </FormGroup></td>
                 <td><Button on:click={updateRecurse}>Actualizar</Button></td>
             </tr>
         </tbody>
