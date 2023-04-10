@@ -7,6 +7,8 @@
 
         
         const toggle = () => (open = !open);
+        const myToggle = () => (modalOpen = !modalOpen);
+
 
         let warning = "";
         let info = "";
@@ -14,7 +16,10 @@
         let v_warning = false;
         let errores = "";
         let v_errores = false;
+        let success = "";
+        let v_success = false;
         let open = false;
+        let modalOpen = false;
 
         onMount(async () => {
             getData();
@@ -48,13 +53,10 @@
             });
             const status = await res.status;
             resultStatus = status;
-            if(status==201){
-
-                getData(); 
-
-                info = "La base de datos se ha cargado correctamente"
-
-                v_info = true;
+            if(status===201){
+                getData();
+                success = "La base de datos se ha cargado correctamente";
+                v_success = true;
 
             }else if(status==200){
 
@@ -89,9 +91,9 @@
                 warning = "No hay datos cargados en la base de datos";
                 v_warning = true;
             } 
-            if(status==201 || status ==200){
-                info = `Los datos han sido cargados`;
-                v_info = true;
+            if(status ==201){
+                success = `Los datos han sido cargados`;
+                v_success = true;
             } 
             
         }
@@ -104,11 +106,12 @@
             });
             const status = await res.status;
             resultStatus = status;	           
-            if(status===200){
-                getData();
+            if(status==200){
+                
                 console.log("Dato borrado: "+data)
-                info = `Se ha borrado correctamente el dato ${data}`;
-                v_info = true;
+                success = `Se ha borrado correctamente el dato ${data}`;
+                v_success = true;
+                getData();
             }
         }
 
@@ -119,9 +122,9 @@
                 method: 'DELETE',
                 });
                 const status = await res.status;
-                if (status === 204 || status === 204) {
-                    info = "Todos los datos han sido borrados";
-                    v_info = true;
+                if (status === 200 || status === 204) {
+                    success = "Todos los datos han sido borrados";
+                    v_success = true;
 
                 }
             } catch (err) {
@@ -163,8 +166,8 @@
             if(status==201){
                 getData();
                 location.reload();
-                info = `El dato ${newYear} ${newProvince} se ha creado correctamente`;
-                v_info = true;
+                success = `El dato ${newYear} ${newProvince} se ha creado correctamente`;
+                v_success = true;
             }
             else if(status==409){
                 warning = `El dato /${year}/${province} ya existe en la base de datos`;
@@ -188,6 +191,9 @@
     {/if}
     {#if info != ""}
     <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
+    {/if}
+    {#if success != ""}
+    <Alert color="success" isOpen={v_success} toggle={() => (v_success = false)}>{success}</Alert>
     {/if}
     
     <div class="botones">
