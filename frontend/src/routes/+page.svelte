@@ -2,10 +2,10 @@
     import { dev } from '$app/environment';
     let API_v2 = '/api/v2';
     let API_v1 = '/api/v1';
-    if (dev)
+    if (dev){
         API_v2 = 'http://localhost:12345'+API_v2;
         API_v1 = 'http://localhost:12345'+API_v1;
-
+    }
 </script>
 <main>
     <br>
