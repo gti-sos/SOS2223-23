@@ -9,7 +9,9 @@
 
     //____________________________Inicialización__________________________________________
         onMount(async () => {
+
             getAffiliation();
+
         });
     
     //_____________________________Variables de ruta______________________________________
@@ -31,11 +33,22 @@
         let warning = "";
         let info = "";
         let v_info = false;
+        let info2 = "";
+        let v_info2 = false;
         let v_warning = false;
         let errores = "";
         let v_errores = false;
         let open = false;
         const toggle = () => (open = !open);
+        function f_info() {
+            (setTimeout(function(){v_info = false;}, 6000));
+        }
+        function f_info2() {
+            (setTimeout(function(){v_info = false;}, 6000));
+        }
+        function f_warning() {
+            (setTimeout(function(){v_info = false;}, 6000));
+        }
     
         let result = "";
         let resultStatus = "";
@@ -55,11 +68,15 @@
 
                 v_info = true;
 
+                f_info();
+
             }else if(status==200){
 
                 info = "La base de datos ya está cargada, si quiere cargar los datos iniciales, borre los datos existentes";
 
                 v_info = true;
+
+                f_info();
 
             }else if(status == 500){
 
@@ -75,17 +92,39 @@
                 method: 'GET'
             });
             try{
+
                 const data = await res.json();
                 result = JSON.stringify(data,null,2);
                 affiliates = data;
+                
             }catch(error){
+
                 console.log(`Error parsing result: ${error}`);
             }
             const status = await res.status;
             resultStatus = status;	
             if(status==404){
+
                 warning = "No hay datos cargados en la base de datos";
+
                 v_warning = true;
+
+                f_warning();
+
+            }else if(status==200){
+
+                info = "Mostrando los datos de la base de datos"
+
+                v_info = true;
+
+                f_info();
+
+            }else if(status == 500){
+
+                error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+
+                v_error = true;
+
             }
         }
       
@@ -111,9 +150,11 @@
 
                 getAffiliation();
 
-                info = `El datos ${newProvince} ${newYear} se ha creado correctamente`;
+                info2 = `El dato ${newProvince} ${newYear} se ha creado correctamente`;
 
-                v_info = true;
+                v_info2 = true;
+
+                f_info2();
 
             }else if(status==409){
 
@@ -121,28 +162,61 @@
 
                 v_warning = true;
 
+                f_warning();
+
             }else if(status==400){
 
                 warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
                 
                 v_warning = true;
+
+                f_warning();
+
+            }else if(status == 500){
+
+                error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+
+                v_error = true;
+
             }
         }
 
         async function deleteAffiliation(affiliate) {
+
             resultStatus = result = "";
+
             const res = await fetch(API+"/"+affiliate, {
                 method: 'DELETE'
             });
+
             const status = await res.status;
-            resultStatus = status;	           
+
+            resultStatus = status;	
+
             if(status==204){
 
                 getAffiliation(); 
 
-                info = `Se ha borrado correctamente el dato ${affiliate}`;
+                info2 = `Se ha borrado correctamente el dato ${affiliate}`;
+
+                v_info2 = true;
+
+                f_info2();
+
+            }else if(status == 400){
+
+                info = `El dato ${affiliate} no existe en la base de datos`;
 
                 v_info = true;
+
+                f_info();
+
+            }else if(status == 500){
+
+                error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+
+                v_error = true;
+
             }
         }
 
@@ -156,9 +230,13 @@
                 const status = await res.status;
                 if (status === 204) {
 
-                    info = "Todos los datos han sido borrados";
+                    info2 = "Todos los datos han sido borrados";
 
-                    v_info = true;
+                    v_info2 = true;
+
+                    f_info2();
+
+                    getAffiliation();
 
                     resultStatus = "Todos los datos han sido borrados";
 
@@ -188,9 +266,13 @@
     {#if warning != ""}
     <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
     {/if}
+    {#if info2 != ""}
+    <Alert color="info" isOpen={v_info2} toggle={() => (v_info2 = false)}>{info2}</Alert>
+    {/if}
     {#if info != ""}
     <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
     {/if}
+
 
     <div class="botones">
         <ButtonToolbar>

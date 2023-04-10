@@ -5,6 +5,7 @@
         import { dev } from '$app/environment';
         import {
             Button,
+            Alert,
             Table,
             Card,
             CardBody,
@@ -19,6 +20,19 @@
         onMount(async () => {
             getRecurse();
         });
+
+        let warning = "";
+        let info = "";
+        let v_info = false;
+        let v_warning = false;
+        let errores = "";
+        let v_errores = false;
+        function f_info() {
+            (setTimeout(function(){v_info = false;}, 6000));
+        }
+        function f_warning() {
+            (setTimeout(function(){v_info = false;}, 12000));
+        }
         
         let province = $page.params.province;
         let year = $page.params.year;
@@ -57,12 +71,37 @@
                 recurseSs_affiliation = data.ss_affiliation;
                 recurseN_cont_indef = data.n_cont_indef;
                 recurseN_cont_eventual = data.n_cont_eventual;
-                recurseN_cont_temporary = data.n_cont_temporary;           
+                recurseN_cont_temporary = data.n_cont_temporary;
+                           
             }catch(error){
+
                 console.log(`Error parsing result: ${error}`);
             }
             const status = await res.status;
             resultStatus = status;	
+            if(status==404){
+
+                warning = "No existe el dato solicitado";
+
+                v_warning = true;
+
+                f_warning();
+
+            }else if(status==200){
+
+                info = "Este es el dato solicitado"
+
+                v_info = true;
+
+                f_info();
+
+            }else if(status == 500){
+
+                error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+
+                v_error = true;
+
+            }
         }
       
         async function updateRecurse () {
@@ -88,7 +127,30 @@
                 const status = await res.status;
                 resultStatus = status;	           
                 if(status==200){
+
                     getRecurse();
+
+                    info = `El dato ${recurseProvince} ${recurseYear} se ha actualizado correctamente`;
+
+                    v_info = true;
+
+                    f_info();
+
+                }else if(status==404){
+
+                    warning = `El dato ${recurseProvince} ${recurseYear} no existe en la base de datos`;
+
+                    v_warning = true;
+
+                    f_warning();
+
+                }else if(status==400){
+
+                    warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
+
+                    v_warning = true;
+
+                    f_warning();
                 }
             }
             
@@ -96,6 +158,16 @@
 </script>
 <main>
     <h1> Detalles del recurso:</h1>
+
+    {#if errores != ""}
+    <Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert>
+    {/if}
+    {#if warning != ""}
+    <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
+    {/if}
+    {#if info != ""}
+    <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
+    {/if}
     
     <Table>
         <thead>
