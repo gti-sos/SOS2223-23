@@ -2,10 +2,8 @@
     // @ts-nocheck
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, Table,ButtonToolbar } from 'sveltestrap';
+        import { Button, Table,ButtonToolbar, Input } from 'sveltestrap';
         import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
-        
-        const toggle = () => (open = !open);
 
         let warning = "";
         let info = "";
@@ -16,6 +14,11 @@
         let success = "";
         let v_success = false;
         let open = false;
+        let myOpen = false;
+        let consultAPI = "";
+
+        const toggle = () => (open = !open);
+        const myToggle = () => (myOpen = !myOpen);
         
         onMount(async () => {
             getData();
@@ -132,7 +135,7 @@
         }
 
 
-        async function createData () {
+        async function createData() {
             resultStatus = result = "";
             if(newYear == "" || newProvince == "" || newMunicipality_size_lt_ft == "" ||newMunicipality_size_bt_ft_tht == "" ||
             newMunicipality_size_gt_tht == "" ||newCapital_size == ""){
@@ -173,7 +176,32 @@
                 v_warning = true;
             }
         }
-    
+        async function consult(){
+            APIConsult = API+"/"+consultAPI
+            resultStatus = result = "";
+            const res = await fetch(APIConsult, {
+                method: 'GET'
+            });
+            try{
+                const data = await res.json();
+                result = JSON.stringify(data,null,2);
+                density = data;
+            }catch(error){
+                console.log(`Error parsing result: ${error}`);
+            }
+            const status = await res.status;
+            resultStatus = status;	
+            if(status==404){
+                warning = "No hay datos cargados en la base de datos";
+                v_warning = true;
+            } 
+            if(status ==201){
+                success = `Los datos han sido cargados`;
+                v_success = true;
+            } 
+        }
+        
+
 </script>
 <main>
     <h1>Listado de datos: Densidad de Poblacion</h1>
@@ -194,8 +222,9 @@
     
     <div class="botones">
         <ButtonToolbar>
-            <Button outline on:click={loadData}>Cargar Datos Iniciales</Button>
-            <Button outline on:click={toggle}>Borrar todos los datos</Button>
+            <Button color=primary class=botones_iniciales outline on:click={loadData}>Cargar Datos Iniciales</Button>
+
+            <Button color=primary class=botones_iniciales outline on:click={toggle}>Borrar todos los datos</Button>
             <Modal isOpen={open} {toggle}>
             <ModalHeader {toggle}>Eliminar Datos</ModalHeader>
             <ModalBody>
@@ -206,6 +235,22 @@
                 <Button color="secondary" on:click={toggle}>Cancelar</Button>
             </ModalFooter>
             </Modal>
+
+            <Button color=primary class=botones_iniciales outline on:click={myToggle}>Consulta especial</Button>
+            <Modal isOpen={myOpen} {myToggle}>
+                
+              </Modal>
+
+              <Modal isOpen={myOpen} {myToggle}>
+                <ModalHeader {myToggle}>"Consulta API"</ModalHeader>
+                <ModalBody>
+                    <input bind:value={consultAPI}>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="primary" on:click={() => {consult(); myToggle()}}>Filtrar por consulta</Button>
+                  <Button color="secondary" on:click={myToggle}>Cancelar</Button>
+                </ModalFooter>
+              </Modal>
         </ButtonToolbar>
     </div>
 
@@ -236,7 +281,7 @@
                     <td><input placeholder="0" bind:value={newMunicipality_size_bt_ft_tht}></td>
                     <td><input placeholder="0" bind:value={newMunicipality_size_gt_tht}></td>
                     <td><input placeholder="0" bind:value={newCapital_size}></td>
-                    <td><Button on:click={createData}>Crear</Button></td>
+                    <td><Button outline color=success on:click={createData}>Crear</Button></td>
                     
                 </tr>
         
@@ -251,8 +296,23 @@
                 <td>{datos.capital_size}</td>
                 <td class="botones-accion">
                 <ButtonToolbar>
-                    <Button><a id="enlace_edit" href="/density-population/{datos.year}/{datos.province}/{datos.gender}">Editar</a></Button>
-                    <Button id="delete_button" on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Borrar</Button>
+                    <Button color=warning outline><a id="enlace_edit" href="/density-population/{datos.year}/{datos.province}/{datos.gender}">Editar</a></Button>
+                    <!-- <div>
+                        <Button color="danger" on:click={myToggle}>Open Modal</Button>
+                        <Modal isOpen={myOpen} {myToggle}>
+                          <ModalHeader {myToggle}>Modal title</ModalHeader>
+                          <ModalBody>
+                            Estas seguro que quieres eliminar este dato?: {datos.year}/{datos.province}/{datos.gender}
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button color="primary" on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Do Something</Button>
+                            <Button color="secondary" on:click={myToggle}>Cancel</Button>
+                          </ModalFooter>
+                        </Modal>
+                    </div> -->
+
+
+                    <Button color=danger outline  on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Borrar</Button>
                 </ButtonToolbar>
                 </td>
                 <td>&nbsp</td>
@@ -275,6 +335,6 @@
     }
     #enlace_edit{
         text-decoration: none;
-        color: aquamarine;
+        color: black;
     }
 </style>
