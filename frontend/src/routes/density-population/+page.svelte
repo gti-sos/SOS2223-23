@@ -6,6 +6,10 @@
         import { Button, Table,ButtonToolbar, Input } from 'sveltestrap';
         import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
 
+        onMount(async () => {
+            getData();
+        });
+
         let warning = "";
         let info = "";
         let v_info = false;
@@ -16,14 +20,10 @@
         let v_success = false;
         let open = false;
         let myOpen = false;
-        //let consultAPI = "";
+        let consultAPI = "";
 
         const toggle = () => (open = !open);
         const myToggle = () => (myOpen = !myOpen);
-        
-        onMount(async () => {
-            getData();
-        });
         
         let API = '/api/v2/density-population';
         
@@ -83,7 +83,7 @@
                 result = JSON.stringify(data,null,2);
                 density = data;
             }catch(error){
-                console.log(`Error parsing result: ${error}`);
+                console.log(`Error parseando el resultado: ${error}`);
             }
             const status = await res.status;
             resultStatus = status;	
@@ -177,16 +177,40 @@
                 v_warning = true;
             }
         }
-        
-        // function updateConsultAPI(event) {
-        //     consultAPI = event.target.value;
-        // }
 
-        function redirectToRoute() {
-            myToggle(); // Llamamos a la función myToggle()
-            window.location.href="/density-population/consultAPI"; // Redirigimos a la ruta indicada
+        async function getConsult(){
+            resultStatus = result = "";
+            const res = await fetch(API+"?"+consultAPI, {
+                method: "GET"
+            });
+            console.log(API+"?"+consultAPI);
+            try{
+                const data = await res.json();
+                result = JSON.stringify(data, null, 2);
+                density = data;
+                
+            }catch(error){
+                console.log(`Error parseando el resultado: ${error}`);
+            }
+            const status = await res.status;
+            resultStatus = status;
+            if(status==404){
+                warning = "No hay datos cargados en la base de datos";
+                v_warning = true;
+            } 
+            if(status ==201){
+                success = `Los datos han sido cargados`;
+                v_success = true;
+            } 
         }
-        export let consultAPI = '';
+        async function cleanFilter(){
+            resultStatus = result = "";
+            if(consultAPI != ""){
+                consultAPI="";
+            }
+            getData();
+        }
+
 </script>
 <main>
     <h1>Listado de datos: Densidad de Poblacion</h1>
@@ -205,7 +229,7 @@
     <Alert color="success" isOpen={v_success} toggle={() => (v_success = false)}>{success}</Alert>
     {/if}
     
-    <div class="botones">
+    <div class="botones" >
         <ButtonToolbar>
             <Button color=primary class=botones_iniciales outline on:click={loadData}>Cargar Datos Iniciales</Button>
 
@@ -229,17 +253,19 @@
               <Modal isOpen={myOpen} {myToggle}>
                 <ModalHeader {myToggle}>"Consulta API"</ModalHeader>
                 <ModalBody>
-                    <input bind:value={consultAPI}>
+                    Introduce aquí tu busqueda: <input bind:value={consultAPI}>
                     <p>{consultAPI}</p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="primary" on:click={redirectToRoute}>Consulta</Button>
+                  <Button color="primary" on:click={() => {getConsult(); myToggle()}}>Consulta</Button>
                   <Button color="secondary" on:click={myToggle}>Cancelar</Button>
                 </ModalFooter>
               </Modal>
         </ButtonToolbar>
+        <Button outline style=position:absolute;right:0;margin-right:15px color="secondary" on:click={() => 
+        {cleanFilter(); myToggle()}}>Borrar consulta</Button>
     </div>
-
+        
     <div>
         
       </div>
@@ -321,6 +347,6 @@
     }
     #enlace_edit{
         text-decoration: none;
-        color: black;
+        color: grey
     }
 </style>
