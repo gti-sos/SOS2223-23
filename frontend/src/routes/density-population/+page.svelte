@@ -2,6 +2,7 @@
     // @ts-nocheck
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
+        import { writable } from 'svelte/store';
         import { Button, Table,ButtonToolbar, Input } from 'sveltestrap';
         import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
 
@@ -15,7 +16,7 @@
         let v_success = false;
         let open = false;
         let myOpen = false;
-        let consultAPI = "";
+        //let consultAPI = "";
 
         const toggle = () => (open = !open);
         const myToggle = () => (myOpen = !myOpen);
@@ -44,7 +45,7 @@
     
         let result = "";
         let resultStatus = "";
-    
+
         async function loadData() {
             resultStatus = result = "";
             const res = await fetch(API+'/loadInitialData', {
@@ -176,32 +177,16 @@
                 v_warning = true;
             }
         }
-        async function consult(){
-            APIConsult = API+"/"+consultAPI
-            resultStatus = result = "";
-            const res = await fetch(APIConsult, {
-                method: 'GET'
-            });
-            try{
-                const data = await res.json();
-                result = JSON.stringify(data,null,2);
-                density = data;
-            }catch(error){
-                console.log(`Error parsing result: ${error}`);
-            }
-            const status = await res.status;
-            resultStatus = status;	
-            if(status==404){
-                warning = "No hay datos cargados en la base de datos";
-                v_warning = true;
-            } 
-            if(status ==201){
-                success = `Los datos han sido cargados`;
-                v_success = true;
-            } 
-        }
         
+        // function updateConsultAPI(event) {
+        //     consultAPI = event.target.value;
+        // }
 
+        function redirectToRoute() {
+            myToggle(); // Llamamos a la función myToggle()
+            window.location.href="/density-population/consultAPI"; // Redirigimos a la ruta indicada
+        }
+        export let consultAPI = '';
 </script>
 <main>
     <h1>Listado de datos: Densidad de Poblacion</h1>
@@ -245,9 +230,10 @@
                 <ModalHeader {myToggle}>"Consulta API"</ModalHeader>
                 <ModalBody>
                     <input bind:value={consultAPI}>
+                    <p>{consultAPI}</p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="primary" on:click={() => {consult(); myToggle()}}>Filtrar por consulta</Button>
+                  <Button color="primary" on:click={redirectToRoute}>Consulta</Button>
                   <Button color="secondary" on:click={myToggle}>Cancelar</Button>
                 </ModalFooter>
               </Modal>
