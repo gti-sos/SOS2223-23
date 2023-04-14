@@ -66,6 +66,4 @@
             <li><a href="/hired-people">Frontend de hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
         </ul>
     </ul>
-    <br>
-    <br>
 </main>

@@ -5,7 +5,21 @@
 
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, Table, ButtonToolbar, Modal, ModalBody, ModalFooter, ModalHeader, Alert } from 'sveltestrap';
+        import { Button, 
+            Table,
+            ButtonToolbar,
+            Modal,
+            ModalBody,
+            ModalFooter,
+            ModalHeader,
+            Alert, 
+            Card,
+            CardBody,
+            CardHeader,
+            CardText,
+            CardTitle, 
+            Row, 
+            Col } from 'sveltestrap';
 
     //____________________________Inicialización__________________________________________
         onMount(async () => {
@@ -21,38 +35,69 @@
         if(dev)
             API = 'http://localhost:12345'+API
             
-        let affiliates = [];
+    // ____________________________Variables de datos_______________________________________
 
-        let newYear = '';
+        let affiliates = []; //Datos
+        let pagina = 0;
+        const itemsPerPage = 10;
+        let lastPage = false;
+        function nextPage() {
+            if (!lastPage) {
+                pagina++;
+                getAffiliation();
+            }
+        }
+  
+        function previousPage() {
+            if (pagina > 1) {
+                pagina--;
+                getAffiliation();
+            }
+        }
+
+        //Para crear datos
+        let newYear = ''; 
         let newProvince = '';
         let newSs_affiliation = '';
         let newN_cont_indef = '';
         let newN_cont_eventual = '';
         let newN_cont_temporary = '';
 
+    // ______________________________Variables de control_____________________________________
+        //Avisos
         let warning = "";
+        let v_warning = false;
+        function f_warning() {
+            (setTimeout(function(){v_info = false;}, 6000));
+        }
+    
+        //Info
         let info = "";
         let v_info = false;
         let info2 = "";
         let v_info2 = false;
-        let v_warning = false;
-        let errores = "";
-        let v_errores = false;
-        let open = false;
-        const toggle = () => (open = !open);
         function f_info() {
             (setTimeout(function(){v_info = false;}, 6000));
         }
         function f_info2() {
             (setTimeout(function(){v_info = false;}, 6000));
         }
-        function f_warning() {
-            (setTimeout(function(){v_info = false;}, 6000));
-        }
-    
+
+        //Errores
+        let errores = "";
+        let v_errores = false;
+
+        //Borrado
+        let open = false;
+        const toggle = () => (open = !open);
+        
+        
+        //Para depuracion
         let result = "";
         let resultStatus = "";
     
+
+        //Cargar datos de la base si vacia
         async function loadData() {
             resultStatus = result = "";
             const res = await fetch(API+'/loadInitialData', {
@@ -86,9 +131,11 @@
             }
         }
 
+        //Obtener datos
         async function getAffiliation() {
+
             resultStatus = result = "";
-            const res = await fetch(API, {
+            const res = await fetch(API+`?offset=${pagina*itemsPerPage}&limit=${itemsPerPage}`, {
                 method: 'GET'
             });
             try{
@@ -105,7 +152,10 @@
             resultStatus = status;	
             if(status==404){
 
-                warning = "No hay datos cargados en la base de datos";
+                warning = "No hay datos cargados en la base de datos o ya no hay más datos";
+
+                
+                lastPage = true;
 
                 v_warning = true;
 
@@ -113,7 +163,9 @@
 
             }else if(status==200){
 
-                info = "Mostrando los datos de la base de datos"
+                info = `Mostrando la pagina ${pagina} de la base de datos`
+
+                lastPage = false;
 
                 v_info = true;
 
@@ -258,7 +310,11 @@
                 console.error(`Error borrando todos los datos: ${error}`);
             }
         }
-    
+
+
+        function capitalizeFirstLetter(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
 </script>
 <main>
 
@@ -317,11 +373,10 @@
                 <td><input bind:value={newN_cont_temporary}></td>
                 <td><Button on:click={createAffiliation}>Crear</Button></td>
             </tr>
-    
         {#each affiliates as affiliate}
           <tr>
             <td>{affiliate.year}</td>
-            <td>{affiliate.province}</td>
+            <td>{capitalizeFirstLetter(affiliate.province)}</td>
             <td>{affiliate.ss_affiliation}</td>
             <td>{affiliate.n_cont_indef}</td>
             <td>{affiliate.n_cont_eventual}</td>
@@ -330,11 +385,12 @@
             <td><Button on:click={deleteAffiliation(`${affiliate.province}/${affiliate.year}`)}>Borrar</Button></td>
             <td>&nbsp</td>
           </tr>
-          {/each} 
+        {/each} 
         </tbody>
-      </Table>
+    </Table>
 
-
+    <button on:click={previousPage} disabled={pagina === 0}>Previous</button>
+    <button on:click={nextPage} disabled={lastPage === true}>Next</button>
 </main>
 
 <style>
@@ -342,4 +398,10 @@
         display: flex; 
         justify-content: center;
     }
+
+    a{
+        text-decoration: none;
+        color: white;
+    }
+
 </style>

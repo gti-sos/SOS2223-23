@@ -2,6 +2,9 @@
     import { Card, CardBody } from 'sveltestrap';
     
 </script>
+<br>
+<br>
+<br>
 
 <div class="footer">
   <Card>
