@@ -23,6 +23,7 @@
             Row, 
             Col, 
             Container} from 'sveltestrap';
+    import { query_selector_all } from 'svelte/internal';
 
     //____________________________Inicialización__________________________________________
         onMount(async () => {
@@ -71,6 +72,22 @@
         let newN_cont_eventual = '';
         let newN_cont_temporary = '';
 
+        // Para buscar datos
+        let searchedYear = '';
+        let searchedFrom = '';
+        let searchedTo = ''; 
+        let searchedProvince = '';
+        let searchedSs_affiliation_over = '';
+        let searchedSs_affiliation_under = '';
+        let searchedN_cont_indef_over = '';
+        let searchedN_cont_indef_under = '';
+        let searchedN_cont_eventual_over = '';
+        let searchedN_cont_eventual_under = '';
+        let searchedN_cont_temporary_over = '';
+        let searchedN_cont_temporary_under = '';
+        let concreteYear = '';
+        let concreteProvince = '';
+
     // ______________________________Variables de control_____________________________________
         //Avisos
         let warning = "";
@@ -107,7 +124,49 @@
         let v_buscar = false;
         const buscar = () => (v_buscar = !v_buscar);
         let busqueda = '';
+        function queryparser(){
+            let query = '&'
+            searchedYear = '';
+            searchedFrom = '';
+            searchedTo = ''; 
+            searchedProvince = '';
+            searchedSs_affiliation_over = '';
+            searchedSs_affiliation_under = '';
+            searchedN_cont_indef_over = '';
+            searchedN_cont_indef_under = '';
+            searchedN_cont_eventual_over = '';
+            searchedN_cont_eventual_under = '';
+            searchedN_cont_temporary_over = '';
+            searchedN_cont_temporary_under = '';
+            if(searchedProvince != ''){
+                query = query + `province=${searchedProvince}&`
+            }if(searchedYear != ''){
+                query = query + `year=${searchedYear}&`
+            }if(searchedFrom != ''){
+                query = query + `from=${searchedFrom}&`
+            }if(searchedTo != ''){
+                query = query + `to=${searchedTo}&`
+            }if(searchedSs_affiliation_over != ''){
+                query = query + `ss_affiliation_over=${searchedSs_affiliation_over}&`
+            }if(searchedSs_affiliation_under != ''){
+                query = query + `ss_affiliation_under=${searchedSs_affiliation_under}&`
+            }if(searchedN_cont_indef_over != ''){
+                query = query + `n_cont_indef_over=${searchedN_cont_indef_over}&`
+            }if(searchedN_cont_indef_under != ''){
+                query = query + `n_cont_indef_under=${searchedN_cont_indef_under}&`
+            }if(searchedN_cont_eventual_over != ''){
+                query = query + `n_cont_eventual_over=${searchedN_cont_eventual_over}&`
+            }if(searchedN_cont_eventual_under != ''){
+                query = query + `n_cont_eventual_under=${searchedN_cont_eventual_under}&`
+            }if(searchedN_cont_temporary_over != ''){
+                query = query + `n_cont_temporary_over=${searchedN_cont_temporary_over}&`
+            }if(searchedN_cont_temporary_under != ''){
+                query = query + `n_cont_temporary_under=${searchedN_cont_temporary_under}&`
+            }
 
+            return query.slice(0, -1);
+        }
+        const re_pagina = () => { pagina = 0 };
 
         //Para depuracion
         let result = "";
@@ -171,6 +230,7 @@
             }
             
         }
+
         //Obtener datos
         async function getAffiliation(query) {
             let newquery = '';
@@ -223,6 +283,56 @@
 
                 }
             }
+            
+        }
+
+        async function getRecurse() {
+
+            if(concreteProvince == '' || concreteYear == ''){
+
+                warning = "Para buscar un recurso concreto debe proporcionar año y provincia";
+
+                v_warning = true;
+
+                f_warning();
+            }else{
+                resultStatus = result = "";
+                const res = await fetch(API+`/${concreteProvince}/${concreteYear}`, {
+                    method: 'GET'
+                });
+                try{
+
+                    const data = await res.json();
+                    result = JSON.stringify(data,null,2);
+                    affiliate = data;
+                    
+                }catch(error){
+
+                    console.log(`Error parsing result: ${error}`);
+                }
+                const status = await res.status;
+                resultStatus = status;	
+                if(status==404){
+
+                    warning = "No existe el dato solicitado";
+
+                    v_warning = true;
+
+                    f_warning();
+
+                }else if(status==200){
+
+                    location.replace(`/ss-affiliates/${concreteProvince}/${concreteYear}`);
+                    
+                }else if(status == 500){
+
+                    error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+
+                    v_error = true;
+
+                }
+            }
+                
             
         }
       
@@ -298,7 +408,7 @@
 
             if(status==204){
 
-                getAffiliation(''); 
+                getAffiliation(queryparser()); 
 
                 info2 = `Se ha borrado correctamente el dato ${affiliate}`;
 
@@ -339,8 +449,6 @@
 
                     f_info2();
 
-                    getAffiliation('');
-
                     resultStatus = "Todos los datos han sido borrados";
 
                     console.log('Todos los datos han sido borrados.');
@@ -360,6 +468,8 @@
         function capitalizeFirstLetter(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
+
+        
 </script>
 <main>
 
@@ -391,11 +501,11 @@
 
     <!--_______________________________________________Botonera______________________________________________-->
     <Container class = 'mb-3'>
-        <Row>
-            <Col>
+        <Row cols={{ xs:2,sm: 2, md: 4, lg: 4, xl:4}}>
+            <Col class = 'mb-3'>
                 <Button on:click={loadData}>Cargar Datos<Icon name="collection"></Icon></Button>
             </Col>
-            <Col>
+            <Col class = 'mb-3'>
                 <Button on:click={borrar}>Borrar Datos</Button>
                 <Modal isOpen={v_borrar} {borrar}>
                     <ModalHeader {borrar}>Eliminar Datos</ModalHeader>
@@ -408,10 +518,10 @@
                     </ModalFooter>
                 </Modal>
             </Col>
-            <Col>
+            <Col class = 'mb-3'>
                 <Button on:click={() => {crear(); v_buscar = false;}}>Introducir Dato</Button>
             </Col>
-            <Col>
+            <Col class = 'mb-3'>
                 <Button on:click={() => {buscar(); v_crear = false}}>Buscar Datos</Button>
             </Col>
         </Row>
@@ -420,7 +530,7 @@
     <!--______________________________________Formulario para creacion de nuevos recursos_____________________________________-->
     {#if v_crear}
         <Container class = 'mb-3'>
-            <Row>
+            <Row cols={{ xs:2,sm: 2, md: 3, lg: 3, xl:3}}>
                 <Col class = 'mb-3'>
                     <FormGroup>
                         <Label for="province">Provincia nuevo dato</Label>
@@ -456,8 +566,6 @@
                         />
                     </FormGroup>
                 </Col>
-            </Row>
-            <Row>
                 <Col class = 'mb-3'>
                     <FormGroup>
                         <Label for="indef">Indefinidos nuevo dato</Label>
@@ -510,36 +618,66 @@
             <Row>
                 <Col class = 'mb-3'>
                     <FormGroup>
-                        <Label for="province">Provincia nuevo dato</Label>
+                        <Label for="c_province">Provincia:</Label>
                         <Input
                             type="text"
-                            id = "province"
-                            name="province"
-                            placeholder="Escribe una provincia"
-                            bind:value={newProvince}
-                        />
-                    </FormGroup></Col>
-                <Col class = 'mb-3'>
-                    <FormGroup>
-                        <Label for="year">Año nuevo dato</Label>
-                        <Input
-                            type="number"
-                            id = "year"
-                            name="year"
-                            placeholder="Escribe un año"
-                            bind:value={newYear}
+                            id = "c_province"
+                            name="c_province"
+                            placeholder="Proporcione una provincia"
+                            bind:value={concreteProvince}
+                            required
                         />
                     </FormGroup>
                 </Col>
                 <Col class = 'mb-3'>
                     <FormGroup>
-                        <Label for="affiliate">Afiliados nuevo dato</Label>
+                        <Label for="c_year">Año:</Label>
                         <Input
                             type="number"
-                            id = "affiliate"
-                            name="affiliate"
-                            placeholder="Escribe una cifra"
-                            bind:value={newSs_affiliation}
+                            id = "c_year"
+                            name="c_year"
+                            placeholder="Proporcione un año"
+                            bind:value={concreteYear}
+                            required
+                        />
+                    </FormGroup>
+                </Col>
+                <Col><Button on:click={()=>{getRecurse()}}>Buscar</Button></Col>
+            </Row>
+            <Row cols={{ xs:2,sm: 2, md: 3, lg: 3, xl:4}}>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_province">De una Provincia concreta:</Label>
+                        <Input
+                            type="text"
+                            id = "b_province"
+                            name="b_province"
+                            placeholder="Busqueda por una provincia"
+                            bind:value={searchedProvince}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_year">De un Año concreto:</Label>
+                        <Input
+                            type="number"
+                            id = "b_year"
+                            name="b_year"
+                            placeholder="Busqueda por un año"
+                            bind:value={searchedYear}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="from">Desde el año:</Label>
+                        <Input
+                            type="number"
+                            id = "from"
+                            name="from"
+                            placeholder="Escribe un año"
+                            bind:value={searchedFrom}
                         />
                     </FormGroup>
                 </Col>
@@ -547,44 +685,116 @@
             <Row>
                 <Col class = 'mb-3'>
                     <FormGroup>
-                        <Label for="indef">Indefinidos nuevo dato</Label>
+                        <Label for="to">Hasta el año:</Label>
                         <Input
                             type="number"
-                            id = "indef"
-                            name="indef"
-                            placeholder="Escribe una cifra"
-                            bind:value={newN_cont_indef}
+                            id = "to"
+                            name="to"
+                            placeholder="Escribe un año"
+                            bind:value={searchedTo}
                         />
                     </FormGroup>
                 </Col>
                 <Col class = 'mb-3'>
                     <FormGroup>
-                        <Label for="event">Eventuales nuevo dato</Label>
+                        <Label for="b_ss_over">Desde una cifra de afiliados:</Label>
                         <Input
                             type="number"
-                            id = "event"
-                            name="event"
+                            id = "b_ss_over"
+                            name="b_ss_over"
                             placeholder="Escribe una cifra"
-                            bind:value={newN_cont_eventual}
+                            bind:value={searchedSs_affiliation_over}
                         />
                     </FormGroup>
                 </Col>
                 <Col class = 'mb-3'>
                     <FormGroup>
-                        <Label for="temp">Temporales nuevo dato</Label>
+                        <Label for="b_ss_under">Hasta una cifra de afiliados:</Label>
                         <Input
                             type="number"
-                            id = "temp"
-                            name="temp"
+                            id = "b_ss_under"
+                            name="b_ss_under"
                             placeholder="Escribe una cifra"
-                            bind:value={newN_cont_temporary}
+                            bind:value={searchedSs_affiliation_under}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_temp_over">Desde una cifra de temporales:</Label>
+                        <Input
+                            type="number"
+                            id = "b_temp_over"
+                            name="b_temp_over"
+                            placeholder="Escribe una cifra"
+                            bind:value={searchedN_cont_temporary_over}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_temp_under">Hasta una cifra de temporales:</Label>
+                        <Input
+                            type="number"
+                            id = "b_temp_under"
+                            name="b_temp_under"
+                            placeholder="Escribe una cifra"
+                            bind:value={searchedN_cont_temporary_under}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_event_over">Desde una cifra de eventuales:</Label>
+                        <Input
+                            type="number"
+                            id = "b_event_over"
+                            name="b_event_over"
+                            placeholder="Escribe una cifra"
+                            bind:value={searchedN_cont_eventual_over}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_event_under">Hasta una cifra de eventuales:</Label>
+                        <Input
+                            type="number"
+                            id = "b_event_under"
+                            name="b_event_under"
+                            placeholder="Escribe una cifra"
+                            bind:value={searchedN_cont_eventual_under}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_indef_over">Desde una cifra de indefinidos:</Label>
+                        <Input
+                            type="number"
+                            id = "b_indef_over"
+                            name="b_indef_over"
+                            placeholder="Escribe una cifra"
+                            bind:value={searchedN_cont_indef_over}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="b_indef_under">Hasta una cifra de indefinidos:</Label>
+                        <Input
+                            type="number"
+                            id = "b_indef_under"
+                            name="b_indef_under"
+                            placeholder="Escribe una cifra"
+                            bind:value={searchedN_cont_indef_under}
                         />
                     </FormGroup>
                 </Col>
             </Row>
             <Row>
                 <Col></Col>
-                <Col><Button on:click={()=>{getAffiliation(busqueda)}}>Buscar</Button></Col>
+                <Col><Button on:click={()=>{getAffiliation(queryparser())}}>Buscar</Button></Col>
                 <Col></Col>
             </Row>
         </Container>
