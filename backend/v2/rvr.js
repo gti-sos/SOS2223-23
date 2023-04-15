@@ -99,6 +99,18 @@ function rvrv2(app){
     });
 
 
+    app.get(`${BASE_API_URL_ss_affiliates}/count`, (req, res) => {
+        db.count({}, (err,count)=>{
+            if(err){
+                console.log(`Error getting ss-affiliates`);
+                // Estado 500: Internal Server Error
+                res.sendStatus(500);
+            }else{
+                res.json(count);
+            }
+            
+        })
+    })
     //GET /ss-affiliates/province: Recursos por provincia
     app.get(`${BASE_API_URL_ss_affiliates}/:province`, (req, res) => {
 

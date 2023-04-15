@@ -24,7 +24,10 @@
     //____________________________Inicialización__________________________________________
         onMount(async () => {
 
+        
             getAffiliation();
+
+            
 
         });
     
@@ -38,11 +41,13 @@
     // ____________________________Variables de datos_______________________________________
 
         let affiliates = []; //Datos
+        let total = 0;
         let pagina = 0;
         const itemsPerPage = 10;
-        let lastPage = false;
+        let lastPage = 0;
+        let v_lastPage = true;
         function nextPage() {
-            if (!lastPage) {
+            if (!v_lastPage) {
                 pagina++;
                 getAffiliation();
             }
@@ -131,53 +136,74 @@
             }
         }
 
-        //Obtener datos
-        async function getAffiliation() {
-
+        async function getCount(){
             resultStatus = result = "";
-            const res = await fetch(API+`?offset=${pagina*itemsPerPage}&limit=${itemsPerPage}`, {
+            const res = await fetch(API+`/count`, {
                 method: 'GET'
             });
             try{
+                const count = await res.json();
+                total = count;
+                lastPage = Math.floor(total/itemsPerPage);
+                v_lastPage = (pagina == lastPage)
+                if(count==0){
 
-                const data = await res.json();
-                result = JSON.stringify(data,null,2);
-                affiliates = data;
-                
+                    warning = "No hay datos cargados en la base de datos";
+
+                    v_warning = true;
+
+                    f_warning();
+}
             }catch(error){
-
                 console.log(`Error parsing result: ${error}`);
             }
-            const status = await res.status;
-            resultStatus = status;	
-            if(status==404){
+            
+        }
+        //Obtener datos
+        async function getAffiliation() {
+            await getCount();
+            if (total != 0){
+                resultStatus = result = "";
+                const res = await fetch(API+`?offset=${pagina*itemsPerPage}&limit=${itemsPerPage}`, {
+                    method: 'GET'
+                });
+                try{
 
-                warning = "No hay datos cargados en la base de datos o ya no hay más datos";
+                    const data = await res.json();
+                    result = JSON.stringify(data,null,2);
+                    affiliates = data;
+                    
+                }catch(error){
 
-                
-                lastPage = true;
+                    console.log(`Error parsing result: ${error}`);
+                }
+                const status = await res.status;
+                resultStatus = status;	
+                if(status==404){
 
-                v_warning = true;
+                    warning = "No hay datos cargados en la base de datos o ya no hay más datos";
 
-                f_warning();
+                    v_warning = true;
 
-            }else if(status==200){
+                    f_warning();
 
-                info = `Mostrando la pagina ${pagina} de la base de datos`
+                }else if(status==200){
 
-                lastPage = false;
+                    info = `Mostrando la pagina ${pagina} de la base de datos`
 
-                v_info = true;
+                    v_info = true;
 
-                f_info();
+                    f_info();
 
-            }else if(status == 500){
+                }else if(status == 500){
 
-                error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
+                    error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
 
-                v_error = true;
+                    v_error = true;
 
+                }
             }
+            
         }
       
         async function createAffiliation() {
@@ -318,7 +344,7 @@
 </script>
 <main>
 
-    
+    <div class = "esquema"> </div>
     <h1> Listado de datos: ss-affiliates</h1>
 
     {#if errores != ""}
@@ -373,24 +399,31 @@
                 <td><input bind:value={newN_cont_temporary}></td>
                 <td><Button on:click={createAffiliation}>Crear</Button></td>
             </tr>
-        {#each affiliates as affiliate}
-          <tr>
-            <td>{affiliate.year}</td>
-            <td>{capitalizeFirstLetter(affiliate.province)}</td>
-            <td>{affiliate.ss_affiliation}</td>
-            <td>{affiliate.n_cont_indef}</td>
-            <td>{affiliate.n_cont_eventual}</td>
-            <td>{affiliate.n_cont_temporary}</td>
-            <td><Button><a href='ss-affiliates/{affiliate.province}/{affiliate.year}'>Editar</a></Button></td>
-            <td><Button on:click={deleteAffiliation(`${affiliate.province}/${affiliate.year}`)}>Borrar</Button></td>
-            <td>&nbsp</td>
-          </tr>
-        {/each} 
         </tbody>
     </Table>
 
+    <div class = 'container'>
+        {#each affiliates as affiliate, i}
+            <div class = "item{i}"><Card>
+                <CardHeader>
+                  <CardTitle>{capitalizeFirstLetter(affiliate.province)} {affiliate.year}</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <CardText>
+                    Afiliados a la seguridad Social: {affiliate.ss_affiliation} <br>
+                    Nuevos contratos indefinidos: {affiliate.n_cont_indef} <br>
+                    Nuevos contratos eventuales: {affiliate.n_cont_eventual} <br>
+                    Nuevos contratos temporales: {affiliate.n_cont_temporary} <br>
+                    <Button><a href='ss-affiliates/{affiliate.province}/{affiliate.year}'>Editar</a></Button>
+                    <Button on:click={deleteAffiliation(`${affiliate.province}/${affiliate.year}`)}>Borrar</Button>
+                  </CardText>
+                </CardBody>
+              </Card></div>
+        {/each}
+    </div>
+
     <button on:click={previousPage} disabled={pagina === 0}>Previous</button>
-    <button on:click={nextPage} disabled={lastPage === true}>Next</button>
+    <button on:click={nextPage} disabled={v_lastPage === true}>Next</button>
 </main>
 
 <style>
@@ -404,4 +437,62 @@
         color: white;
     }
 
+    .container{
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: start;
+        align-content: start;
+        row-gap: 1rem;
+    }
+    .item1{
+        grid-area: 1/1/2/2;
+        justify-self: left;
+        align-self: start;
+    }
+    .item2{
+        grid-area: 1/2/2/3;
+        justify-self: center;
+        align-self: center;
+    }
+    .item3{
+        grid-area: 1/3/2/4;
+        justify-self: right;
+        align-self: center;
+    }
+    .item4{
+        grid-area: 2/1/3/2;
+        justify-self: left;
+        align-self: center;
+    }
+    .item5{
+        grid-area: 2/2/3/3;
+        justify-self: center;
+        align-self: center;
+    }
+    .item6{
+        grid-area: 2/3/3/4;
+        justify-self: right;
+        align-self: center;
+    }
+    .item7{
+        grid-area: 3/1/4/2;
+        justify-self: left;
+        align-self: center;
+    }
+    .item8{
+        grid-area: 3/2/4/3;
+        justify-self: center;
+        align-self: center;
+    }
+    .item9{
+        grid-area: 3/3/4/4;
+        justify-self: right;
+        align-self: center;
+    }
+    .item10{
+        grid-area: 4/1/5/2;
+        justify-self: left;
+        align-self: center;
+    }
 </style>
