@@ -5,11 +5,12 @@
         import { Pagination, PaginationItem, PaginationLink } from 'sveltestrap';
         import { Button, Table,ButtonToolbar, Input } from 'sveltestrap';
         import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
-    import { get } from 'svelte/store';
 
         onMount(async () => {
             getData();
         });
+
+        let xd = 0;
 
         let warning = "";
         let info = "";
@@ -77,7 +78,7 @@
 
         async function getData() {
             resultStatus = result = "";
-            const res = await fetch(API+"?"+"limit=40&"+"offset="+pagination, {
+            const res = await fetch(API+"?"+"limit=10&"+"offset="+pagination, {
                 method: 'GET'
             });
             try{
@@ -181,7 +182,7 @@
 
         async function getConsult(){
             resultStatus = result = "";
-            const res = await fetch(API+"?"+"limit=40&"+"offset="+pagination+"&"+consultAPI, {
+            const res = await fetch(API+"?"+"limit=10&"+"offset="+pagination+"&"+consultAPI, {
                 method: "GET"
             });
             console.log(API+"?"+consultAPI);
@@ -210,6 +211,17 @@
                 consultAPI="";
             }
             getData();
+        }
+        
+        async function countData(){
+            const res = await fetch(API, {
+                method: 'GET'
+            });
+            const data = await res.json()
+            let numElements = Array.isArray(data) ? data.length : 0;
+            let valor = Math.floor(numElements/10);
+            console.log(valor); 
+            xd = valor;
         }
 
 </script>
@@ -267,9 +279,10 @@
         {cleanFilter(); myToggle()}}>Borrar consulta</Button>
     </div>
     <div class="pagination">
-        <Pagination ariaLabel="Page navigation example">
+        <!-- <Pagination ariaLabel="Page navigation example">
+            
             <PaginationItem >
-              <PaginationLink on:click={() => {pagination=1; getData()}}>1</PaginationLink>
+            <PaginationLink on:click={() => {pagination=1; getData()}}>1</PaginationLink>
             </PaginationItem>
             <PaginationItem >
                 <PaginationLink on:click={() => {pagination=41; getData()}}>2</PaginationLink>
@@ -283,7 +296,28 @@
             <PaginationItem >
                 <PaginationLink on:click={() => {pagination=161; getData()}}>5</PaginationLink>
             </PaginationItem>
+            
+        </Pagination> -->
+        <Pagination ariaLabel="Page navigation example">
+            
+            <PaginationItem >
+            <PaginationLink on:click={() => {pagination=1; getData()}}>1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=41; getData()}}>2</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=81; getData()}}>3</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=121; getData()}}>4</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=161; getData()}}>5</PaginationLink>
+            </PaginationItem>
+            
         </Pagination>
+
     </div>
         
     <div>
