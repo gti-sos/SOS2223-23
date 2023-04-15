@@ -2,13 +2,15 @@
     // @ts-nocheck
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { writable } from 'svelte/store';
+        import { Pagination, PaginationItem, PaginationLink } from 'sveltestrap';
         import { Button, Table,ButtonToolbar, Input } from 'sveltestrap';
         import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
 
         onMount(async () => {
             getData();
         });
+
+        let xd = 0;
 
         let warning = "";
         let info = "";
@@ -21,6 +23,7 @@
         let open = false;
         let myOpen = false;
         let consultAPI = "";
+        let pagination = 1;
 
         const toggle = () => (open = !open);
         const myToggle = () => (myOpen = !myOpen);
@@ -75,7 +78,7 @@
 
         async function getData() {
             resultStatus = result = "";
-            const res = await fetch(API, {
+            const res = await fetch(API+"?"+"limit=10&"+"offset="+pagination, {
                 method: 'GET'
             });
             try{
@@ -97,7 +100,6 @@
             } 
             
         }
-      
 
         async function deleteData(data){
             resultStatus = result = "";
@@ -180,7 +182,7 @@
 
         async function getConsult(){
             resultStatus = result = "";
-            const res = await fetch(API+"?"+consultAPI, {
+            const res = await fetch(API+"?"+"limit=10&"+"offset="+pagination+"&"+consultAPI, {
                 method: "GET"
             });
             console.log(API+"?"+consultAPI);
@@ -209,6 +211,17 @@
                 consultAPI="";
             }
             getData();
+        }
+        
+        async function countData(){
+            const res = await fetch(API, {
+                method: 'GET'
+            });
+            const data = await res.json()
+            let numElements = Array.isArray(data) ? data.length : 0;
+            let valor = Math.floor(numElements/10);
+            console.log(valor); 
+            xd = valor;
         }
 
 </script>
@@ -264,6 +277,47 @@
         </ButtonToolbar>
         <Button outline style=position:absolute;right:0;margin-right:15px color="secondary" on:click={() => 
         {cleanFilter(); myToggle()}}>Borrar consulta</Button>
+    </div>
+    <div class="pagination">
+        <!-- <Pagination ariaLabel="Page navigation example">
+            
+            <PaginationItem >
+            <PaginationLink on:click={() => {pagination=1; getData()}}>1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=41; getData()}}>2</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=81; getData()}}>3</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=121; getData()}}>4</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=161; getData()}}>5</PaginationLink>
+            </PaginationItem>
+            
+        </Pagination> -->
+        <Pagination ariaLabel="Page navigation example">
+            
+            <PaginationItem >
+            <PaginationLink on:click={() => {pagination=1; getData()}}>1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=41; getData()}}>2</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=81; getData()}}>3</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=121; getData()}}>4</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink on:click={() => {pagination=161; getData()}}>5</PaginationLink>
+            </PaginationItem>
+            
+        </Pagination>
+
     </div>
         
     <div>
@@ -332,8 +386,6 @@
               {/each} 
             </tbody>
           </Table>
-    
-          
     </div>
     
 </main>
