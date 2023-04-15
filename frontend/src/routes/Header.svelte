@@ -54,3 +54,10 @@
         </Dropdown>
     </Nav>
 </main>
+        
+<style>
+    main{
+        color: #002366;
+        font-family: 'Times New Roman', Arial, sans-serif;
+    }
+</style>

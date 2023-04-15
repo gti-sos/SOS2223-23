@@ -6,8 +6,10 @@
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
         import { Button, 
-            Table,
-            ButtonToolbar,
+            Icon,
+            FormGroup,
+            Label,
+            Input,
             Modal,
             ModalBody,
             ModalFooter,
@@ -19,13 +21,14 @@
             CardText,
             CardTitle, 
             Row, 
-            Col } from 'sveltestrap';
+            Col, 
+            Container} from 'sveltestrap';
 
     //____________________________Inicialización__________________________________________
         onMount(async () => {
 
         
-            getAffiliation();
+            getAffiliation('');
 
             
 
@@ -49,14 +52,14 @@
         function nextPage() {
             if (!v_lastPage) {
                 pagina++;
-                getAffiliation();
+                getAffiliation('');
             }
         }
   
         function previousPage() {
             if (pagina > 1) {
                 pagina--;
-                getAffiliation();
+                getAffiliation('');
             }
         }
 
@@ -93,10 +96,19 @@
         let v_errores = false;
 
         //Borrado
-        let open = false;
-        const toggle = () => (open = !open);
+        let v_borrar = false;
+        const borrar = () => (v_borrar = !v_borrar);
         
-        
+        //Para crear
+        let v_crear = false;
+        const crear = () => (v_crear = !v_crear);
+
+        //Para buscar 
+        let v_buscar = false;
+        const buscar = () => (v_buscar = !v_buscar);
+        let busqueda = '';
+
+
         //Para depuracion
         let result = "";
         let resultStatus = "";
@@ -112,7 +124,7 @@
             resultStatus = status;
             if(status==201){
 
-                getAffiliation(); 
+                getAffiliation(''); 
 
                 info = "La base de datos se ha cargado correctamente"
 
@@ -136,9 +148,9 @@
             }
         }
 
-        async function getCount(){
+        async function getCount(query){
             resultStatus = result = "";
-            const res = await fetch(API+`/count`, {
+            const res = await fetch(API+`/count${query}`, {
                 method: 'GET'
             });
             try{
@@ -160,11 +172,19 @@
             
         }
         //Obtener datos
-        async function getAffiliation() {
-            await getCount();
+        async function getAffiliation(query) {
+            let newquery = '';
+
+            if (query != ''){
+
+                newquery = '?'+query.slice(1);
+
+            }
+            
+            await getCount(newquery);
             if (total != 0){
                 resultStatus = result = "";
-                const res = await fetch(API+`?offset=${pagina*itemsPerPage}&limit=${itemsPerPage}`, {
+                const res = await fetch(API+`?offset=${pagina*itemsPerPage}&limit=${itemsPerPage}${query}`, {
                     method: 'GET'
                 });
                 try{
@@ -230,7 +250,7 @@
                 resultStatus = status;	           
                 if(status==201){
 
-                    getAffiliation();
+                    getAffiliation('');
 
                     info2 = `El dato ${newProvince} ${newYear} se ha creado correctamente`;
 
@@ -278,7 +298,7 @@
 
             if(status==204){
 
-                getAffiliation(); 
+                getAffiliation(''); 
 
                 info2 = `Se ha borrado correctamente el dato ${affiliate}`;
 
@@ -319,7 +339,7 @@
 
                     f_info2();
 
-                    getAffiliation();
+                    getAffiliation('');
 
                     resultStatus = "Todos los datos han sido borrados";
 
@@ -337,162 +357,290 @@
             }
         }
 
-
         function capitalizeFirstLetter(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
 </script>
 <main>
 
-    <div class = "esquema"> </div>
-    <h1> Listado de datos: ss-affiliates</h1>
+    <!--______________________________________Cabecera_____________________________________-->
+    <Container>
+        <Row>
+            <Col sm={{ size: 'auto', offset: 2 }}><h1> Datos de la Seguridad Social en Andalucía</h1></Col>
+        </Row>
+    </Container>
 
-    {#if errores != ""}
-    <Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert>
+    <br/>
+
+    <!--______________________________________Alertas y avisos_____________________________________-->
+    <Container>
+        
+        {#if errores != ""}
+        <Row><Col><Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert></Col></Row>
+        {/if}
+        {#if warning != ""}
+        <Row><Col><Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert></Col></Row>
+        {/if}
+        {#if info2 != ""}
+        <Row><Col><Alert color="info" isOpen={v_info2} toggle={() => (v_info2 = false)}>{info2}</Alert></Col></Row>
+        {/if}
+        {#if info != ""}
+        <Row><Col><Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert></Col></Row>
+        {/if}
+    </Container>
+
+    <!--_______________________________________________Botonera______________________________________________-->
+    <Container class = 'mb-3'>
+        <Row>
+            <Col>
+                <Button on:click={loadData}>Cargar Datos<Icon name="collection"></Icon></Button>
+            </Col>
+            <Col>
+                <Button on:click={borrar}>Borrar Datos</Button>
+                <Modal isOpen={v_borrar} {borrar}>
+                    <ModalHeader {borrar}>Eliminar Datos</ModalHeader>
+                    <ModalBody>
+                        ¿Estás seguro que quieres eliminar todos los datos?
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" on:click={() => { deleteAllData(); borrar(); location.reload();}}>Eliminar</Button>
+                        <Button color="secondary" on:click={borrar}>Cancelar</Button>
+                    </ModalFooter>
+                </Modal>
+            </Col>
+            <Col>
+                <Button on:click={() => {crear(); v_buscar = false;}}>Introducir Dato</Button>
+            </Col>
+            <Col>
+                <Button on:click={() => {buscar(); v_crear = false}}>Buscar Datos</Button>
+            </Col>
+        </Row>
+    </Container >
+
+    <!--______________________________________Formulario para creacion de nuevos recursos_____________________________________-->
+    {#if v_crear}
+        <Container class = 'mb-3'>
+            <Row>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="province">Provincia nuevo dato</Label>
+                        <Input
+                            type="text"
+                            id = "province"
+                            name="province"
+                            placeholder="Escribe una provincia"
+                            bind:value={newProvince}
+                        />
+                    </FormGroup></Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="year">Año nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "year"
+                            name="year"
+                            placeholder="Escribe un año"
+                            bind:value={newYear}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="affiliate">Afiliados nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "affiliate"
+                            name="affiliate"
+                            placeholder="Escribe una cifra"
+                            bind:value={newSs_affiliation}
+                        />
+                    </FormGroup>
+                </Col>
+            </Row>
+            <Row>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="indef">Indefinidos nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "indef"
+                            name="indef"
+                            placeholder="Escribe una cifra"
+                            bind:value={newN_cont_indef}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="event">Eventuales nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "event"
+                            name="event"
+                            placeholder="Escribe una cifra"
+                            bind:value={newN_cont_eventual}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="temp">Temporales nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "temp"
+                            name="temp"
+                            placeholder="Escribe una cifra"
+                            bind:value={newN_cont_temporary}
+                        />
+                    </FormGroup>
+                </Col>
+            </Row>
+            <Row>
+                <Col></Col>
+                <Col><Button on:click={createAffiliation}>Crear</Button></Col>
+                <Col></Col>
+            </Row>
+        </Container>
     {/if}
-    {#if warning != ""}
-    <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
+
+
+    <!--______________________________________Cuadro de búsquedas_____________________________________________-->
+    {#if v_buscar}
+        <Container class = 'mb-3'>
+            <Row>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="province">Provincia nuevo dato</Label>
+                        <Input
+                            type="text"
+                            id = "province"
+                            name="province"
+                            placeholder="Escribe una provincia"
+                            bind:value={newProvince}
+                        />
+                    </FormGroup></Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="year">Año nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "year"
+                            name="year"
+                            placeholder="Escribe un año"
+                            bind:value={newYear}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="affiliate">Afiliados nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "affiliate"
+                            name="affiliate"
+                            placeholder="Escribe una cifra"
+                            bind:value={newSs_affiliation}
+                        />
+                    </FormGroup>
+                </Col>
+            </Row>
+            <Row>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="indef">Indefinidos nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "indef"
+                            name="indef"
+                            placeholder="Escribe una cifra"
+                            bind:value={newN_cont_indef}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="event">Eventuales nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "event"
+                            name="event"
+                            placeholder="Escribe una cifra"
+                            bind:value={newN_cont_eventual}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup>
+                        <Label for="temp">Temporales nuevo dato</Label>
+                        <Input
+                            type="number"
+                            id = "temp"
+                            name="temp"
+                            placeholder="Escribe una cifra"
+                            bind:value={newN_cont_temporary}
+                        />
+                    </FormGroup>
+                </Col>
+            </Row>
+            <Row>
+                <Col></Col>
+                <Col><Button on:click={()=>{getAffiliation(busqueda)}}>Buscar</Button></Col>
+                <Col></Col>
+            </Row>
+        </Container>
     {/if}
-    {#if info2 != ""}
-    <Alert color="info" isOpen={v_info2} toggle={() => (v_info2 = false)}>{info2}</Alert>
-    {/if}
-    {#if info != ""}
-    <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
-    {/if}
+    
 
-
-    <div class="botones">
-        <ButtonToolbar>
-            <Button outline on:click={loadData}>Cargar Datos Iniciales</Button>
-            <Button outline on:click={toggle}>Borrar todos los datos</Button>
-            <Modal isOpen={open} {toggle}>
-            <ModalHeader {toggle}>Eliminar Datos</ModalHeader>
-            <ModalBody>
-                ¿Estás seguro que quieres eliminar todos los datos?
-            </ModalBody>
-            <ModalFooter>
-                <Button color="danger" on:click={() => { deleteAllData(); toggle(); location.reload()}}>Eliminar</Button>
-                <Button color="secondary" on:click={toggle}>Cancelar</Button>
-            </ModalFooter>
-            </Modal>
-        </ButtonToolbar>
-    </div>
-
-    <Table>
-        <thead>
-          <tr>
-            <th>Año</th>
-            <th>Provincia</th>
-            <th>Afiliados a la Seguridad Social</th>
-            <th>Nuevos Contratos Indefinidos</th>
-            <th>Nuevos Contratos Eventuales</th>
-            <th>Nuevos contratos Temporales</th>
-          </tr>
-        </thead>
-        <tbody>
-           <tr>
-                <td><input bind:value={newYear}></td>
-                <td><input bind:value={newProvince}></td>
-                <td><input bind:value={newSs_affiliation}></td>
-                <td><input bind:value={newN_cont_indef}></td>
-                <td><input bind:value={newN_cont_eventual}></td>
-                <td><input bind:value={newN_cont_temporary}></td>
-                <td><Button on:click={createAffiliation}>Crear</Button></td>
-            </tr>
-        </tbody>
-    </Table>
-
-    <div class = 'container'>
-        {#each affiliates as affiliate, i}
-            <div class = "item{i}"><Card>
-                <CardHeader>
-                  <CardTitle>{capitalizeFirstLetter(affiliate.province)} {affiliate.year}</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <CardText>
-                    Afiliados a la seguridad Social: {affiliate.ss_affiliation} <br>
-                    Nuevos contratos indefinidos: {affiliate.n_cont_indef} <br>
-                    Nuevos contratos eventuales: {affiliate.n_cont_eventual} <br>
-                    Nuevos contratos temporales: {affiliate.n_cont_temporary} <br>
-                    <Button><a href='ss-affiliates/{affiliate.province}/{affiliate.year}'>Editar</a></Button>
-                    <Button on:click={deleteAffiliation(`${affiliate.province}/${affiliate.year}`)}>Borrar</Button>
-                  </CardText>
-                </CardBody>
-              </Card></div>
+    <hr/>
+                
+    <!--_______________________________________________Datos_________________________________________________-->
+    <Container>
+        <Row cols={{ xs:2,sm: 3, md: 3, lg: 3, xl:4}}>
+        {#each affiliates as affiliate}
+            <Col class = 'mb-3'>
+                <Card>
+                    <CardHeader>
+                    <CardTitle>{capitalizeFirstLetter(affiliate.province)} {affiliate.year}</CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                    <CardText>
+                        Afiliados a la seguridad Social: {affiliate.ss_affiliation} <br>
+                        Nuevos contratos indefinidos: {affiliate.n_cont_indef} <br>
+                        Nuevos contratos eventuales: {affiliate.n_cont_eventual} <br>
+                        Nuevos contratos temporales: {affiliate.n_cont_temporary} <br>
+                        <Button><a href='ss-affiliates/{affiliate.province}/{affiliate.year}'>Editar</a></Button>
+                        <Button on:click={deleteAffiliation(`${affiliate.province}/${affiliate.year}`)}>Borrar</Button>
+                    </CardText>
+                    </CardBody>
+                </Card>
+            </Col>
         {/each}
-    </div>
+    </Row>
+    </Container>
 
-    <button on:click={previousPage} disabled={pagina === 0}>Previous</button>
-    <button on:click={nextPage} disabled={v_lastPage === true}>Next</button>
+
+    <!--______________________________________Paginación_____________________________________-->
+    <Button on:click={previousPage} disabled={pagina === 0}>Previous</Button>
+
+    <Button on:click={nextPage} disabled={v_lastPage === true}>Next</Button>
+
 </main>
 
 <style>
-    .botones{
-        display: flex; 
-        justify-content: center;
-    }
 
     a{
         text-decoration: none;
         color: white;
     }
+    main{
 
-    .container{
-        display: grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
-        justify-content: start;
-        align-content: start;
-        row-gap: 1rem;
+        color: #002366;
+        font-family: 'Times New Roman', Arial, sans-serif;
     }
-    .item1{
-        grid-area: 1/1/2/2;
-        justify-self: left;
-        align-self: start;
-    }
-    .item2{
-        grid-area: 1/2/2/3;
-        justify-self: center;
-        align-self: center;
-    }
-    .item3{
-        grid-area: 1/3/2/4;
-        justify-self: right;
-        align-self: center;
-    }
-    .item4{
-        grid-area: 2/1/3/2;
-        justify-self: left;
-        align-self: center;
-    }
-    .item5{
-        grid-area: 2/2/3/3;
-        justify-self: center;
-        align-self: center;
-    }
-    .item6{
-        grid-area: 2/3/3/4;
-        justify-self: right;
-        align-self: center;
-    }
-    .item7{
-        grid-area: 3/1/4/2;
-        justify-self: left;
-        align-self: center;
-    }
-    .item8{
-        grid-area: 3/2/4/3;
-        justify-self: center;
-        align-self: center;
-    }
-    .item9{
-        grid-area: 3/3/4/4;
-        justify-self: right;
-        align-self: center;
-    }
-    .item10{
-        grid-area: 4/1/5/2;
-        justify-self: left;
-        align-self: center;
+    hr{
+        background-color: #002366;
+        height: 5px;
+        margin-left: 15%;
+        margin-right: 15%;
     }
 </style>

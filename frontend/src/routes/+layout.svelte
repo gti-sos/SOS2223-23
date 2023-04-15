@@ -13,6 +13,8 @@
     main {
         position: relative;
         min-height: 100%;
+        color: #002366;
+        font-family: 'Times New Roman', Arial, sans-serif;
     }
    
 </style>

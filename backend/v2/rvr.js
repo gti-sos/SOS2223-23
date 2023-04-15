@@ -62,6 +62,77 @@ function rvrv2(app){
         });
     });
 
+    app.get(`${BASE_API_URL_ss_affiliates}/count`, (req, res) => {
+
+        console.log(`New request to /ss-affiliates/count`);
+
+        // Recuperamos todos los registros de la base de datos para filtrarlos despues
+        db.find({}, {_id: 0}, (err, data) => {
+
+                    // Comprobamos los errores que han podido surgir
+                    if(err){
+
+                        console.log(`Error getting ss-affiliates`);
+
+                        // El estado es 500: Internal Server Error
+                        res.sendStatus(500);
+
+                    // Comprobamos si existen datos:
+                    }else if(data.length == 0){
+
+                        console.log(`ss-affiliates empty`);
+
+                        // Si no existen datos el estado es 404: Not Found
+                        res.json(data.length);
+                        
+
+                    }else{
+
+                        // Inicializamos los valores necesarios para el filtrado: un contador para el limit y el valor por defecto offset
+                        let i = -1;
+                        if(!req.query.offset){ var offset = -1;}else{ var offset = parseInt(req.query.offset);}
+
+                        // Filtramos los datos, para cada campo posible se devuelve true si no se pasa en la query, 
+                        // y si es un parametro se comprueba la condicion
+                        let datos = data.filter((x) => {
+                            return (((req.query.year == undefined)||(parseInt(req.query.year) === x.year))&&
+                            ((req.query.from == undefined)||(parseInt(req.query.from) <= x.year))&&
+                            ((req.query.to == undefined)||(parseInt(req.query.to) >= x.year))&&
+                            ((req.query.province == undefined)||(req.query.province === x.province))&&
+                            ((req.query.ss_affiliation_under == undefined)||(parseInt(req.query.ss_affiliation_under) >= x.ss_affiliation))&&
+                            ((req.query.ss_affiliation_over == undefined)||(parseInt(req.query.ss_affiliation_over) <= x.ss_affiliation))&&
+                            ((req.query.n_cont_temporary_under == undefined)||(parseInt(req.query.n_cont_temporary_under) >= x.n_cont_temporary))&&
+                            ((req.query.n_cont_temporary_over == undefined)||(parseInt(req.query.n_cont_temporary_over) <= x.n_cont_temporary))&&
+                            ((req.query.n_cont_indef_under == undefined)||(parseInt(req.query.n_cont_indef_under) >= x.n_cont_indef))&&
+                            ((req.query.n_cont_indef_over == undefined)||(parseInt(req.query.n_cont_indef_over) <= x.n_cont_indef))&&
+                            ((req.query.n_cont_eventual_under == undefined)||(parseInt(req.query.n_cont_eventual_under) >= x.n_cont_eventual))&&
+                            ((req.query.n_cont_eventual_over == undefined)||(parseInt(req.query.n_cont_eventual_over) <= x.n_cont_eventual)));
+                        }).filter((x) => {
+                            // Por ultimo implementamos la paginacion
+                            i = i+1;
+                            if(req.query.limit==undefined){ var cond = true;}else{ var cond = (offset + parseInt(req.query.limit)) >= i;}
+                            return (i>offset)&&cond;
+                        });
+
+                        // Comprobamos si tras el filtrado sigue habiendo datos, si no hay:
+                        if(datos.length == 0){
+
+                            console.log(`Query empty`);
+                            // Estado 404: Not Found
+                            res.json(datos.length);
+                            
+                        // Si por el contrario encontramos datos
+                        }else{
+
+                            console.log(`Data of ss-affiliates: ${datos.length}`);
+                            // Devolvemos dichos datos, estado 200: OK
+                            res.json(datos.length);
+                            
+                        }
+                    }
+            })
+    });
+
     //GET /ss-affiliates/province/year (First Province, then Year): Recurso único
     app.get(`${BASE_API_URL_ss_affiliates}/:province/:year`, (req, res) => {
 
@@ -98,19 +169,6 @@ function rvrv2(app){
         });
     });
 
-
-    app.get(`${BASE_API_URL_ss_affiliates}/count`, (req, res) => {
-        db.count({}, (err,count)=>{
-            if(err){
-                console.log(`Error getting ss-affiliates`);
-                // Estado 500: Internal Server Error
-                res.sendStatus(500);
-            }else{
-                res.json(count);
-            }
-            
-        })
-    })
     //GET /ss-affiliates/province: Recursos por provincia
     app.get(`${BASE_API_URL_ss_affiliates}/:province`, (req, res) => {
 
@@ -254,6 +312,7 @@ function rvrv2(app){
             })
     });
 
+    
 //___________________________POSTS_____________________________________________
 
 
