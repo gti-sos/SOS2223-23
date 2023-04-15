@@ -233,6 +233,7 @@
 
         //Obtener datos
         async function getAffiliation(query) {
+
             let newquery = '';
 
             if (query != ''){
@@ -323,7 +324,7 @@
                 }else if(status==200){
 
                     location.replace(`/ss-affiliates/${concreteProvince}/${concreteYear}`);
-                    
+
                 }else if(status == 500){
 
                     error = "Ha ocurrido un error en el servidor, vuelva a cargar la página o espere a que solucionemos el problema";
@@ -332,7 +333,6 @@
 
                 }
             }
-                
             
         }
       
@@ -529,6 +529,7 @@
 
     <!--______________________________________Formulario para creacion de nuevos recursos_____________________________________-->
     {#if v_crear}
+    <hr class = 'line'/>
         <Container class = 'mb-3'>
             <Row cols={{ xs:2,sm: 2, md: 3, lg: 3, xl:3}}>
                 <Col class = 'mb-3'>
@@ -614,7 +615,9 @@
 
     <!--______________________________________Cuadro de búsquedas_____________________________________________-->
     {#if v_buscar}
+    <hr class = 'line'/>
         <Container class = 'mb-3'>
+            <Row><Col>Use este cuadro para buscar un dato concreto, será redirigido a la pantalla de detalles</Col></Row>
             <Row>
                 <Col class = 'mb-3'>
                     <FormGroup>
@@ -644,6 +647,8 @@
                 </Col>
                 <Col><Button on:click={()=>{getRecurse()}}>Buscar</Button></Col>
             </Row>
+            <hr class = 'line'/>
+            <Row><Col>Use este cuadro para realizar una busqueda, se le mostrará una lista, aunque solo se obtenga un resultado</Col></Row>
             <Row cols={{ xs:2,sm: 2, md: 3, lg: 3, xl:4}}>
                 <Col class = 'mb-3'>
                     <FormGroup>
@@ -681,8 +686,6 @@
                         />
                     </FormGroup>
                 </Col>
-            </Row>
-            <Row>
                 <Col class = 'mb-3'>
                     <FormGroup>
                         <Label for="to">Hasta el año:</Label>
@@ -801,7 +804,7 @@
     {/if}
     
 
-    <hr/>
+    <hr class = 'divider'/>
                 
     <!--_______________________________________________Datos_________________________________________________-->
     <Container>
@@ -847,9 +850,15 @@
         color: #002366;
         font-family: 'Times New Roman', Arial, sans-serif;
     }
-    hr{
+    .divider{
         background-color: #002366;
         height: 5px;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+    .line{
+        background-color: #002366;
+        height: 2px;
         margin-left: 15%;
         margin-right: 15%;
     }
