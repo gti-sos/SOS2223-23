@@ -92,6 +92,56 @@ function amjc2(app){
             })
         });
 
+        app.get(`${BASE_API_URL_AMJC}/count`, (req, res) => {
+
+            console.log(`New request to /hired-people/count`);
+    
+            // Recuperamos todos los registros de la base de datos para filtrarlos despues
+            db.find({}, {_id: 0}, (err, data) => {
+                if(err){
+                    console.log(`Error getting hired-people`);
+                    res.sendStatus(500);
+                }else if(data.length == 0){
+                    console.log(`hired-people empty`);
+                    res.json(data.length);
+                }else{
+                    // Inicializamos un contador (limit) y el offset
+                    let i = -1;
+                    if(!req.query.offset){ var offset = -1;}else{ var offset = parseInt(req.query.offset);}
+                    // Filtramos los datos
+                    let datos = data.filter((x) => {
+                        return (((req.query.year == undefined)||(parseInt(req.query.year) === x.year))&&
+                        ((req.query.from == undefined)||(parseInt(req.query.from) <= x.year))&&
+                        ((req.query.to == undefined)||(parseInt(req.query.to) >= x.year))&&
+                        ((req.query.province == undefined)||(req.query.province=== x.province))&&
+                        ((req.query.gender == undefined)||(req.query.gender === x.gender))&&
+                        ((req.query.indefinite_contract_under == undefined)||(parseInt(req.query.indefinite_contract_under) >= x.indefinite_contract))&&
+                        ((req.query.single_construction_contract_under == undefined)||(parseInt(req.query.single_construction_contract_under) >= x.single_construction_contract))&&
+                        ((req.query.multiple_construction_contract_under == undefined)||(parseInt(req.query.multiple_construction_contract_under) >= x.multiple_construction_contract))&&
+                        ((req.query.single_eventual_contract_under == undefined)||(parseInt(req.query.single_eventual_contract_under) >= x.single_eventual_contract))&&
+                        ((req.query.multiple_eventual_contract_under == undefined)||(parseInt(req.query.multiple_eventual_contract_under) >= x.multiple_eventual_contract)))
+                    }).filter((x) => {
+                        // Paginacion
+                        i = i+1;
+                        if(req.query.limit==undefined){ var cond = true;}else{ var cond = (offset + parseInt(req.query.limit)) >= i;}
+                        return (i>offset)&&cond;
+                    });
+
+                    // Comprobamos si tras el filtrado sigue habiendo datos, si no hay:
+                    if(datos.length == 0){
+                        console.log(`Query empty`);
+                        // Estado 404: Not Found
+                        res.json(datos.length);
+                    // Si por el contrario encontramos datos
+                    }else{
+                        console.log(`Data of hired-people: ${datos.length}`);
+                        // Devolvemos dichos datos, estado 200: OK
+                        res.json(datos.length);
+                    }
+                }
+            })
+        });
+
         //GET a recurso específico
         app.get(BASE_API_URL_AMJC + '/:year/:province/:gender', (request,response) => {
             var year = request.params.year;
