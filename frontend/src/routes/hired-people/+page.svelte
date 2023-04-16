@@ -62,19 +62,19 @@
         let specificGender = '';
 
         function vaciarquery(){
-            let searchYear = '';
-            let searchProvince = '';
-            let searchGender = '';
-            let searchIndefinite_contract = '';
-            let searchSingle_construction_contract = '';
-            let searchMultiple_construction_contract = '';
-            let searchSingle_eventual_contract = '';
-            let searchMultiple_eventual_contract = '';
-            let searchFrom = '';
-            let searchTo = '';
-            let specificYear = '';
-            let specificProvince = '';
-            let specificGender = '';
+            searchYear = '';
+            searchProvince = '';
+            searchGender = '';
+            searchIndefinite_contract_under = '';
+            searchSingle_construction_contract_under = '';
+            searchMultiple_construction_contract_under = '';
+            searchSingle_eventual_contract_under = '';
+            searchMultiple_eventual_contract_under = '';
+            searchFrom = '';
+            searchTo = '';
+            specificYear = '';
+            specificProvince = '';
+            specificGender = '';
         }
 
         let info = "";
@@ -130,10 +130,10 @@
                 busqueda = busqueda + `single_eventual_contract_under=${searchSingle_eventual_contract_under}&`
             }if(searchMultiple_eventual_contract_under != ''){
                 busqueda = busqueda + `multiple_eventual_contract_under=${searchMultiple_eventual_contract_under}&`
-            }if(searchedFrom != ''){
-                busqueda = busqueda + `from=${searchedFrom}&`
-            }if(searchedTo != ''){
-                busqueda = busqueda + `to=${searchedTo}&`
+            }if(searchFrom != ''){
+                busqueda = busqueda + `from=${searchFrom}&`
+            }if(searchTo != ''){
+                busqueda = busqueda + `to=${searchTo}&`
             }
             busqueda = busqueda.slice(0,-1);
         }
@@ -302,7 +302,7 @@
             const status = await res.status;
             resultStatus = status;	           
             if(status==204){
-                queryparser();
+                realizarBusqueda();
                 await getHired(busqueda); 
                 info2 = `Se ha borrado correctamente el dato ${hiredPeople}.`;
                 v_info2 = true;
@@ -341,10 +341,6 @@
                 resultStatus = "Error borrando todos los datos.";
                 console.error(`Error borrando todos los datos: ${error}`);
             }
-        }
-
-        function capitalizeFirstLetter(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
         }
     
 </script>
@@ -709,7 +705,7 @@
             <Col class = 'mb-3'>
                 <Card>
                     <CardHeader>
-                        <CardTitle>{capitalizeFirstLetter(hired.year)} {hired.province} {hired.gender}</CardTitle>
+                        <CardTitle>{hired.year} {hired.province} {hired.gender}</CardTitle>
                     </CardHeader>
                     <CardBody>
                         <CardText>
@@ -718,8 +714,8 @@
                             Contratos Múltiples de Construcción: {hired.multiple_construction_contract} <br>
                             Contratos Únicos Eventuales: {hired.single_eventual_contract} <br>
                             Contratos Múltiples Eventuales: {hired.multiple_eventual_contract} <br>
-                            <Button><a href='hired-people/{hired.province}/{hired.year}'>Editar</a></Button>
-                            <Button on:click={deleteHired(`/${hired.year}/${hired.province}/${hired.gender}`)}>Borrar</Button>
+                            <Button><a href='hired-people/{hired.year}/{hired.province}/{hired.gender}'>Editar</a></Button>
+                            <Button on:click={deleteHired(`${hired.year}/${hired.province}/${hired.gender}`)}>Borrar</Button>
                         </CardText>
                     </CardBody>
                 </Card>
