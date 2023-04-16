@@ -5,24 +5,9 @@
 
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, 
-            Icon,
-            FormGroup,
-            Label,
-            Input,
-            Modal,
-            ModalBody,
-            ModalFooter,
-            ModalHeader,
-            Alert, 
-            Card,
-            CardBody,
-            CardHeader,
-            CardText,
-            CardTitle, 
-            Row, 
-            Col, 
-            Container} from 'sveltestrap';
+        import { Button, Icon, FormGroup, Label, Input, Modal, ModalBody, ModalFooter, ModalHeader, 
+            Alert, Card, CardBody, CardHeader, CardText, CardTitle,  Row, Col, 
+            Container, ButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'sveltestrap';
     import { query_selector_all } from 'svelte/internal';
 
     //____________________________Inicialización__________________________________________
@@ -53,14 +38,14 @@
         function nextPage() {
             if (!v_lastPage) {
                 pagina++;
-                getAffiliation('');
+                getAffiliation(busqueda);
             }
         }
   
         function previousPage() {
             if (pagina >= 1) {
                 pagina--;
-                getAffiliation('');
+                getAffiliation(busqueda);
             }
         }
 
@@ -87,6 +72,24 @@
         let searchedN_cont_temporary_under = '';
         let concreteYear = '';
         let concreteProvince = '';
+
+        function vaciarquery(){
+            searchedYear = '';
+            searchedFrom = '';
+            searchedTo = ''; 
+            searchedProvince = '';
+            searchedSs_affiliation_over = '';
+            searchedSs_affiliation_under = '';
+            searchedN_cont_indef_over = '';
+            searchedN_cont_indef_under = '';
+            searchedN_cont_eventual_over = '';
+            searchedN_cont_eventual_under = '';
+            searchedN_cont_temporary_over = '';
+            searchedN_cont_temporary_under = '';
+            concreteYear = '';
+            concreteProvince = '';
+
+        }
 
     // ______________________________Variables de control_____________________________________
         //Avisos
@@ -121,50 +124,41 @@
         const crear = () => (v_crear = !v_crear);
 
         //Para buscar 
-        let v_buscar = false;
-        const buscar = () => (v_buscar = !v_buscar);
+        let v_buscar1 = false;
+        const buscar1 = () => (v_buscar1 = !v_buscar1);
+        let v_buscar2 = false;
+        const buscar2 = () => (v_buscar2 = !v_buscar2);
         let busqueda = '';
+
         function queryparser(){
-            let query = '&'
-            searchedYear = '';
-            searchedFrom = '';
-            searchedTo = ''; 
-            searchedProvince = '';
-            searchedSs_affiliation_over = '';
-            searchedSs_affiliation_under = '';
-            searchedN_cont_indef_over = '';
-            searchedN_cont_indef_under = '';
-            searchedN_cont_eventual_over = '';
-            searchedN_cont_eventual_under = '';
-            searchedN_cont_temporary_over = '';
-            searchedN_cont_temporary_under = '';
+            busqueda = '&'
             if(searchedProvince != ''){
-                query = query + `province=${searchedProvince}&`
+                busqueda = busqueda + `province=${searchedProvince}&`
             }if(searchedYear != ''){
-                query = query + `year=${searchedYear}&`
+                busqueda = busqueda + `year=${searchedYear}&`
             }if(searchedFrom != ''){
-                query = query + `from=${searchedFrom}&`
+                busqueda = busqueda + `from=${searchedFrom}&`
             }if(searchedTo != ''){
-                query = query + `to=${searchedTo}&`
+                busqueda = busqueda + `to=${searchedTo}&`
             }if(searchedSs_affiliation_over != ''){
-                query = query + `ss_affiliation_over=${searchedSs_affiliation_over}&`
+                busqueda = busqueda + `ss_affiliation_over=${searchedSs_affiliation_over}&`
             }if(searchedSs_affiliation_under != ''){
-                query = query + `ss_affiliation_under=${searchedSs_affiliation_under}&`
+                busqueda = busqueda + `ss_affiliation_under=${searchedSs_affiliation_under}&`
             }if(searchedN_cont_indef_over != ''){
-                query = query + `n_cont_indef_over=${searchedN_cont_indef_over}&`
+                busqueda = busqueda + `n_cont_indef_over=${searchedN_cont_indef_over}&`
             }if(searchedN_cont_indef_under != ''){
-                query = query + `n_cont_indef_under=${searchedN_cont_indef_under}&`
+                busqueda = busqueda + `n_cont_indef_under=${searchedN_cont_indef_under}&`
             }if(searchedN_cont_eventual_over != ''){
-                query = query + `n_cont_eventual_over=${searchedN_cont_eventual_over}&`
+                busqueda = busqueda + `n_cont_eventual_over=${searchedN_cont_eventual_over}&`
             }if(searchedN_cont_eventual_under != ''){
-                query = query + `n_cont_eventual_under=${searchedN_cont_eventual_under}&`
+                busqueda = busqueda + `n_cont_eventual_under=${searchedN_cont_eventual_under}&`
             }if(searchedN_cont_temporary_over != ''){
-                query = query + `n_cont_temporary_over=${searchedN_cont_temporary_over}&`
+                busqueda = busqueda + `n_cont_temporary_over=${searchedN_cont_temporary_over}&`
             }if(searchedN_cont_temporary_under != ''){
-                query = query + `n_cont_temporary_under=${searchedN_cont_temporary_under}&`
+                busqueda = busqueda + `n_cont_temporary_under=${searchedN_cont_temporary_under}&`
             }
 
-            return query.slice(0, -1);
+            busqueda = busqueda.slice(0,-1);
         }
         const re_pagina = () => { pagina = 0 };
 
@@ -219,7 +213,7 @@
                 v_lastPage = (pagina == lastPage)
                 if(count==0){
 
-                    warning = "No hay datos cargados en la base de datos";
+                    warning = "Su búsqueda no ha dado resultados o no existen datos en la base de datos";
 
                     v_warning = true;
 
@@ -245,7 +239,7 @@
             await getCount(newquery);
             if (total != 0){
                 resultStatus = result = "";
-                const res = await fetch(API+`?offset=${pagina*itemsPerPage}&limit=${itemsPerPage}${query}`, {
+                const res = await fetch(API+`?offset=${(pagina*itemsPerPage)-1}&limit=${itemsPerPage}${query}`, {
                     method: 'GET'
                 });
                 try{
@@ -408,13 +402,22 @@
 
             if(status==204){
 
-                getAffiliation(queryparser()); 
+                queryparser();
+
+                await getAffiliation(busqueda); 
 
                 info2 = `Se ha borrado correctamente el dato ${affiliate}`;
 
                 v_info2 = true;
 
                 f_info2();
+
+                console.log(total)
+
+                if(total == 0){
+
+                    location.reload();
+                }
 
             }else if(status == 400){
 
@@ -497,6 +500,7 @@
         {#if info != ""}
         <Row><Col><Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert></Col></Row>
         {/if}
+
     </Container>
 
     <!--_______________________________________________Botonera______________________________________________-->
@@ -519,10 +523,16 @@
                 </Modal>
             </Col>
             <Col class = 'mb-3'>
-                <Button on:click={() => {crear(); v_buscar = false;}}>Introducir Dato</Button>
+                <Button on:click={() => {crear(); v_buscar1 = false; v_buscar2 = false}}>Introducir Dato</Button>
             </Col>
             <Col class = 'mb-3'>
-                <Button on:click={() => {buscar(); v_crear = false}}>Buscar Datos</Button>
+                <ButtonDropdown>
+                    <DropdownToggle color="secondary" caret>Buscar</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem on:click={() => {buscar1(); v_crear = false; v_buscar2 = false}}>Un recurso concreto</DropdownItem>
+                      <DropdownItem on:click={() => {buscar2(); v_crear = false; v_buscar1 = false}}>Varios recursos</DropdownItem>
+                    </DropdownMenu>
+                </ButtonDropdown>
             </Col>
         </Row>
     </Container >
@@ -614,10 +624,11 @@
 
 
     <!--______________________________________Cuadro de búsquedas_____________________________________________-->
-    {#if v_buscar}
+    {#if v_buscar1}
     <hr class = 'line'/>
         <Container class = 'mb-3'>
-            <Row><Col>Use este cuadro para buscar un dato concreto, será redirigido a la pantalla de detalles</Col></Row>
+            <Row><Col>Use este cuadro para buscar un dato concreto, será redirigido a la pantalla de detalles. Ambos datos son requeridos.</Col></Row>
+            <br>
             <Row>
                 <Col class = 'mb-3'>
                     <FormGroup>
@@ -645,10 +656,15 @@
                         />
                     </FormGroup>
                 </Col>
-                <Col><Button on:click={()=>{getRecurse()}}>Buscar</Button></Col>
+                <Col><Button on:click={()=>{getRecurse()}} style=align-self:end>Obtener recurso concreto</Button></Col>
             </Row>
+        </Container>
+    {/if}
+    {#if v_buscar2}
+        <Container class = 'mb-3'>
             <hr class = 'line'/>
             <Row><Col>Use este cuadro para realizar una busqueda, se le mostrará una lista, aunque solo se obtenga un resultado</Col></Row>
+            <br>
             <Row cols={{ xs:2,sm: 2, md: 3, lg: 3, xl:4}}>
                 <Col class = 'mb-3'>
                     <FormGroup>
@@ -797,7 +813,7 @@
             </Row>
             <Row>
                 <Col></Col>
-                <Col><Button on:click={()=>{getAffiliation(queryparser())}}>Buscar</Button></Col>
+                <Col><Button on:click={()=>{queryparser(); re_pagina(); getAffiliation(busqueda); vaciarquery();}}>Listar Recursos</Button></Col>
                 <Col></Col>
             </Row>
         </Container>

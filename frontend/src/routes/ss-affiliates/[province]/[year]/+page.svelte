@@ -3,17 +3,8 @@
     
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import {
-            Button,
-            Alert,
-            Table,
-            Card,
-            CardBody,
-            CardHeader,
-            CardText,
-            CardTitle, 
-            FormGroup, 
-            Input
+        import { Button, Alert, Table, Card, CardBody, CardHeader, CardText,
+            CardTitle, FormGroup, Input, Row, Col, Container
         } from 'sveltestrap';
         import { page } from '$app/stores';
 
@@ -24,11 +15,16 @@
         let warning = "";
         let info = "";
         let v_info = false;
+        let info2 = "";
+        let v_info2 = false;
         let v_warning = false;
         let errores = "";
         let v_errores = false;
         function f_info() {
             (setTimeout(function(){v_info = false;}, 6000));
+        }
+        function f_info2() {
+            (setTimeout(function(){v_info2 = false;}, 6000));
         }
         function f_warning() {
             (setTimeout(function(){v_info = false;}, 12000));
@@ -57,6 +53,9 @@
         
         let result = "";
         let resultStatus = "";
+
+        let v_actualizar = false;
+        const actualizar = () => (v_actualizar = !v_actualizar);
     
         async function getRecurse () {
             resultStatus = result = "";
@@ -105,7 +104,8 @@
         }
       
         async function updateRecurse () {
-            if(updatedRecurseSs_affiliation=="" || updatedRecurseN_cont_indef==""|| updatedRecurseN_cont_eventual==""||  updatedRecurseN_cont_temporary==""){
+            console.log(updatedRecurseSs_affiliation+updatedRecurseN_cont_indef+updatedRecurseN_cont_eventual+updatedRecurseN_cont_temporary)
+            if(updatedRecurseSs_affiliation==="" || updatedRecurseN_cont_indef===""|| updatedRecurseN_cont_eventual===""||  updatedRecurseN_cont_temporary===""){
                 warning = "No se puede actualizar si el dato no se pasa completo";
                 v_warning = true;
             }else{
@@ -130,11 +130,11 @@
 
                     getRecurse();
 
-                    info = `El dato ${recurseProvince} ${recurseYear} se ha actualizado correctamente`;
+                    info2 = `El dato ${recurseProvince} ${recurseYear} se ha actualizado correctamente`;
 
-                    v_info = true;
+                    v_info2 = true;
 
-                    f_info();
+                    f_info2();
 
                 }else if(status==404){
 
@@ -157,61 +157,133 @@
         }
 </script>
 <main>
-    <h1> Detalles del recurso:</h1>
+    <Container>
+        <Row>
+            <Col sm={{ size: 'auto', offset: 2 }}><h1> Detalles del recurso</h1></Col>
+        </Row>
+    </Container>
 
+    <br/>
+
+    <Container>
     {#if errores != ""}
-    <Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert>
+    <Row><Col><Alert color="danger" isOpen={v_errores} toggle={() => (v_errores = false)}>{errores}</Alert></Col></Row>
     {/if}
     {#if warning != ""}
-    <Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert>
+    <Row><Col><Alert color="warning" isOpen={v_warning} toggle={() => (v_warning = false)}>{warning}</Alert></Col></Row>
     {/if}
     {#if info != ""}
-    <Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert>
+    <Row><Col><Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert></Col></Row>
     {/if}
+    {#if info2 != ""}
+    <Row><Col><Alert color="info" isOpen={v_info2} toggle={() => (v_info2 = false)}>{info2}</Alert></Col></Row>
+    {/if}
+    </Container>
     
-    <Table>
-        <thead>
-          <tr>
-            <th>Provincia</th>
-            <th>Año</th>
-            <th>Afiliados a la Seguridad Social</th>
-            <th>Contratos Indefinidos</th>
-            <th>Contratos Eventuales</th>
-            <th>Contratos Temporales</th>
-            <th>Accion</th>
-          </tr>
-        </thead>
-        <tbody>
-           <tr>
-                <td>{updatedRecurseProvince}</td>
-                <td>{updatedRecurseYear}</td>
-                <td><FormGroup floating label="Nuevos Afiliados">
-                    <Input bind:value={updatedRecurseSs_affiliation} placeholder="Nuevos Afiliados"/>
-                </FormGroup></td>
-                <td><FormGroup floating label="Nuevos Contratos eventuales">
-                    <Input bind:value={updatedRecurseN_cont_eventual} placeholder="Nuevos Contratos eventuales"/>
-                </FormGroup></td>
-                <td><FormGroup floating label="Nuevos Contratos indefinidos">
-                    <Input bind:value={updatedRecurseN_cont_indef} placeholder="Nuevos Contratos indefinidos"/>
-                </FormGroup></td>
-                <td><FormGroup floating label="Nuevos Contratos temporales">
-                    <Input bind:value={updatedRecurseN_cont_temporary} placeholder="Nuevos Contratos temporales"/>
-                </FormGroup></td>
-                <td><Button on:click={updateRecurse}>Actualizar</Button></td>
-            </tr>
-        </tbody>
-      </Table>
-      <Card>
-        <CardHeader>
-          <CardTitle>Dato para {recurseProvince} en {recurseYear}</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <CardText>
-            Afiliados a la seguridad Social: {recurseSs_affiliation} <br>
-            Nuevos contratos indefinidos: {recurseN_cont_indef} <br>
-            Nuevos contratos eventuales: {recurseN_cont_eventual} <br>
-            Nuevos contratos temporales: {recurseN_cont_temporary} <br>
-          </CardText>
-        </CardBody>
-      </Card>
+    <Container class = 'mb-3'>
+        <Row>
+            <Col class = 'mb-3' sm={{ size: 'auto', offset: 2 }}>
+                <Button on:click={() => {location.replace('/ss-affiliates')}}>Volver atrás</Button>
+            </Col>
+            <Col class = 'mb-3' sm={{ size: 'auto', offset: 3 }}>
+                <Button on:click={actualizar}>Modificar Dato</Button>
+            </Col>
+        </Row>
+    </Container>
+
+
+    {#if v_actualizar}
+    <hr class = 'line'/>
+        <Container class = 'mb-3'>
+            <Row cols={{ xs:2,sm: 2, md: 4, lg: 4, xl:4}}>
+                <Col class = 'mb-3'>
+                    <FormGroup floating label="Nuevos Afiliados">
+                        <Input
+                            type="number"
+                            id = "affiliate"
+                            name="affiliate"
+                            placeholder="Escribe una cifra"
+                            bind:value={updatedRecurseSs_affiliation}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup floating label="Nuevos Contratos eventuales" >
+                        <Input
+                            type="number"
+                            id = "indef"
+                            name="indef"
+                            placeholder="Escribe una cifra"
+                            bind:value={updatedRecurseN_cont_eventual}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup floating label="Nuevos Contratos indefinidos">
+                        <Input
+                            type="number"
+                            id = "event"
+                            name="event"
+                            placeholder="Escribe una cifra"
+                            bind:value={updatedRecurseN_cont_indef}
+                        />
+                    </FormGroup>
+                </Col>
+                <Col class = 'mb-3'>
+                    <FormGroup floating label="Nuevos Contratos temporales">
+                        <Input
+                            type="number"
+                            id = "temp"
+                            name="temp"
+                            placeholder="Escribe una cifra"
+                            bind:value={updatedRecurseN_cont_temporary}
+                        />
+                    </FormGroup>
+                </Col>
+            </Row>
+            <Row>
+                <Col></Col>
+                <Col><Button on:click={updateRecurse}>Actualizar</Button></Col>
+                <Col></Col>
+            </Row>
+        </Container>
+    {/if}
+
+    <hr class = 'divider'/>
+    <Container>
+        <Row>
+            <Col xs={{size:'12'}} sm={{ size: '12' }} md={{ size: '6', offset: 3 }} lg={{ size: '6', offset: 3 }} xl={{ size: '6', offset: 3 }}>
+                <Card>
+                    <CardHeader>
+                      <CardTitle>Dato para {recurseProvince} en {recurseYear}</CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      <CardText>
+                        Afiliados a la seguridad Social: {recurseSs_affiliation} <br>
+                        Nuevos contratos indefinidos: {recurseN_cont_indef} <br>
+                        Nuevos contratos eventuales: {recurseN_cont_eventual} <br>
+                        Nuevos contratos temporales: {recurseN_cont_temporary} <br>
+                      </CardText>
+                    </CardBody>
+                  </Card>
+            </Col>
+        </Row>
+    </Container>
+      
 </main>
+
+<style>
+
+    .divider{
+        background-color: #002366;
+        height: 5px;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+    .line{
+        background-color: #002366;
+        height: 2px;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+</style>
