@@ -24,6 +24,7 @@
         let open = false;
         let myOpen = false;
         let consultAPI = "";
+        let v_consult = true;
         let pagination = 0;
         
         //datos para consulta
@@ -98,6 +99,7 @@
                 const data = await res.json();
                 result = JSON.stringify(data,null,2);
                 density = data;
+                v_consult = true;
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
             }
@@ -185,11 +187,11 @@
             if(status==201){
                 getData();
                 location.reload();
-                success = `El dato ${newYear} ${newProvince} se ha creado correctamente`;
+                success = `El dato /${newYear}/${newProvince}/${newGender} se ha creado correctamente`;
                 v_success = true;
             }
             else if(status==409){
-                warning = `El dato /${newYear}/${newProvince} ya existe en la base de datos`;
+                warning = `El dato /${newYear}/${newProvince}/${newGender} ya existe en la base de datos`;
                 v_warning = true;
             }else if(status==400){
                 warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
@@ -232,6 +234,7 @@
                 const data = await res.json();
                 result = JSON.stringify(data, null, 2);
                 density = data;
+                v_consult = false;
                 
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
@@ -318,7 +321,6 @@
     {/if}
     
     <div class="botones" >
-        {valor}
         <ButtonToolbar>
             <Button color=primary class=botones_iniciales outline on:click={loadData}>Cargar Datos Iniciales</Button>
 
@@ -529,24 +531,26 @@
     </div>
     
     <Pagination ariaLabel="Page navigation example">
-        <PaginationItem>
-            <PaginationLink style=color:#696969 first on:click={() => {firstPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
-                true)}} disabled={pagination === 0}></PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-            <PaginationLink style=color:#696969 on:click={()=>{previousPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
-                true)}} disabled={pagination === 0}>Previous</PaginationLink>
-        </PaginationItem>
-        <PaginationItem >
-            <PaginationLink style=color:#696969 on:click={() => {countData();nextPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
-                true)}} disabled={pagination === valor}>Next</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-            <PaginationLink style=color:#696969 last on:click={()=>{lastPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
-            true)}} disabled={pagination === valor}></PaginationLink>
-        </PaginationItem>
+        {#if v_consult}
+            <PaginationItem>
+                <PaginationLink style=color:#696969 first on:click={() => {firstPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+                    true)}} disabled={pagination === 0}></PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+                <PaginationLink style=color:#696969 on:click={()=>{previousPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+                    true)}} disabled={pagination === 0}>Previous</PaginationLink>
+            </PaginationItem>
+            <PaginationItem >
+                <PaginationLink style=color:#696969 on:click={() => {countData();nextPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+                    true)}} disabled={pagination === valor}>Next</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+                <PaginationLink style=color:#696969 last on:click={()=>{lastPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+                true)}} disabled={pagination === valor}></PaginationLink>
+            </PaginationItem>
+        {/if}
     </Pagination>
-
+    
 </main>
     
     
