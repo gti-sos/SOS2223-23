@@ -2,8 +2,8 @@
     // @ts-nocheck
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, Table,ButtonToolbar, Input } from 'sveltestrap';
-        import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
+        import { Button, Table,ButtonToolbar, Input,Container, Row, Col } from 'sveltestrap';
+        import { Modal,ModalBody,ModalFooter,ModalHeader, Alert, FormGroup, Label } from 'sveltestrap';
         import { Pagination, PaginationItem, PaginationLink } from 'sveltestrap';
 
 
@@ -11,7 +11,7 @@
             getData();
             countData();
         });
-
+        //datos para funciones
         let valor = -1;
         let warning = "";
         let info = "";
@@ -25,6 +25,17 @@
         let myOpen = false;
         let consultAPI = "";
         let pagination = 0;
+        
+        //datos para consulta
+        let specificYear = null;
+        let province = null;
+        let gender = null;
+        let fromYear = null;
+        let toYear = null;
+        let munLessThan = null;
+        let munBetween = null;
+        let munGreaterThan = null;
+        let capital = null;
 
         const toggle = () => (open = !open);
         const myToggle = () => (myOpen = !myOpen);
@@ -59,6 +70,7 @@
             resultStatus = status;
             if(status===201){
                 getData();
+                countData();
                 success = "La base de datos se ha cargado correctamente";
                 v_success = true;
 
@@ -96,10 +108,12 @@
             if(status==404){
                 warning = "No hay datos cargados en la base de datos";
                 v_warning = true;
+                countData();
             } 
             if(status ==201){
                 success = `Los datos han sido cargados`;
                 v_success = true;
+                countData();
             } 
             
         }
@@ -183,12 +197,37 @@
             }
         }
 
+        function formConsult(){
+            consultAPI = '';
+            if(specificYear != null){
+                consultAPI = consultAPI + `year=${specificYear}&`
+            }if(province != null){
+                consultAPI = consultAPI + `province=${province}&`
+            }if(gender != null){
+                consultAPI = consultAPI + `gender=${gender}&`
+            }if(fromYear != null){
+                consultAPI = consultAPI + `from=${fromYear}&`
+            }if(toYear != null){
+                consultAPI = consultAPI + `to=${toYear}&`
+            }if(munLessThan != null){
+                consultAPI = consultAPI + `municipality_size_lt_ft_under=${munLessThan}&`
+            }if(munBetween != null){
+                consultAPI = consultAPI + `municipality_size_bt_ft_tht_under=${munBetween}&`
+            }if(munGreaterThan != null){
+                consultAPI = consultAPI + `municipality_size_gt_tht_under=${munGreaterThan}&`
+            }if(capital != null){
+                consultAPI = consultAPI + `capital_size_under=${capital}&`
+            }
+            console.log(consultAPI)
+        }
+
         async function getConsult(){
             resultStatus = result = "";
-            const res = await fetch(API+"?"+"limit=10&"+"offset="+pagination+"&"+consultAPI, {
+            formConsult();
+            const res = await fetch(API+"?"+consultAPI, {
                 method: "GET"
             });
-            console.log(API+"?"+consultAPI);
+            console.log(API+"?"+consultAPI+"limit=10&"+"offset="+pagination);
             try{
                 const data = await res.json();
                 result = JSON.stringify(data, null, 2);
@@ -209,10 +248,16 @@
             } 
         }
         async function cleanFilter(){
-            resultStatus = result = "";
-            if(consultAPI != ""){
-                consultAPI="";
-            }
+            consultAPI = "";
+            specificYear = null;
+            province = null;
+            gender = null;
+            fromYear = null;
+            toYear = null;
+            munLessThan = null;
+            munBetween = null;
+            munGreaterThan = null;
+            capital = null;
             getData();
         }
         
@@ -223,7 +268,6 @@
             const data = await res.json()
             let numElements = Array.isArray(data) ? data.length : 0;
             let ultPage = Math.floor(numElements/10);
-            console.log(ultPage); 
             valor = ultPage;
         }
 
@@ -249,9 +293,9 @@
             pagination=valor;
             getData();
         }
-        function infoPage(){
-            info = `Mostrando la página: ${pagination} de ${valor}`;
-            v_info = true;
+        function infoPage(inf,v_inf){
+            info = inf;
+            v_info = v_inf;
         }
 
 
@@ -274,11 +318,12 @@
     {/if}
     
     <div class="botones" >
+        {valor}
         <ButtonToolbar>
             <Button color=primary class=botones_iniciales outline on:click={loadData}>Cargar Datos Iniciales</Button>
 
             <Button color=primary class=botones_iniciales outline on:click={toggle}>Borrar todos los datos</Button>
-            <Modal isOpen={open} {toggle}>
+            <Modal  isOpen={open} {toggle}>
             <ModalHeader {toggle}>Eliminar Datos</ModalHeader>
             <ModalBody>
                 ¿Estás seguro que quieres eliminar todos los datos?
@@ -294,11 +339,132 @@
                 
               </Modal>
 
-              <Modal isOpen={myOpen} {myToggle}>
-                <ModalHeader {myToggle}>"Consulta API"</ModalHeader>
-                <ModalBody>
-                    Introduce aquí tu busqueda: <input bind:value={consultAPI}>
-                    <p>{consultAPI}</p>
+              <Modal class="modal-dialog modal-xl" isOpen={myOpen} {myToggle}>
+                <ModalHeader {myToggle}>"Consulta"</ModalHeader>
+                <ModalBody >
+                    <Container class = 'mb-3'>
+                        <Row><Col><h5>Introduzca los valores por los que quiere consultar datos</h5></Col></Row>
+                        <hr>
+                        <Row><Col><h6>Estos campos devolverán un único dato</h6></Col></Row>
+                        <br>
+                        {consultAPI}  
+                        <!-- -->
+                        <Row>
+                            <Col>
+                                <FormGroup>
+                                    <Label>Por año:</Label>
+                                    <Input
+                                        disabled={fromYear != null || toYear != null || munLessThan !=null ||
+                                        munBetween !=null || munGreaterThan || capital !=null ? true:false}
+                                        type="number"                                     
+                                        placeholder="Busqueda por un año"
+                                        bind:value={specificYear}                                      
+                                    />
+                                </FormGroup>
+                            </Col>
+                            <Col>
+                                <FormGroup>
+                                    <Label>Por provincia:</Label>
+                                    <Input
+                                        disabled={fromYear != null || toYear != null || munLessThan !=null ||
+                                        munBetween !=null || munGreaterThan || capital!=null ? true:false}
+                                        type="text"                                       
+                                        placeholder="Busqueda por una provincia"
+                                        bind:value={province} 
+                                    />
+                                </FormGroup>
+                            </Col>
+                            <Col>
+                                <FormGroup>
+                                    <Label>Por género:</Label>
+                                    <Input
+                                        disabled={fromYear != null || toYear != null || munLessThan !=null ||
+                                        munBetween !=null || munGreaterThan || capital!=null ? true:false}
+                                        type="text"                                        
+                                        placeholder="Busqueda por género"
+                                        bind:value={gender}                                        
+                                    />
+                                </FormGroup>
+                            </Col>
+                            
+                        </Row>
+                        <hr>
+                        <Row><Col><h6>Estos campos devolverán todos los datos que se correspondan con la consulta solicitada</h6></Col></Row>
+                        <br>
+                        <Row>
+                            <Col class = 'mb-3'>
+                                <FormGroup>
+                                    <Label>Desde el año:</Label>
+                                    <Input 
+                                        disabled={specificYear != null || province != null || gender !=null ? true:false}
+                                        type="number"
+                                        placeholder="Escribe un año"
+                                        bind:value={fromYear}                                        
+                                    />
+                                </FormGroup>
+                            </Col>
+                            <Col class = 'mb-3'>
+                                <FormGroup>
+                                    <Label>Hasta el año:</Label>
+                                    <Input
+                                        disabled={specificYear != null || province != null || gender !=null ? true:false}
+                                        type="number"
+                                        placeholder="Escribe un año"
+                                        bind:value={toYear} 
+                                    />
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            
+                            <Col>
+                                <FormGroup>
+                                    <Label>Hasta la densidad de poblacion para municipios pequeños</Label>
+                                    <Input
+                                        disabled={specificYear != null || province != null || gender !=null ? true:false}
+                                        type="number"
+                                        placeholder="Escribe una cifra"
+                                        bind:value={munLessThan} 
+                                    />
+                                </FormGroup>
+                            </Col>
+                            <Col class = 'mb-3'>
+                                <FormGroup>
+                                    <Label>Hasta la densidad de poblacion para municipios medianos</Label>
+                                    <Input
+                                        disabled={specificYear != null || province != null || gender !=null ? true:false}
+                                        type="number"
+                                        placeholder="Escribe una cifra"
+                                        bind:value={munBetween} 
+                                    />
+                                </FormGroup>
+                            </Col>
+                            <Col class = 'mb-3'>
+                                <FormGroup>
+                                    <Label>Hasta la densidad de poblacion para municipios grandes</Label>
+                                    <Input
+                                        disabled={specificYear != null || province != null || gender !=null ? true:false}
+                                        type="number"
+                                        placeholder="Escribe una cifra"
+                                        bind:value={munGreaterThan} 
+                                    />
+                                </FormGroup>
+                            </Col>
+                            <Col class = 'mb-3'>
+                                <FormGroup>
+                                    <Label>Hasta la densidad de poblacion para capitales</Label>
+                                    <Input
+                                        disabled={specificYear != null || province != null || gender !=null ? true:false}
+                                        type="number"
+                                        placeholder="Escribe una cifra"
+                                        bind:value={capital} 
+                                    />
+                                </FormGroup>
+                            </Col>
+                            
+                        </Row>
+                    </Container>
+
                 </ModalBody>
                 <ModalFooter>
                   <Button color="primary" on:click={() => {getConsult(); myToggle()}}>Consulta</Button>
@@ -307,7 +473,7 @@
               </Modal>
         </ButtonToolbar>
         <Button outline style=position:absolute;right:0;margin-right:15px color="secondary" on:click={() => 
-        {cleanFilter(); myToggle()}}>Borrar consulta</Button>
+        {cleanFilter();infoPage("Se han limpiado los campos de consulta",true)}}>Borrar consulta</Button>
     </div>
     <div>
         
@@ -329,9 +495,9 @@
             </thead>
             <tbody>
                <tr>
-                    <td><input placeholder="year" bind:value={newYear}></td>
-                    <td><input placeholder="province" bind:value={newProvince}></td>
-                    <td><input placeholder="gender" bind:value={newGender}></td>
+                    <td><input placeholder="Introduce el año" bind:value={newYear}></td>
+                    <td><input placeholder="Introduce la provincia" bind:value={newProvince}></td>
+                    <td><input placeholder="Introduce el género" bind:value={newGender}></td>
                     <td><input placeholder="0" bind:value={newMunicipality_size_lt_ft}></td>
                     <td><input placeholder="0" bind:value={newMunicipality_size_bt_ft_tht}></td>
                     <td><input placeholder="0" bind:value={newMunicipality_size_gt_tht}></td>
@@ -364,18 +530,23 @@
     
     <Pagination ariaLabel="Page navigation example">
         <PaginationItem>
-            <PaginationLink style=color:#696969 first on:click={() => {firstPage();infoPage()}} disabled={pagination === 0}></PaginationLink>
+            <PaginationLink style=color:#696969 first on:click={() => {firstPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+                true)}} disabled={pagination === 0}></PaginationLink>
         </PaginationItem>
         <PaginationItem>
-            <PaginationLink style=color:#696969 on:click={()=>{previousPage();infoPage()}} disabled={pagination === 0}>Previous</PaginationLink>
+            <PaginationLink style=color:#696969 on:click={()=>{previousPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+                true)}} disabled={pagination === 0}>Previous</PaginationLink>
         </PaginationItem>
         <PaginationItem >
-            <PaginationLink style=color:#696969 on:click={() => {countData();nextPage();infoPage()}} disabled={pagination === valor}>Next</PaginationLink>
+            <PaginationLink style=color:#696969 on:click={() => {countData();nextPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+                true)}} disabled={pagination === valor}>Next</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-            <PaginationLink style=color:#696969 last on:click={()=>{lastPage();infoPage()}} disabled={pagination === valor}></PaginationLink>
+            <PaginationLink style=color:#696969 last on:click={()=>{lastPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
+            true)}} disabled={pagination === valor}></PaginationLink>
         </PaginationItem>
     </Pagination>
+
 </main>
     
     
