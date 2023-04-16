@@ -58,7 +58,7 @@
         }
   
         function previousPage() {
-            if (pagina > 1) {
+            if (pagina >= 1) {
                 pagina--;
                 getAffiliation('');
             }
