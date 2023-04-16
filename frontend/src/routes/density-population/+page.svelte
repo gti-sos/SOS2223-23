@@ -2,16 +2,17 @@
     // @ts-nocheck
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Pagination, PaginationItem, PaginationLink } from 'sveltestrap';
         import { Button, Table,ButtonToolbar, Input } from 'sveltestrap';
         import { Modal,ModalBody,ModalFooter,ModalHeader, Alert } from 'sveltestrap';
+        import { Pagination, PaginationItem, PaginationLink } from 'sveltestrap';
+
 
         onMount(async () => {
             getData();
+            countData();
         });
 
-        let xd = 0;
-
+        let valor = -1;
         let warning = "";
         let info = "";
         let v_info = false;
@@ -23,7 +24,7 @@
         let open = false;
         let myOpen = false;
         let consultAPI = "";
-        let pagination = 1;
+        let pagination = 0;
 
         const toggle = () => (open = !open);
         const myToggle = () => (myOpen = !myOpen);
@@ -78,7 +79,7 @@
 
         async function getData() {
             resultStatus = result = "";
-            const res = await fetch(API+"?"+"limit=10&"+"offset="+pagination, {
+            const res = await fetch(API+"?"+"limit=10&"+"offset="+pagination*10, {
                 method: 'GET'
             });
             try{
@@ -88,6 +89,8 @@
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
             }
+            
+
             const status = await res.status;
             resultStatus = status;	
             if(status==404){
@@ -219,10 +222,38 @@
             });
             const data = await res.json()
             let numElements = Array.isArray(data) ? data.length : 0;
-            let valor = Math.floor(numElements/10);
-            console.log(valor); 
-            xd = valor;
+            let ultPage = Math.floor(numElements/10);
+            console.log(ultPage); 
+            valor = ultPage;
         }
+
+        function firstPage() {
+            pagination=0;
+            getData();
+        }
+
+        function nextPage() {
+            if (pagination!=valor) {
+                pagination++;
+                getData();
+            }
+        }
+  
+        function previousPage() {
+            if (pagination >= 1) {
+                pagination--;
+                getData();
+            }
+        }
+        function lastPage() {
+            pagination=valor;
+            getData();
+        }
+        function infoPage(){
+            info = `Mostrando la página: ${pagination} de ${valor}`;
+            v_info = true;
+        }
+
 
 </script>
 <main>
@@ -278,48 +309,6 @@
         <Button outline style=position:absolute;right:0;margin-right:15px color="secondary" on:click={() => 
         {cleanFilter(); myToggle()}}>Borrar consulta</Button>
     </div>
-    <div class="pagination">
-        <!-- <Pagination ariaLabel="Page navigation example">
-            
-            <PaginationItem >
-            <PaginationLink on:click={() => {pagination=1; getData()}}>1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=41; getData()}}>2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=81; getData()}}>3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=121; getData()}}>4</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=161; getData()}}>5</PaginationLink>
-            </PaginationItem>
-            
-        </Pagination> -->
-        <Pagination ariaLabel="Page navigation example">
-            
-            <PaginationItem >
-            <PaginationLink on:click={() => {pagination=1; getData()}}>1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=41; getData()}}>2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=81; getData()}}>3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=121; getData()}}>4</PaginationLink>
-            </PaginationItem>
-            <PaginationItem >
-                <PaginationLink on:click={() => {pagination=161; getData()}}>5</PaginationLink>
-            </PaginationItem>
-            
-        </Pagination>
-
-    </div>
-        
     <div>
         
       </div>
@@ -363,21 +352,6 @@
                 <td class="botones-accion">
                 <ButtonToolbar>
                     <Button color=warning outline><a id="enlace_edit" href="/density-population/{datos.year}/{datos.province}/{datos.gender}">Editar</a></Button>
-                    <!-- <div>
-                        <Button color="danger" on:click={myToggle}>Open Modal</Button>
-                        <Modal isOpen={myOpen} {myToggle}>
-                          <ModalHeader {myToggle}>Modal title</ModalHeader>
-                          <ModalBody>
-                            Estas seguro que quieres eliminar este dato?: {datos.year}/{datos.province}/{datos.gender}
-                          </ModalBody>
-                          <ModalFooter>
-                            <Button color="primary" on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Do Something</Button>
-                            <Button color="secondary" on:click={myToggle}>Cancel</Button>
-                          </ModalFooter>
-                        </Modal>
-                    </div> -->
-
-
                     <Button color=danger outline  on:click={deleteData(`${datos.year}/${datos.province}/${datos.gender}`)}>Borrar</Button>
                 </ButtonToolbar>
                 </td>
@@ -388,17 +362,32 @@
           </Table>
     </div>
     
+    <Pagination ariaLabel="Page navigation example">
+        <PaginationItem>
+            <PaginationLink style=color:#696969 first on:click={() => {firstPage();infoPage()}} disabled={pagination === 0}></PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+            <PaginationLink style=color:#696969 on:click={()=>{previousPage();infoPage()}} disabled={pagination === 0}>Previous</PaginationLink>
+        </PaginationItem>
+        <PaginationItem >
+            <PaginationLink style=color:#696969 on:click={() => {countData();nextPage();infoPage()}} disabled={pagination === valor}>Next</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+            <PaginationLink style=color:#696969 last on:click={()=>{lastPage();infoPage()}} disabled={pagination === valor}></PaginationLink>
+        </PaginationItem>
+    </Pagination>
 </main>
     
     
     
 <style>
+    
     .botones{
         display: flex; 
         justify-content: center;
     }
     #enlace_edit{
         text-decoration: none;
-        color: grey
+        color: #696969;
     }
 </style>

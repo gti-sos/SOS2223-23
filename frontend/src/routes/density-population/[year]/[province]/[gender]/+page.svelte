@@ -2,7 +2,7 @@
     // @ts-nocheck
         import { onMount } from 'svelte';
         import { dev } from '$app/environment';
-        import { Button, Table, } from 'sveltestrap';
+        import { Button, Table, Input } from 'sveltestrap';
         import { Toast,ToastHeader,ToastBody, Alert } from 'sveltestrap';
         import { page } from '$app/stores';
 
@@ -134,10 +134,10 @@
                 <td>{updatedYear}</td>
                 <td>{updatedProvince}</td>
                 <td>{updatedGender}</td>
-                <td><input placeholder="0" bind:value={updatedMunicipality_size_lt_ft}></td>
-                <td><input placeholder="0" bind:value={updatedMunicipality_size_bt_ft_tht}></td>
-                <td><input placeholder="0" bind:value={updatedMunicipality_size_gt_tht}></td>
-                <td><input placeholder="0" bind:value={updatedCapital_size}></td>
+                <td><Input placeholder="Para municipios de menos de 5000 habitantes" bind:value={updatedMunicipality_size_lt_ft}></Input></td>
+                <td><Input placeholder="Para municipios de entre 5000  y 20000 habitantes" bind:value={updatedMunicipality_size_bt_ft_tht}></Input></td>
+                <td><Input placeholder="Para municipios de mas de 20000 habitantes" bind:value={updatedMunicipality_size_gt_tht}></Input></td>
+                <td><Input placeholder="Para capitales" bind:value={updatedCapital_size}></Input></td>
                 <td><Button on:click={updateData}>Actualizar</Button></td>
             </tr>
      </tbody>
