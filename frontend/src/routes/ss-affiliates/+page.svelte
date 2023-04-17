@@ -332,7 +332,8 @@
       
         async function createAffiliation() {
             resultStatus = result = "";
-            if(newSs_affiliation==="" || newN_cont_indef===""|| newN_cont_eventual===""||  newN_cont_temporary===""){
+            if(newSs_affiliation==="" || newSs_affiliation===null || newN_cont_indef===""||  newN_cont_indef===null ||newN_cont_eventual===""
+            ||newN_cont_eventual===null||  newN_cont_temporary==="" || newN_cont_temporary===null){
                 warning = "No se puede actualizar si el dato no se pasa completo";
                 v_warning = true;
             }else{
