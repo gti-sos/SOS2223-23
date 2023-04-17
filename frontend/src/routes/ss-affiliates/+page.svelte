@@ -132,29 +132,29 @@
 
         function queryparser(){
             busqueda = '&'
-            if(searchedProvince != ''){
+            if(searchedProvince !== ''){
                 busqueda = busqueda + `province=${searchedProvince}&`
-            }if(searchedYear != ''){
+            }if(searchedYear !== ''){
                 busqueda = busqueda + `year=${searchedYear}&`
-            }if(searchedFrom != ''){
+            }if(searchedFrom !== ''){
                 busqueda = busqueda + `from=${searchedFrom}&`
-            }if(searchedTo != ''){
+            }if(searchedTo !== ''){
                 busqueda = busqueda + `to=${searchedTo}&`
-            }if(searchedSs_affiliation_over != ''){
+            }if(searchedSs_affiliation_over !== ''){
                 busqueda = busqueda + `ss_affiliation_over=${searchedSs_affiliation_over}&`
-            }if(searchedSs_affiliation_under != ''){
+            }if(searchedSs_affiliation_under !== ''){
                 busqueda = busqueda + `ss_affiliation_under=${searchedSs_affiliation_under}&`
-            }if(searchedN_cont_indef_over != ''){
+            }if(searchedN_cont_indef_over !== ''){
                 busqueda = busqueda + `n_cont_indef_over=${searchedN_cont_indef_over}&`
-            }if(searchedN_cont_indef_under != ''){
+            }if(searchedN_cont_indef_under !== ''){
                 busqueda = busqueda + `n_cont_indef_under=${searchedN_cont_indef_under}&`
-            }if(searchedN_cont_eventual_over != ''){
+            }if(searchedN_cont_eventual_over !== ''){
                 busqueda = busqueda + `n_cont_eventual_over=${searchedN_cont_eventual_over}&`
-            }if(searchedN_cont_eventual_under != ''){
+            }if(searchedN_cont_eventual_under !== ''){
                 busqueda = busqueda + `n_cont_eventual_under=${searchedN_cont_eventual_under}&`
-            }if(searchedN_cont_temporary_over != ''){
+            }if(searchedN_cont_temporary_over !== ''){
                 busqueda = busqueda + `n_cont_temporary_over=${searchedN_cont_temporary_over}&`
-            }if(searchedN_cont_temporary_under != ''){
+            }if(searchedN_cont_temporary_under !== ''){
                 busqueda = busqueda + `n_cont_temporary_under=${searchedN_cont_temporary_under}&`
             }
 
@@ -230,7 +230,7 @@
 
             let newquery = '';
 
-            if (query != ''){
+            if (query !== ''){
 
                 newquery = '?'+query.slice(1);
 
@@ -283,7 +283,7 @@
 
         async function getRecurse() {
 
-            if(concreteProvince == '' || concreteYear == ''){
+            if(concreteProvince === '' || concreteYear === ''){
 
                 warning = "Para buscar un recurso concreto debe proporcionar año y provincia";
 
@@ -332,7 +332,7 @@
       
         async function createAffiliation() {
             resultStatus = result = "";
-            if(newSs_affiliation=="" || newN_cont_indef==""|| newN_cont_eventual==""||  newN_cont_temporary==""){
+            if(newSs_affiliation==="" || newN_cont_indef===""|| newN_cont_eventual===""||  newN_cont_temporary===""){
                 warning = "No se puede actualizar si el dato no se pasa completo";
                 v_warning = true;
             }else{
