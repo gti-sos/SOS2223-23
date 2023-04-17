@@ -6,7 +6,7 @@
         import { Button, Icon, FormGroup, Label, Input, Modal, ModalBody, ModalFooter, ModalHeader, 
             Alert, Card, CardBody, CardHeader, CardText, CardTitle,  Row, Col, 
             Container, ButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'sveltestrap';
-        import { query_selector_all } from 'svelte/internal';
+        
 
         onMount(async () => {
             getHired('');
@@ -301,7 +301,7 @@
             });
             const status = await res.status;
             resultStatus = status;	           
-            if(status==204){
+            if(status==200){
                 realizarBusqueda();
                 await getHired(busqueda); 
                 info2 = `Se ha borrado correctamente el dato ${hiredPeople}.`;
