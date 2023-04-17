@@ -538,11 +538,11 @@
             </PaginationItem>
             <PaginationItem>
                 <PaginationLink style=color:#696969 on:click={()=>{previousPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
-                    true)}} disabled={pagination === 0}>Previous</PaginationLink>
+                    true)}} disabled={pagination === 0}>Anterior</PaginationLink>
             </PaginationItem>
             <PaginationItem >
                 <PaginationLink style=color:#696969 on:click={() => {countData();nextPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,
-                    true)}} disabled={pagination === valor}>Next</PaginationLink>
+                    true)}} disabled={pagination === valor}>Siguiente</PaginationLink>
             </PaginationItem>
             <PaginationItem>
                 <PaginationLink style=color:#696969 last on:click={()=>{lastPage();infoPage(`Mostrando la página: ${pagination+1} de ${valor+1}`,

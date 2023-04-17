@@ -849,9 +849,9 @@
 
 
     <!--______________________________________Paginación_____________________________________-->
-    <Button on:click={previousPage} disabled={pagina === 0}>Previous</Button>
+    <Button on:click={previousPage} disabled={pagina === 0}>Anterior</Button>
 
-    <Button on:click={nextPage} disabled={v_lastPage === true}>Next</Button>
+    <Button on:click={nextPage} disabled={v_lastPage === true}>Siguiente</Button>
 
 </main>
 
