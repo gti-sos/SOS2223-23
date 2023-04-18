@@ -439,33 +439,44 @@
 
 
         async function deleteAllData() {
-            resultStatus = result = "";
-            try {
-                const res = await fetch(API, {
-                method: 'DELETE',
-                });
-                const status = await res.status;
-                if (status === 204) {
+            await getCount(newquery);
+            if (total != 0){
 
-                    info2 = "Todos los datos han sido borrados";
 
-                    v_info2 = true;
+                resultStatus = result = "";
+                try {
+                    const res = await fetch(API, {
+                    method: 'DELETE',
+                    });
+                    const status = await res.status;
+                    if (status === 204) {
 
-                    f_info2();
+                        info2 = "Todos los datos han sido borrados";
 
-                    resultStatus = "Todos los datos han sido borrados";
+                        v_info2 = true;
 
-                    console.log('Todos los datos han sido borrados.');
+                        f_info2();
+
+                        resultStatus = "Todos los datos han sido borrados";
+
+                        console.log('Todos los datos han sido borrados.');
+                    }
+                } catch (error) {
+
+                    errores = error
+
+                    v_errores = true;
+
+                    resultStatus = "Error borrando todos los datos.";
+
+                    console.error(`Error borrando todos los datos: ${error}`);
                 }
-            } catch (error) {
+            }else{
+                warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
+                    
+                v_warning = true;
 
-                errores = error
-
-                v_errores = true;
-
-                resultStatus = "Error borrando todos los datos.";
-
-                console.error(`Error borrando todos los datos: ${error}`);
+                f_warning();
             }
         }
 
