@@ -472,7 +472,7 @@
                     console.error(`Error borrando todos los datos: ${error}`);
                 }
             }else{
-                warning  = `Hay algún dato que no se ha obtenido correctamente, vuelva a intentarlo`;
+                warning  = `No se puede hacer borrar si la base de datos ya está vacía`;
                     
                 v_warning = true;
 
