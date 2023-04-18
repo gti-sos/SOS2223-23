@@ -439,7 +439,7 @@
 
 
         async function deleteAllData() {
-            await getCount(newquery);
+            await getCount('');
             if (total != 0){
 
 
