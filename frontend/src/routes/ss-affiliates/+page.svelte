@@ -441,8 +441,6 @@
         async function deleteAllData() {
             await getCount('');
             if (total != 0){
-
-
                 resultStatus = result = "";
                 try {
                     const res = await fetch(API, {
@@ -460,6 +458,8 @@
                         resultStatus = "Todos los datos han sido borrados";
 
                         console.log('Todos los datos han sido borrados.');
+
+                        location.reload();
                     }
                 } catch (error) {
 
@@ -529,7 +529,7 @@
                         ¿Estás seguro que quieres eliminar todos los datos?
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="danger" on:click={() => { deleteAllData(); borrar(); location.reload();}}>Eliminar</Button>
+                        <Button color="danger" on:click={() => { deleteAllData(); borrar();}}>Eliminar</Button>
                         <Button color="secondary" on:click={borrar}>Cancelar</Button>
                     </ModalFooter>
                 </Modal>
