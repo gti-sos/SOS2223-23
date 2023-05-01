@@ -39,11 +39,12 @@
             },
             xAxis: {
                 categories: categories,
-                crosshair: true
+                crosshair: true,
+                
             },
             yAxis: {
                 min: 0,
-                max:80,
+                max: 75,
                 title: {
                 text: 'Densidad de población'
                 }
