@@ -20,8 +20,11 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"apexcharts": "^3.40.0",
+		"c3": "^0.7.20",
 		"highcharts": "^10.3.3",
 		"mathjs": "^11.8.0",
+		"plotly": "^1.0.6",
 		"sveltestrap": "^5.10.0"
 	}
 }
