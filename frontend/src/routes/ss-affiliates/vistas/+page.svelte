@@ -17,34 +17,6 @@
 
         const affiliation = await getAffiliation();
 
-        // @ts-ignore
-        const sevilla2 = affiliation.filter((affiliate) => affiliate.province==='sevilla').sort(function(a, b) {return a.year - b.year;}).map((affiliate)=> {return {ss_affiliation: affiliate.ss_affiliation, n_cont_indef:affiliate.n_cont_indef, n_cont_eventual: affiliate.n_cont_eventual, n_cont_temporary:affiliate.n_cont_temporary }})
-        
-        let sevilla_affiliation = ['data1']
-
-        // @ts-ignore
-        sevilla_affiliation = sevilla_affiliation.concat(sevilla2.map(affiliate => affiliate.ss_affiliation))
-
-        const data = sevilla_affiliation
-
-        let sevilla_eventual = ['data2']
-
-        // @ts-ignore
-        sevilla_eventual = sevilla_eventual.concat(sevilla2.map(affiliate => affiliate.n_cont_eventual))
-
-        const data2 = sevilla_eventual
-
-        let sevilla_temporary = ['data3']
-
-        // @ts-ignore
-        sevilla_temporary = sevilla_temporary.concat(sevilla2.map(affiliate => affiliate.n_cont_temporary))
-
-        const data3 = sevilla_temporary
-
-        console.log(sevilla_affiliation)
-        console.log(sevilla_eventual)
-        console.log(sevilla_temporary)
-
         if (affiliation.length === 0 ){
 
             info = "La base de datos está vacía, no se pueden hacer los gráficos"
@@ -54,8 +26,6 @@
             f_info();
         }
         else{
-
-            console.log(affiliation)
 
             chart1();
            
@@ -183,6 +153,8 @@
             }]
         });   
     }
+
+    
 </script>
 <main>
     <link href="../../node_modules/c3/c3.css" rel="stylesheet">
@@ -193,7 +165,7 @@
 
     <Container>
         <Row>
-            <Col sm={{ size: 'auto', offset: 2 }}><h1> Gráfica Seguridad Social en Andalucía</h1></Col>
+            <Col sm={{ size: 'auto', offset: 2 }}><h1> Gráficas Seguridad Social en Andalucía</h1></Col>
         </Row>
     </Container>
 
@@ -203,41 +175,134 @@
     {#if info != ""}
         <Row><Col><Alert color="info" isOpen={v_info} toggle={() => (v_info = false)}>{info}</Alert></Col></Row>
     {/if}
-        <Row><div id="container" style="width:100%; height:400px;"></div></Row>
-        <Row><div id="container2"></div></Row>
+        <Row><Col><h3> Gráfica Afiliados en Andalucía</h3></Col></Row>
+        <Row><Col><div id="container" style="width:100%; height:400px;"></div></Col></Row>
+        <Row><Col><h3> Gráfica Nuevos contratos Sevilla</h3></Col></Row>
+        <Row><Col><div id="chart" style="width:100%; height:400px;"></div></Col></Row>
     </Container>
 
     <script>
 
-        var chart = c3.generate({
-            bindto: document.getElementById('container2'),
-            data: {
-                columns: [
-                    ['data1', 609250, 602963, 617140, 626250, 641183, 662450, 683295, 696221, 689844, 714337, 729400],
-                    ['data2', 175997, 180755, 184601, 184162, 189533, 199026, 198047, 199047, 179297, 181757, 75484]
-                ]
-            },axes: {
-                data2: 'y2'
-            },
-            types: {
-                data2: 'bar' 
-            },
-            axis: {
-                y: {
-                    label: {
-                        text: 'Y Label',
-                        position: 'outer-middle'
-                    }
+        generarGrafica();
+
+        async function getAffiliation() {
+
+            let currentUrl = window.location.href;
+        
+
+            let API = '/api/v2/ss-affiliates';
+
+            if (currentUrl.includes('localhost')){
+                API = 'http://localhost:12345'+API
+            }
+
+            let list = [];
+
+            const res = await fetch(API, {
+                method: 'GET'
+            });
+            try{
+
+                const data = await res.json();
+                list = data;
+                
+            }catch(error){
+
+                console.log(`Error parsing result: ${error}`);
+            }
+
+            return list
+        } 
+
+        async function generarGrafica(){
+
+            const data = await getAffiliation()
+
+            // @ts-ignore
+            const sevilla = data.filter((affiliate) => affiliate.province==='sevilla').sort(function(a, b) {return a.year - b.year;}).map((affiliate)=> {return {year: affiliate.year, ss_affiliation: affiliate.ss_affiliation, n_cont_indef:affiliate.n_cont_indef, n_cont_eventual: affiliate.n_cont_eventual, n_cont_temporary:affiliate.n_cont_temporary }})
+            
+            let sevilla_year = ['date']
+
+            // @ts-ignore
+            sevilla_year = sevilla_year.concat(sevilla.map(affiliate => affiliate.year.toString()))
+
+            const x_axis = sevilla_year
+
+            let sevilla_affiliation = ['afiliados']
+
+            // @ts-ignore
+            sevilla_affiliation = sevilla_affiliation.concat(sevilla.map(affiliate => affiliate.ss_affiliation))
+
+            const data1 = sevilla_affiliation
+
+            let sevilla_eventual = ['eventuales']
+
+            // @ts-ignore
+            sevilla_eventual = sevilla_eventual.concat(sevilla.map(affiliate => affiliate.n_cont_eventual))
+
+            const data2 = sevilla_eventual
+
+            let sevilla_temporary = ['temporales']
+
+            // @ts-ignore
+            sevilla_temporary = sevilla_temporary.concat(sevilla.map(affiliate => affiliate.n_cont_temporary))
+
+            const data3 = sevilla_temporary
+
+            let sevilla_indef = ['indefinidos']
+
+            // @ts-ignore
+            sevilla_indef = sevilla_indef.concat(sevilla.map(affiliate => affiliate.n_cont_indef))
+
+            const data4 = sevilla_indef 
+
+            var chart = c3.generate({
+                bindto: document.getElementById('chart'),
+                data: {
+                    x : 'date',
+                    xFormat: '%Y', 
+                    columns: [
+                        x_axis,
+                        data1,
+                        data2,
+                        data3, 
+                        data4
+                    ],
+                    type: 'bar',
+                    types: {
+                        'afiliados': 'line'
+                    },
+                    groups: [
+                        ['eventuales', 'temporales', 'indefinidos']
+                    ]
                 },
-                y2: {
-                    show: true,
-                    label: {
-                        text: 'Y2 Label',
-                        position: 'outer-middle'
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%Y'
+                        }
+                    },
+                    y: {
+                        label: {
+                            text: 'Número de afiliados',
+                            position: 'outer-middle'
+                        }
+                    },
+                    y2: {
+                        show: true,
+                        label: {
+                            text: 'Número de contratos',
+                            position: 'outer-middle'
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        
+
+        
+
     </script>
 </main>
 <style></style>
