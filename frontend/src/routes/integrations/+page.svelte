@@ -8,7 +8,7 @@
         <br>
         <ul>
             <li><a href="/ss-affiliates/integrations/job-offers">Ofertas de Trabajo Andalucía</li>
-            <li><a href="/ss-affiliates/integrations/job-offers">Integración 2</a></li>
+            <li><a href="/ss-affiliates/integrations/courses">Cursos de Formacion</a></li>
             <li><a href="/ss-affiliates/integrations/job-offers">Integración 3</a></li>
             <li><a href="/ss-affiliates/integrations/job-offers">Integración 4</a></li>
         </ul>
