@@ -1,5 +1,6 @@
 const BASE_API_URL_ss_affiliates = `/api/v2/ss-affiliates`;
-const BASE_API_URL_Extern = `/api/v2/job-offers`;
+const BASE_API_URL_Job = `/api/v2/job-offers`;
+const BASE_API_URL_Courses = `/api/v2/courses`;
 import request from 'request';
 import Datastore from 'nedb';
 import { data_rvr } from '../data/data_rvr.js';
@@ -19,48 +20,48 @@ function rvrv2(app){
 
 
     //______________________________Proxy Externo__________________________________________
-    app.use(`${BASE_API_URL_Extern}/sevilla`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/sevilla`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=Sevilla&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/granada`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/granada`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=Granada&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
        
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/malaga`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/malaga`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=M%C3%A1laga&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/almeria`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/almeria`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=Almer%C3%ADa&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/huelva`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/huelva`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=Huelva&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/jaen`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/jaen`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=Ja%C3%A9n&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/cordoba`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/cordoba`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=C%C3%B3rdoba&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/cadiz`, function(req, res) {
+    app.use(`${BASE_API_URL_Job}/cadiz`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/job-offering-public-sector/search?announcement_status=Concluido&job_official_degree_requirements=Grado%20Universitario%2F%20Licenciatura%20e%20Ingenier%C3%ADas%2F%20Diplomaturas%20e%20Ingenier%C3%ADas%20T%C3%A9cnicas&announcement_type=Oferta%20de%20empleo&provinces=C%C3%A1diz&job_agreement=Indefinido&order_by=id&mode=ASC&format=json&size=0&organism=-&job_name=-&job_specific_degree_requirements=-&locality=-';
         req.pipe(request(apiServerHost)).pipe(res);
     });
 
-    app.use(`${BASE_API_URL_Extern}/cursos`, function(req, res) {
+    app.use(`${BASE_API_URL_Courses}`, function(req, res) {
         var apiServerHost = 'https://datos.juntadeandalucia.es/api/v0/training-courses/search?modality=Teleformaci%C3%B3n&title=-&order_by=id&mode=ASC&format=json&size=0';
         req.pipe(request(apiServerHost)).pipe(res);
     });
