@@ -25,14 +25,13 @@ var port = process.env.PORT || 12345;
 
 app.use(express.json());
 
-rvrv1(app);
-
-rvrv2(app); //Ricardo
+rvrv1(app); //Ricardo v2
+rvrv2(app); //Ricardo v2
 
 ppo(app); //Pablo v1
 ppo2(app); //Pablo v2
 
-amjc(app); //Agustín
+amjc(app); //Agustín v1
 amjc2(app); //Agustín v2
 
 app.use(handler);

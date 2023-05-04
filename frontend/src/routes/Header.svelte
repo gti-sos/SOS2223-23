@@ -60,6 +60,7 @@
                 <DropdownItem href = "/density-population/vistas">density-people (Pablo)</DropdownItem>
             </DropdownMenu>
         </Dropdown>
+        <NavLink href="/integrations">Integraciones</NavLink>
     </Nav>
 </main>
         
