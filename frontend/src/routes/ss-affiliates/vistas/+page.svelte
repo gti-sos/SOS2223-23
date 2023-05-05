@@ -162,7 +162,7 @@
 <main>
     <link href="../../node_modules/c3/c3.css" rel="stylesheet">
 
-    <script src="../../node_modules/d3/dist/d3.min.js" charset="utf-8"></script>
+    <script src="../../node_modules/d3/d3.min.js" charset="utf-8"></script>
     <script src="../../node_modules/c3/c3.min.js"></script>
 
 

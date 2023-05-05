@@ -251,8 +251,10 @@
 
             }else{
 
+                
                 jobNames.push(ofertas[i].job_name);
                 jobNumbers.push(parseInt(ofertas[i].job_number_places));
+                
             }
         }
 
