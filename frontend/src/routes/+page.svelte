@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Inicio Api</title>
+</svelte:head>
+
 <script>
     import { dev } from '$app/environment';
     let API_v2 = '/api/v2';
