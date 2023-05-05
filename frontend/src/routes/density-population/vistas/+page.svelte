@@ -129,6 +129,8 @@
 
                 },
                 yAxis: {
+                    name:'Densidad de poblacion de municipios pequeños',
+                    nameLocation:'end',
                     type: 'value'
                 },
                 series: [
