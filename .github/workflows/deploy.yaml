@@ -8,18 +8,36 @@ on:
 jobs:
   deploy:
     name: Deploy to Cloud Run
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     environment: production
     steps:
       - uses: actions/checkout@v2
 
-      - run: npm install
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-      - run: cd frontend && npm install && npm run build
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm start &
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
 
-      - run: npm test
+      - name: Install Backend Dependencies
+        run: npm install
+
+      - name: Install Frontend Dependencies & Build
+        run: cd frontend && npm install && npm run build
+
+      - name: Start Server
+        run: npm start &
+
+      - name: Test Backend
+        run: npm test
+
+      - name: Test Frontend
+        run: npx playwright test
       
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
