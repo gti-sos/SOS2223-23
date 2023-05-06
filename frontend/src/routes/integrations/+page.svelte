@@ -2,7 +2,7 @@
 </script>
 <main>
     <br>
-    <h1 style="padding-left: 10px;">Integraciones</h1>
+    <h1 style="padding-left: 10px;">Integraciones y Usos</h1>
     <ul>
         <li><b>Ricardo:</b></li>
         <br>
@@ -17,8 +17,8 @@
         <li><b>Pablo:</b></li>
         <br>
         <ul>
-            <li><a href="/">Integración 1</li>
-            <li><a href="/">Integración 2</a></li>
+            <li><a href="/density-population/integrations/usos/evolution-stats">Poblacion Joven y Total en Andalucía</li>
+            <li><a href="/density-population/integrations/usos/localentities-stats">Entidades locales</a></li>
             <li><a href="/">Integración 3</a></li>
             <li><a href="/">Integración 4</a></li>
         </ul>

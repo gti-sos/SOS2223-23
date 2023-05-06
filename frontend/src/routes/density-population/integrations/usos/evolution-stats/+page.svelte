@@ -86,7 +86,7 @@
             series: [{
                 name: 'Menor de 16 años',
                 data: under_sixteen_years
-            }, {
+            }, {   
                 name: 'Poblacion Total',
                 data: total_population
             }]}
@@ -95,5 +95,8 @@
 <main>
     <figure class="highcharts-figure" style="margin-left: 15px; margin-right:35px">
         <div id="container"></div>
+        <div class="context">
+            <p>Uso de la API de compañero de SOS: 'Evolution-Stats'</p>
+        </div>
     </figure>
 </main>

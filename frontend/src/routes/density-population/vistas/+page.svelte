@@ -17,10 +17,9 @@
         API = 'http://localhost:12345'+API;
 
     let density=[];
-    let result = "";
-    let resultStatus = "";
 
     async function loadChartHigh(graphData){
+        
         graphData.sort((a, b) => {
             if (b.year !== a.year) {
                 // ordena primero por year de mayor a menor
@@ -31,7 +30,6 @@
             }
             });
         const categories = graphData.map(item => `${item.year} - ${item.province} - ${item.gender}`);
-
         Highcharts.chart('container', {
             chart: {
                 type: 'column'
@@ -67,43 +65,36 @@
             },
             series: [{
                 name: 'Municipality size < 5,000',
-                data: graphData.map(item => item.municipality_size_lt_ft)
+                data: graphData.map(item => parseInt(item.municipality_size_lt_ft))
             }, {
                 name: 'Municipality size 5,000-50,000',
-                data: graphData.map(item => item.municipality_size_bt_ft_tht)
+                data: graphData.map(item => parseInt(item.municipality_size_bt_ft_tht))
             }, {
                 name: 'Municipality size > 50,000',
-                data: graphData.map(item => item.municipality_size_gt_tht)
+                data: graphData.map(item => parseInt(item.municipality_size_gt_tht))
             }, {
                 name: 'Capital size',
-                data: graphData.map(item => item.capital_size)
+                data: graphData.map(item => parseInt(item.capital_size))
             }]
         });
     };
 
     async function getData() {
-        resultStatus = result = "";
         const res = await fetch(API, {
             method: 'GET'
         });
         try{
             const dataReceived = await res.json();
-            result = JSON.stringify(dataReceived,null,2);
             density = dataReceived;
             loadChartHigh(density);
             loadEchart(density);
         }catch(error){
             console.log(`Error parseando el resultado: ${error}`);
-        }
-        const status = await res.status;
-        resultStatus = status;	
-            
+        }	   
     };
 
     async function loadEchart(graphData){
         var myChart = echarts.init(document.getElementById('main'));        
-        console.log(graphData)
-
         myChart.setOption({
                 title: {
                     text: 'Gráfico de densidad de población por género para algunas ciudades costeras en municipios grandes',
@@ -130,8 +121,7 @@
                 },
                 yAxis: {
                     name:'Densidad de poblacion de municipios pequeños',
-                    nameLocation:'end',
-                    type: 'value'
+                    type: 'value',
                 },
                 series: [
                     {
@@ -174,25 +164,11 @@
             });
         
     };
-
     onMount(async () =>{
         getData();
-        
     });
-
-
-
-
-    
 </script>
-
 <main>
-    
     <div id="container"></div>
-    
-
-    
-    <div id="main" style="width: 1300px;height:400px;"></div>
-    
-
+    <div id="main" style="width: 1300px;height:400px;margin-left:15px"></div>
 </main>
