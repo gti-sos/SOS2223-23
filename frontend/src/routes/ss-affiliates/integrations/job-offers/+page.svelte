@@ -24,7 +24,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'Cantidad de plazas ofertadas por trabajo (8 más significativos) en Sevilla'
+                text: `Sevilla en total: ${sevilla.total_hits}`
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -71,7 +71,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'Cantidad de plazas ofertadas por trabajo (todos) en Huelva'
+                text: `Huelva en total: ${huelva.total_hits}`
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -79,12 +79,6 @@
             series: [{
                 name: 'Job number places',
                 data: [{
-                    name: datosHuelva[0].name,
-                    y: datosHuelva[0].number
-                }, {
-                    name: datosHuelva[1].name,
-                    y: datosHuelva[1].number
-                }, {
                     name: datosHuelva[2].name,
                     y: datosHuelva[2].number
                 }, {
@@ -101,15 +95,12 @@
 
         let datosCadiz = procesarDatos(cadiz);
 
-        console.log(datosCadiz)
-    
-
         Highcharts.chart('containerCad', {
             chart: {
                 type: 'pie'
             },
             title: {
-                text: 'Cantidad de plazas ofertadas por trabajo (todos) en Cadiz'
+                text: `Cadiz en total: ${cadiz.total_hits}`
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -117,12 +108,6 @@
             series: [{
                 name: 'Job number places',
                 data: [{
-                    name: datosCadiz[0].name,
-                    y: datosCadiz[0].number
-                }, {
-                    name: datosCadiz[1].name,
-                    y: datosCadiz[1].number
-                }, {
                     name: datosCadiz[2].name,
                     y: datosCadiz[2].number
                 }, {
@@ -131,6 +116,12 @@
                 }, {
                     name: datosCadiz[4].name,
                     y: datosCadiz[4].number
+                }, {
+                    name: datosCadiz[5].name,
+                    y: datosCadiz[5].number
+                }, {
+                    name: datosCadiz[6].name,
+                    y: datosCadiz[6].number
                 }]
             }]
         });
@@ -143,7 +134,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'Cantidad de plazas ofertadas por trabajo (todos) en Almeria'
+                text: `Almeria en total: ${almeria.total_hits}`
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -151,12 +142,6 @@
             series: [{
                 name: 'Job number places',
                 data: [{
-                    name: datosAlmeria[0].name,
-                    y: datosAlmeria[0].number
-                }, {
-                    name: datosAlmeria[1].name,
-                    y: datosAlmeria[1].number
-                }, {
                     name: datosAlmeria[2].name,
                     y: datosAlmeria[2].number
                 }, {
@@ -165,20 +150,31 @@
                 }, {
                     name: datosAlmeria[4].name,
                     y: datosAlmeria[4].number
+                }, {
+                    name: datosAlmeria[5].name,
+                    y: datosAlmeria[5].number
+                }, {
+                    name: datosAlmeria[6].name,
+                    y: datosAlmeria[6].number
+                }, {
+                    name: datosAlmeria[7].name,
+                    y: datosAlmeria[7].number
+                }, {
+                    name: datosAlmeria[8].name,
+                    y: datosAlmeria[8].number
                 }]
             }]
         });
         let granada = await getJobs('granada')
 
         let datosGranada = procesarDatos(granada);
-        
 
         Highcharts.chart('containerGra', {
             chart: {
                 type: 'pie'
             },
             title: {
-                text: 'Cantidad de plazas ofertadas por trabajo (todos) en Granada'
+                text: `Granada en total: ${granada.total_hits}`
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -186,12 +182,6 @@
             series: [{
                 name: 'Job number places',
                 data: [{
-                    name: datosGranada[0].name,
-                    y: datosGranada[0].number
-                }, {
-                    name: datosGranada[1].name,
-                    y: datosGranada[1].number
-                }, {
                     name: datosGranada[2].name,
                     y: datosGranada[2].number
                 }, {
@@ -200,11 +190,142 @@
                 }, {
                     name: datosGranada[4].name,
                     y: datosGranada[4].number
+                }, {
+                    name: datosGranada[5].name,
+                    y: datosGranada[5].number
+                }, {
+                    name: datosGranada[6].name,
+                    y: datosGranada[6].number
+                }, {
+                    name: datosGranada[7].name,
+                    y: datosGranada[7].number
+                }, {
+                    name: datosGranada[8].name,
+                    y: datosGranada[8].number
+                }, {
+                    name: datosGranada[9].name,
+                    y: datosGranada[9].number
+                }, {
+                    name: datosGranada[10].name,
+                    y: datosGranada[10].number
+                }]
+            }]
+        });
+
+        let jaen = await getJobs('jaen')
+
+        let datosJaen = procesarDatos(jaen);
+
+        Highcharts.chart('containerJa', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: `Jaen en total: ${jaen.total_hits}`
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            series: [{
+                name: 'Job number places',
+                data: [{
+                    name: datosJaen[2].name,
+                    y: datosJaen[2].number
+                }, {
+                    name: datosJaen[3].name,
+                    y: datosJaen[3].number
+                }, {
+                    name: datosJaen[4].name,
+                    y: datosJaen[4].number
+                }, {
+                    name: datosJaen[5].name,
+                    y: datosJaen[5].number
+                }, {
+                    name: datosJaen[6].name,
+                    y: datosJaen[6].number
+                }]
+            }]
+        });
+
+        let cordoba = await getJobs('cordoba')
+
+        let datosCordoba = procesarDatos(cordoba);  
+
+        Highcharts.chart('containerCor', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: `Cordoba en total: ${cordoba.total_hits}`
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            series: [{
+                name: 'Job number places',
+                data: [{
+                    name: datosCordoba[2].name,
+                    y: datosCordoba[2].number
+                }, {
+                    name: datosCordoba[3].name,
+                    y: datosCordoba[3].number
+                }, {
+                    name: datosCordoba[4].name,
+                    y: datosCordoba[4].number
+                }, {
+                    name: datosCordoba[5].name,
+                    y: datosCordoba[5].number
+                }]
+            }]
+        });
+
+        let malaga = await getJobs('malaga')
+
+        let datosMalaga = procesarDatos(malaga);
+
+        Highcharts.chart('containerMal', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: `Malaga en total: ${malaga.total_hits}`
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            series: [{
+                name: 'Job number places',
+                data: [{
+                    name: datosMalaga[2].name,
+                    y: datosMalaga[2].number
+                }, {
+                    name: datosMalaga[3].name,
+                    y: datosMalaga[3].number
+                }, {
+                    name: datosMalaga[4].name,
+                    y: datosMalaga[4].number
+                }, {
+                    name: datosMalaga[5].name,
+                    y: datosMalaga[5].number
+                }, {
+                    name: datosMalaga[6].name,
+                    y: datosMalaga[6].number
+                }, {
+                    name: datosMalaga[7].name,
+                    y: datosMalaga[7].number
+                }, {
+                    name: datosMalaga[8].name,
+                    y: datosMalaga[8].number
+                }, {
+                    name: datosMalaga[9].name,
+                    y: datosMalaga[9].number
+                }, {
+                    name: datosMalaga[10].name,
+                    y: datosMalaga[10].number
                 }]
             }]
         });
     })
-
 
     async function getJobs(province) {
 
@@ -280,16 +401,40 @@
     </Container>
 
     <Container>
-        <Row><Col><h3> Ofertas de trabajo en los últimos años Sevilla</h3></Col></Row>
-        <Row><Col><div id="containerSev" style="width:100%; height:400px;"></div></Col></Row>
-        <Row><Col><h3> Ofertas de trabajo en los últimos años Huelva</h3></Col></Row>
-        <Row><Col><div id="containerHue" style="width:100%; height:400px;"></div></Col></Row>
-        <Row><Col><h3> Ofertas de trabajo en los últimos años Granada</h3></Col></Row>
-        <Row><Col><div id="containerGra" style="width:100%; height:400px;"></div></Col></Row>
-        <Row><Col><h3> Ofertas de trabajo en los últimos años Cadiz</h3></Col></Row>
-        <Row><Col><div id="containerCad" style="width:100%; height:400px;"></div></Col></Row>
-        <Row><Col><h3> Ofertas de trabajo en los últimos años Almeria</h3></Col></Row>
-        <Row><Col><div id="containerAlm" style="width:100%; height:400px;"></div></Col></Row>
+        <Row cols={{ xs:1,sm: 1, md: 2, lg: 2, xl:2}}>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerSev" style="width:100%; height:400px;"></div></Row>
+            </Col>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerHue" style="width:100%; height:400px;"></div></Row>
+            </Col>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerGra" style="width:100%; height:400px;"></div></Row>
+            </Col>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerCad" style="width:100%; height:400px;"></div></Row>
+            </Col>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerAlm" style="width:100%; height:400px;"></div></Row>
+            </Col>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerJa" style="width:100%; height:400px;"></div></Row>
+            </Col>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerCor" style="width:100%; height:400px;"></div></Row>
+            </Col>
+            <Col class = 'mb-3'>
+                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><div id="containerMal" style="width:100%; height:400px;"></div></Row>
+            </Col>
+        </Row>
     </Container>
 </main>
 <style></style>
