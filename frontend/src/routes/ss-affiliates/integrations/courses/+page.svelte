@@ -1,9 +1,6 @@
 <script>
     // @ts-nocheck
-
-    import { dev } from '$app/environment';
-    import { dataset_dev } from 'svelte/internal';
-    import {Alert, Row, Col, Container} from 'sveltestrap';
+    import { Row, Col, Container} from 'sveltestrap';
    
 </script>
 <main>
