@@ -17,10 +17,12 @@
         <li><b>Pablo:</b></li>
         <br>
         <ul>
-            <li><a href="/density-population/integrations/usos/evolution-stats">Poblacion Joven y Total en Andalucía</li>
-            <li><a href="/density-population/integrations/usos/localentities-stats">Entidades locales</a></li>
-            <li><a href="/">Integración 3</a></li>
-            <li><a href="/">Integración 4</a></li>
+            <li><b>Usos:</b></li>
+                <ul><a href="/density-population/integrations/usos/evolution-stats">Poblacion Joven y Total en Andalucía</ul>
+                <ul><a href="/density-population/integrations/usos/localentities-stats">Entidades locales</a></ul>
+            <li><b>Integraciones:</b></li>
+                <ul><a href="/density-population/integrations/int1">Integración 1</a></ul>
+                <ul><a href="/">Integración 4</a></ul>
         </ul>
         <br>
         <br>

@@ -27,7 +27,7 @@ function ppo2(app){
                     console.log(`Error getting density-population.`);
                     response.sendStatus(500);
                 }else if(docs.length == 0){
-                    console.log(`Density-population not found`);
+                    console.log(`No hay datos cargados, añada en la Url /loadInitialData`);
                     response.sendStatus(404);
                 }else{
                     let i = -1;
