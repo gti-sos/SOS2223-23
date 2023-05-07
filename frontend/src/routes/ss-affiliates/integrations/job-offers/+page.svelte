@@ -3,7 +3,7 @@
 
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
-    import {Alert, Row, Col, Container} from 'sveltestrap';
+    import {Row, Col, Container} from 'sveltestrap';
     import Highcharts from 'highcharts/highcharts.js';
 
 
