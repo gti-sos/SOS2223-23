@@ -3,6 +3,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.20.0.min.js'></script>
 </svelte:head>
 
 <script>
@@ -102,6 +103,46 @@
         });
     }
 
+    async function loadPlotly(graphData){
+        const year = graphData.map(x => x.province == 'Sevilla' && x.gender == 'Hombres') 
+        var trace_indefinite_contract = {
+            x: year.map(item => parseInt(item.year)),
+            y: year.map(item => parseInt(item.indefinite_contract)),
+            type: 'bar',
+            name: 'Contratos Indefinidos'
+        };
+        var trace_single_construction_contract = {
+            x: year.map(item => parseInt(item.province)),
+            y: year.map(item => parseInt(item.single_construction_contract)),
+            type: 'bar',
+            name: 'Contratos Únicos de Construcción'
+        };
+        var trace_multiple_construction_contract = {
+            x: year.map(item => parseInt(item.province)),
+            y: year.map(item => parseInt(item.multiple_construction_contract)),
+            type: 'bar',
+            name: 'Contratos Múltiples de Construcción'
+        };
+        var trace_single_eventual_contract = {
+            x: year.map(item => parseInt(item.province)),
+            y: year.map(item => parseInt(item.single_eventual_contract)),
+            type: 'bar',
+            name: 'Contratos Únicos Eventuales'
+        };
+        var trace_multiple_eventual_contract = {
+            x: year.map(item => parseInt(item.province)),
+            y: year.map(item => parseInt(item.multiple_eventual_contract)),
+            type: 'bar',
+            name: 'Contratos Múltiples Eventuales'
+        };
+        var data = [trace_indefinite_contract, trace_single_construction_contract, trace_multiple_construction_contract, trace_single_eventual_contract, trace_multiple_eventual_contract];
+        var layout = { 
+            font: {size: 18}
+        };
+        var config = {responsive: true}
+        Plotly.newPlot('myDiv', data, layout, config);
+    }
+
     async function getData() {
         const res = await fetch(API, {
             method: 'GET'
@@ -110,10 +151,12 @@
             const dataReceived = await res.json();
             hired = dataReceived;
             loadChart(hired);
+            loadPlotly(hired);
         }catch(error){
             console.log(`Error parseando el resultado: ${error}`);
         }	   
     };
+
 
     onMount(async() => {
         getData();
@@ -126,5 +169,14 @@
     <h1>Visualización Personas Contratadas en Andalucía</h1>
     <figure class="highcharts-figure">
         <div id="container"></div>
-      </figure>
+    </figure>
+    <div id='myDiv'></div>
 </main>
+
+<style>
+    .highcharts-figure,
+    
+    #container {
+    height: 4000px;
+    }
+</style>
