@@ -23,7 +23,7 @@
             <li><b>Integraciones y Usos a API externas:</b></li>
                 <ul><a href="/density-population/integrations/toro">Escuelas taurinas</a></ul>
                 <ul><a href="/density-population/integrations/covd">Covid en Europa</a></ul>
-                <ul><a href="/density-population/integrations/int3">Integración 3</a></ul>
+                <ul><a href="/density-population/integrations/googleScraper">Precio Play5</a></ul>
                 <ul><a href="/density-population/integrations/int4">Integración 4</a></ul>
         </ul>
         <br>

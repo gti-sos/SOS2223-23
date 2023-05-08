@@ -11,7 +11,6 @@
     let dataApi = [];
     let APItoro = "https://datos.juntadeandalucia.es/api/v0/places/option-values/place_provinces";
     let API = "https://sos2223-23.appspot.com/api/v2/density-population";
-    //https://www.juntadeandalucia.es/datosabiertos/portal/dataset?res_format=openapi-json&vocab_field_activity_sector=Cultura+y+ocio
 
     onMount(async () =>{
         getData();
