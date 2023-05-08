@@ -23,10 +23,12 @@
 		"apexcharts": "^3.40.0",
 		"c3": "^0.4.24",
 		"chart": "^0.1.2",
+		"chart.js": "^4.3.0",
 		"echarts": "^5.4.2",
 		"highcharts": "^10.3.3",
 		"mathjs": "^11.8.0",
 		"plotly": "^1.0.6",
+		"svelte-chartjs": "^3.1.2",
 		"sveltestrap": "^5.10.0"
 	}
 }

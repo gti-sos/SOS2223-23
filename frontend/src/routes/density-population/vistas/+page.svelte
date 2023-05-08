@@ -11,12 +11,19 @@
     import * as echarts from 'echarts';
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
+    import { Alert } from 'sveltestrap';
 
     let API = '/api/v2/density-population';    
     if(dev)
         API = 'http://localhost:12345'+API;
 
     let density=[];
+
+    let mensaje = "";
+    let m_bool = false;
+    function f_info() {
+        (setTimeout(function(){m_bool = false;}, 6000));
+    }
 
     async function loadChartHigh(graphData){
         
@@ -88,7 +95,11 @@
             density = dataReceived;
             loadChartHigh(density);
             loadEchart(density);
+            
         }catch(error){
+            mensaje = "La base de datos está vacía";
+            m_bool = true;
+            f_info();
             console.log(`Error parseando el resultado: ${error}`);
         }	   
     };
@@ -169,6 +180,7 @@
     });
 </script>
 <main>
+    <Alert color="info" isOpen={m_bool} toggle={() => (m_bool = false)}>{mensaje}</Alert>
     <div id="container"></div>
     <div id="main" style="width: 1300px;height:400px;margin-left:15px"></div>
 </main>
