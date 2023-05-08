@@ -115,4 +115,5 @@
 
 <main>
     <div id="container"></div>
+    <p>Este es un uso de API externa</p>
 </main>

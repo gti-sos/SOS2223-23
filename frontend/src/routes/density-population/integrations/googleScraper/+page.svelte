@@ -83,7 +83,7 @@
 </script>
 <main>
     <Alert color="info" isOpen={v_wait} toggle={() => (v_wait = false)}>{wait}</Alert>
-    <p>Tarda mucho en cargar</p>
+    <p>Tarda mucho en cargar. Es un uso de API externa</p>
     
     <div id="main" style="width: 1300px;height:500px;margin-left:15px"></div>
 

@@ -1,5 +1,7 @@
 <svelte:head>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </svelte:head>
 
 <script>
@@ -34,7 +36,7 @@
             try{
                 const dataReceived = await res2.json();
                 let filtro = dataReceived.filter((n) => {
-                    return n.year === 2022;
+                    return n.year === 2022 && n.province !=="Andalucía";
                 }).reduce((acc, b) => {
                     let key = b.province;
                     let existingObj = acc.find((obj) => obj.province === key);
@@ -51,6 +53,7 @@
                     return acc;
                 }, []);
                 dataApi = filtro;
+                console.log(dataApi)
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
             }	   
@@ -61,22 +64,23 @@
     };
 
     async function loadChart(){
-        const ctx = document.getElementById('myChart').getContext('2d');
+        const ctx = document.getElementById('myChart');
         console.log(dataApi.map(n=>n.capital_size))
         console.log(dataToro.map(n=>n.doc_count))
+        console.log(dataApi.map(n => n.province))
         new Chart(ctx, {
             type: 'bar',
             data: {
-            labels: dataApi.map(n => n.provincia),
+            labels: dataApi.map(n => n.province),
             datasets: [{
-                label: 'Capital_Size',
+                label: 'Densidad de población',
                 data: dataApi.map(n=>n.capital_size),
                 backgroundColor: ['blue'],
                 borderWidth: 1
             },{
-                label: 'Numero Escuelas Taurinas',
+                label: 'Número Escuelas Taurinas',
                 data: dataToro.map(n=>n.doc_count),
-                backgroundColor: ['green'],
+                backgroundColor: ['orange'],
                 borderWidth: 1
             }]
             },
@@ -88,7 +92,7 @@
                         
                     },
                     title:{
-                        text: "Gráfica sobre el número de escuelas taurinas en Andalucía",
+                        text: "Número de escuelas taurinas por densidad de poblacion en las provincias andaluzas",
                         display: true,
                         color: 'black',
                         font:{
@@ -139,7 +143,7 @@
                             display: true,
                             title:{
                                 display: true,
-                                text: "Provincias" ,
+                                text: "Provincias de Andalucía" ,
                                 font: {
                                     weight: 'bold',
                                 },
