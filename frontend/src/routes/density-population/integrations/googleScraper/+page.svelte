@@ -48,7 +48,7 @@
         var myPie = echarts.init(document.getElementById('main'));        
         myPie.setOption({
             title: {
-                text: 'Precio de PlayStation 5 según cada vendedor',
+                text: 'Precio de Nvidia GeForce RTX 4090 según cada vendedor',
                 subtext: 'Resultados extraidos de google, se actualizan cada vez que refrescas la ventana',
                 left: 'left',
             },

@@ -166,5 +166,6 @@
 </script>
 <main>
     <canvas id="myChart"></canvas>
+    <p>Es un uso de API Externa</p>
 </main>
 
