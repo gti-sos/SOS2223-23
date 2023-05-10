@@ -1,7 +1,8 @@
 <svelte:head>
-    <script src="../../node_modules/d3/d3.min.js" charset="utf-8"></script>
+    <script src="../../node_modules/d3/d3.min.js"></script>
     <script src="../../node_modules/c3/c3.min.js"></script>
     <link href="../../node_modules/c3/c3.css" rel="stylesheet">
+
 </svelte:head>
 <script>
     // @ts-nocheck
@@ -44,6 +45,9 @@
         lluvia.unshift('Probabilidad lluvia')
         viento.unshift('Velocidad viento');
         var chart = c3.generate({
+            color: {
+                pattern: d3.schemeCategory10
+            },
             title:{
                 text:"Gráfico que muestra la predicción de temperatura, lluvia y viento que hará en Sierra Nevada desde hoy a dentro de 20 días",
                 style:{
