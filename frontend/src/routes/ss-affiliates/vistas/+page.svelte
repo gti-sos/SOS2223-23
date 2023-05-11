@@ -155,10 +155,9 @@
     
 </script>
 <main>
-    <link href="../../node_modules/c3/c3.css" rel="stylesheet">
-
-    <script src="../../node_modules/d3/d3.min.js" charset="utf-8"></script>
-    <script src="../../node_modules/c3/c3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css"/>
 
 
     <Container>
