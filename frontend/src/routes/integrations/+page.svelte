@@ -4,7 +4,7 @@
     <br>
     <h1 style="padding-left: 10px;">Integraciones y Usos</h1>
     <ul>
-        <ul><b>Grupal:</b><a href='integrations/group-integration'>Integración del grupo</a></ul>
+        <ul><b>Grupal:</b><a href='../analytics'>Integración del grupo</a></ul>
         <br>
         <li><b>Ricardo:</b></li>
         <br>
