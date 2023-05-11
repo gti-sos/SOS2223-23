@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>Inicio Api</title>
+    <title>Grupo SOS 23</title>
 </svelte:head>
 
 <script>

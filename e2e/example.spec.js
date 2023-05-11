@@ -1,11 +1,14 @@
 // @ts-check
 import  { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('Ricardo Test', async ({ page }) => {
+  await page.goto('localhost:12345/api/v2/ss-affiliates/loadInitialData');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+  await page.goto('localhost:12345/ss-affiliates');
+
+
+  const numEditButtons = await page.$$eval('button[name*="Editar"]', buttons => buttons.length);
+  expect(numEditButtons).toBeGreaterThan(8);
 });
 
 test('get started link', async ({ page }) => {
