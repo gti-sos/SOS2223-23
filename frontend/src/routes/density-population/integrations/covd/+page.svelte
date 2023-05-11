@@ -10,20 +10,18 @@
     // @ts-nocheck
 
     import { onMount } from 'svelte';
-
+    import { dev } from '$app/environment';
+    
     const delay = ms => new Promise(res => setTimeout(res, ms));
     let dataCov = [];
-    const APICovid = 'https://covid-193.p.rapidapi.com/statistics';
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '16ee2bd576msh9cc1a680fac4200p18deefjsn2b38b3ee309e',
-            'X-RapidAPI-Host': 'covid-193.p.rapidapi.com'
-        }
-    };
+
+    let API = "/api/v2/covd";
+        
+    if(dev)
+        API = 'http://localhost:12345'+API
     
     async function getData() {
-        const res = await fetch(APICovid,options, {
+        const res = await fetch(`${API}`, {
             method: 'GET'
         });
         try{

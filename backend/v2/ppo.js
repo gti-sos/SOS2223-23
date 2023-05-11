@@ -1,12 +1,26 @@
 //const ppo_samples = require('./pposamples');
 const BASE_API_URL = "/api/v2";
+const rutaCOVD = "/api/v2/covd";
 import Datastore from 'nedb';
+import request from 'request';
 import { data_ppo } from '../data/data_ppo.js';
 import { config } from '../data/config.js';
 import Papa from 'papaparse';
 var db = new Datastore();
     
 function ppo2(app){
+    //Proxy para uso Covd
+    app.use(`${rutaCOVD}`, function(req, res) {
+        var apiExterna = "https://covid-193.p.rapidapi.com/statistics";
+        var requestHeaders = {
+            "X-RapidAPI-Key": "16ee2bd576msh9cc1a680fac4200p18deefjsn2b38b3ee309e",
+            "X-RapidAPI-Host": "covid-193.p.rapidapi.com"
+          };
+        req.pipe(request({ url: apiExterna, headers: requestHeaders })).pipe(res);
+     });
+
+
+
     //Todos los GET
     app.get(BASE_API_URL+'/density-population/docs', (request, response) => {
         console.log('Redirecting to documentation site of density-population');
