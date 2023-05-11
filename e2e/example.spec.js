@@ -6,8 +6,12 @@ test('Ricardo Test', async ({ page }) => {
 
   await page.goto('localhost:12345/ss-affiliates');
 
+  await page.waitForLoadState('load');
 
-  const numEditButtons = await page.$$eval('button[name*="Editar"]', buttons => buttons.length);
+  const EditButtons = await page.$$('button[name*="Editar"]');
+  console.log(EditButtons)
+  const numEditButtons =  EditButtons.length;
+  console.log(numEditButtons);
   expect(numEditButtons).toBeGreaterThan(8);
 });
 
