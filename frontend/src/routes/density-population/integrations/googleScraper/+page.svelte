@@ -40,9 +40,8 @@
     };
 
     async function loadEchartPie(){
-        console.log(dataGoogle)
         if(dataGoogle.length===0){
-            wait = "Ha fallado, a veces pasa. Recarga la página y espere";
+            wait = "Ha fallado, a veces pasa. Recarga la página y espere.";
             v_wait = true;
         }
         
@@ -84,7 +83,7 @@
 </script>
 <main>
     <Alert color="info" isOpen={v_wait} toggle={() => (v_wait = false)}>{wait}</Alert>
-    <p>Tarda mucho en cargar. Es un uso de API externa</p>
+    <p>Tarda <strong>mucho</strong> en cargar y a veces falla varias veces consecutivas. Es un uso de API externa.</p>
     
     <div id="main" style="width: 1300px;height:500px;margin-left:15px"></div>
 

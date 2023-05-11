@@ -94,5 +94,5 @@
 </script>
 <main>
     <div id="chart" style="width:100%; height:400px;"></div>
-    <p>Es un uso de API externa</p>
+    <p>Es un uso de API externa.</p>
 </main>

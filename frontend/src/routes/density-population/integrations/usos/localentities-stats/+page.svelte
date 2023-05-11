@@ -61,6 +61,6 @@
     </div>
 
     <div class="context">
-        <p>Uso de la API de compañero de SOS: 'Localentities'</p>
+        <p>Uso de la API de compañero de SOS: 'Localentities'.</p>
     </div>
 </main>

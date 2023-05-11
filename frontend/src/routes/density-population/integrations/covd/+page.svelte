@@ -1,5 +1,4 @@
 <svelte:head>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -113,5 +112,5 @@
 
 <main>
     <div id="container"></div>
-    <p>Este es un uso de API externa</p>
+    <p>Es un uso de API externa.</p>
 </main>

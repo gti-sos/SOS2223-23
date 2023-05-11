@@ -33,7 +33,6 @@
                 var data1980 = dataGraph.filter((n)=>{
                     return n.period === 1980;
                 })
-                console.log(data1980);
                 data1980.forEach(data1980 =>{
                     //period.push(dataGraph["period"]);
                     territory.push(data1980["territory"]);
@@ -52,14 +51,9 @@
         } else{
             console.log("Error cargando los datos")
         }
-        
-
     };
 
     async function loadChart(){  
-        // const territory = data1980.map(item => `${item.territory}`);
-        // console.log(territory)
-
         Highcharts.chart('container', {
             chart: {
                 type: 'bar'
@@ -96,7 +90,7 @@
     <figure class="highcharts-figure" style="margin-left: 15px; margin-right:35px">
         <div id="container"></div>
         <div class="context">
-            <p>Uso de la API de compañero de SOS: 'Evolution-Stats'</p>
+            <p>Uso de la API de compañero de SOS: 'Evolution-Stats'.</p>
         </div>
     </figure>
 </main>

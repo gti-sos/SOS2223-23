@@ -53,7 +53,6 @@
                     return acc;
                 }, []);
                 dataApi = filtro;
-                console.log(dataApi)
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
             }	   
@@ -65,9 +64,6 @@
 
     async function loadChart(){
         const ctx = document.getElementById('myChart');
-        console.log(dataApi.map(n=>n.capital_size))
-        console.log(dataToro.map(n=>n.doc_count))
-        console.log(dataApi.map(n => n.province))
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -166,6 +162,6 @@
 </script>
 <main>
     <canvas id="myChart"></canvas>
-    <p>Es un uso de API Externa</p>
+    <p>Es un uso de API Externa.</p>
 </main>
 

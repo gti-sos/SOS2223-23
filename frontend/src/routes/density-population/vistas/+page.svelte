@@ -114,7 +114,7 @@
                     trigger: 'axis'
                 },
                 legend: {
-                    bottom: 35, // Agrega esta línea
+                    bottom: 35, 
                     data: ['Huelva-Hombres','Huelva-Mujeres','Cádiz-Hombres', 'Cádiz-Mujeres', 'Málaga-Hombres','Málaga-Mujeres']   
                 },
                 grid: {
