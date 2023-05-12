@@ -1,5 +1,7 @@
 <svelte:head>
-
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 </svelte:head>
 <script>
     // @ts-nocheck
@@ -54,27 +56,29 @@
                     delete obj.numOccurrences;
                     return obj;
                 });
+
+                let dataOrdenadaP= ordenaList(dataPmayus);
                 
-                dataPPO=dataPmayus;
+                dataPPO=dataOrdenadaP;
 
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
 
             }
-            //Indefi
             const resRvr = await fetch(APIrvr, {
             method: 'GET'
             });
             try{
                 const dataR = await resRvr.json();
                 let dataRfiltrada=dataR.map(({year,province,n_cont_indef})=>({year,province,n_cont_indef}));
-                dataRVR=dataRfiltrada;
+                let dataOrdenadaR= ordenaList(dataRfiltrada);
+                
+                dataRVR=dataOrdenadaR;
 
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
 
             }
-            //single-construct
             const resAmjc = await fetch(APIamjc, {
             method: 'GET'
             });
@@ -103,7 +107,9 @@
                     delete obj.numOccurrences;
                     return obj;
                 });
-                dataAMJC = dataAmayus;
+                let dataOrdenadaAM= ordenaList(dataAmayus);
+                
+                dataAMJC = dataOrdenadaAM;
 
             }catch(error){
                 console.log(`Error parseando el resultado: ${error}`);
@@ -115,10 +121,90 @@
 
     }
 
-    async function loadChart(){
-        console.log(dataPPO);
-        console.log(dataRVR);
-        console.log(dataAMJC);
+    function ordenaList(lista){
+        lista.sort((a, b) => {
+            if (b.year !== a.year) {
+                return a.year - b.year; 
+            } else {
+                return a.province.localeCompare(b.province); 
+            }
+        });
+        return lista;
+    };
 
-    }
+
+    async function loadChart(){
+        console.log(dataPPO)
+        console.log(dataRVR)
+        console.log(dataAMJC)
+        console.log(dataPPO.map(n=>n.capital_size))
+        const categories = dataPPO.map(item => `${item.year} - ${item.province}`);
+
+        Highcharts.chart('container', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'API Grupal'
+            },
+            colors:['#FF8000','#00e61d','#bb43ff'],
+            xAxis: {
+                categories: categories
+            },
+            yAxis: [{
+                title: {
+                    text: 'Cantidad de Contratos'
+                },
+            },{
+                title: {
+                    text: 'Capital Size'
+                },
+                opposite: true,
+                min:0,
+                max:2000,
+                offset:80
+            }],
+            legend: {
+                reversed: true
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: '50%',
+                    dataLabels: {
+                        enabled: true
+                    },
+                    groupPadding: 0.1
+                }
+            },
+            series: [{
+                name: 'Densidad en Capital',
+                data: dataPPO.map(n=>n.capital_size),
+                yAxis: 1 
+
+            },
+            {
+                name: 'Número Contratos Indefinidos',
+                data: dataRVR.map(n=>n.n_cont_indef)
+            }, 
+            {   
+                name: 'Número de Contratos construcción',
+                data: dataAMJC.map(n=>n.single_construction_contract_total)
+            }]}
+    )}; 
+
 </script>
+<main>
+    <figure class="highcharts-figure" style="margin-left: 15px; margin-right:35px">
+        <div id="container"></div>
+        <div class="context">
+            <p>API Grupal</p>
+        </div>
+    </figure>
+</main>
+<style>
+    .highcharts-figure,
+    
+    #container {
+    height: 4000px;
+    }
+</style>
