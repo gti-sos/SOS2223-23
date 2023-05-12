@@ -57,7 +57,7 @@
             <DropdownMenu>
                 <DropdownItem href = "/ss-affiliates/vistas">Afiliados Andalucía</DropdownItem>
                 <DropdownItem href = "/hired-people/vistas">hired-people (Agustín)</DropdownItem>
-                <DropdownItem href = "/density-population/vistas">density-people (Pablo)</DropdownItem>
+                <DropdownItem href = "/density-population/vistas">Densidad de Población en Andalucía</DropdownItem>
             </DropdownMenu>
         </Dropdown>
         <NavLink href="/integrations">Integraciones</NavLink>

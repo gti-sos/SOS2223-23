@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Datos API Densidad de Poblacion</title>
+</svelte:head>
+
 <script>
     // @ts-nocheck
         import { onMount } from 'svelte';
@@ -509,7 +513,7 @@
                 </tr>
         
             {#each density as datos}
-              <tr>
+              <tr class="dataTable">
                 <td>{datos.year}</td>
                 <td>{datos.province}</td>
                 <td>{datos.gender}</td>

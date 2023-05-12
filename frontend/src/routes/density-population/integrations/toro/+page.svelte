@@ -9,7 +9,7 @@
     import { onMount } from 'svelte';
 
     const delay = ms => new Promise(res => setTimeout(res, ms));
-    let dataToro=[];
+    let dataToro = [];
     let dataApi = [];
     let APItoro = "https://datos.juntadeandalucia.es/api/v0/places/option-values/place_provinces";
     let API = "https://sos2223-23.appspot.com/api/v2/density-population";

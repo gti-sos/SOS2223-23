@@ -25,12 +25,21 @@ test('Ricardo Test', async ({ page }) => {
   expect(numEditLink).toBeGreaterThan(8);
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('Pablo test title', async ({ page }) => {
+  await page.goto('localhost:12345/density-population');
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  // Expect the title to be "Datos API Densidad de Población".
+  await expect(page).toHaveTitle('Datos API Densidad de Poblacion');
+});
 
-  // Expects the URL to contain intro.
-  await expect(page).toHaveURL(/.*intro/);
+test('Pablo test data', async ({ page }) => {
+  await page.goto('localhost:12345/api/v2/density-population/loadInitialData');
+
+  await page.goto('localhost:12345/density-population');
+
+  await page.waitForLoadState('load');
+
+  await page.waitForTimeout(1000);
+
+  await expect((await page.locator(".dataTable").all()).length).toBeGreaterThan(8);
 });
