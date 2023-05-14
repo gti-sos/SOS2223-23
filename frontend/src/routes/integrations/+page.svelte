@@ -36,7 +36,7 @@
             <li><a href="/hired-people/integrations/usoJFS">Precios Mercado</li>
             <li><a href="/hired-people/integrations/usoJLB">Estadísticas Empleo</li>
             <li><a href="/hired-people/integrations/formulaone">Formula 1</li>
-            <li><a href="/">Integración 4</a></li>
+            <li><a href="/hired-people/integrations/calories">Calorias</li>
         </ul>
         <br>
         <br>
