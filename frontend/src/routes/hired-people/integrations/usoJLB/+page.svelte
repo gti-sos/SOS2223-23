@@ -27,7 +27,7 @@
     });
     async function getGraph(){
             const res = await fetch(
-                "https://sos2223-13.appspot.com/api/v2/employments-stats/"
+                "https://sos2223-13.appspot.com/api/v2/employment"
             );
             if(res.ok){
                     const valores = await res.json();

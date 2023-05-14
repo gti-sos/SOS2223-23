@@ -1,5 +1,4 @@
 <svelte:head>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -104,43 +103,27 @@
     }
 
     async function loadPlotly(graphData){
-        const year = graphData.map(x => x.province == 'Sevilla' && x.gender == 'Hombres') 
-        var trace_indefinite_contract = {
-            x: year.map(item => parseInt(item.year)),
-            y: year.map(item => parseInt(item.indefinite_contract)),
+        let prov_hombres = graphData.filter(x => x.province === 'Sevilla' && x.gender === 'Hombres');
+        let prov_mujeres = graphData.filter(x => x.province === 'Sevilla' && x.gender === 'Mujeres');
+        var trace_indefinite_contract_hombres = {
+            x: prov_hombres.map(item => parseInt(item.year)),
+            y: prov_hombres.map(item => parseInt(item.indefinite_contract)),
             type: 'bar',
-            name: 'Contratos Indefinidos'
+            name: 'Hombres'
         };
-        var trace_single_construction_contract = {
-            x: year.map(item => parseInt(item.province)),
-            y: year.map(item => parseInt(item.single_construction_contract)),
+        var trace_indefinite_contract_mujeres = {
+            x: prov_mujeres.map(item => parseInt(item.year)),
+            y: prov_mujeres.map(item => parseInt(item.indefinite_contract)),
             type: 'bar',
-            name: 'Contratos Únicos de Construcción'
+            name: 'Mujeres'
         };
-        var trace_multiple_construction_contract = {
-            x: year.map(item => parseInt(item.province)),
-            y: year.map(item => parseInt(item.multiple_construction_contract)),
-            type: 'bar',
-            name: 'Contratos Múltiples de Construcción'
+        
+        var data = [trace_indefinite_contract_hombres, trace_indefinite_contract_mujeres];
+        var layout = {
+            barmode: 'group',
+            title: 'Contratos Indefinidos en Sevilla'
         };
-        var trace_single_eventual_contract = {
-            x: year.map(item => parseInt(item.province)),
-            y: year.map(item => parseInt(item.single_eventual_contract)),
-            type: 'bar',
-            name: 'Contratos Únicos Eventuales'
-        };
-        var trace_multiple_eventual_contract = {
-            x: year.map(item => parseInt(item.province)),
-            y: year.map(item => parseInt(item.multiple_eventual_contract)),
-            type: 'bar',
-            name: 'Contratos Múltiples Eventuales'
-        };
-        var data = [trace_indefinite_contract, trace_single_construction_contract, trace_multiple_construction_contract, trace_single_eventual_contract, trace_multiple_eventual_contract];
-        var layout = { 
-            font: {size: 18}
-        };
-        var config = {responsive: true}
-        Plotly.newPlot('myDiv', data, layout, config);
+        Plotly.newPlot('myDiv', data, layout);
     }
 
     async function getData() {
@@ -172,6 +155,7 @@
     </figure>
     <div id='myDiv'></div>
 </main>
+
 
 <style>
     .highcharts-figure,

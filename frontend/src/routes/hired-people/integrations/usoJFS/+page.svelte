@@ -123,7 +123,7 @@
 
  
 <main>
-    <figure class="highcharts-figure" style="margin-left: 25px; margin-right:25px">
+    <figure class="highcharts-figure">
         <div id="container"></div>
     </figure>
 </main>
