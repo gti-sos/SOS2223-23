@@ -1,5 +1,5 @@
 const BASE_API_URL_AMJC = "/api/v2/hired-people";
-const BASE_API_CALORIAS = "api/v2/calories"
+const BASE_API_CALORIAS = "/api/v2/calories"
 import { data_amjc } from '../data/data_amjc.js';
 import { config } from '../data/config.js';
 import Papa from 'papaparse';
