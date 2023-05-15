@@ -157,7 +157,7 @@
                 },
             },{
                 title: {
-                    text: 'Capital Size'
+                    text: 'Densidad de población en capitales andaluzas'
                 },
                 opposite: true,
                 min:0,
@@ -187,7 +187,7 @@
                 data: dataRVR.map(n=>n.n_cont_indef)
             }, 
             {   
-                name: 'Número de Contratos construcción',
+                name: 'Número de Contratos Construcción',
                 data: dataAMJC.map(n=>n.single_construction_contract_total)
             }]}
     )}; 
