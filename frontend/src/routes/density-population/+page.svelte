@@ -224,7 +224,6 @@
             }if(capital != null){
                 consultAPI = consultAPI + `capital_size_under=${capital}&`
             }
-            console.log(consultAPI)
         }
 
         async function getConsult(){
@@ -352,8 +351,7 @@
                         <Row><Col><h5>Introduzca los valores por los que quiere consultar datos</h5></Col></Row>
                         <hr>
                         <Row><Col><h6>Estos campos devolverán un único dato</h6></Col></Row>
-                        <br>
-                        {consultAPI}  
+                        <br>  
                         <!-- -->
                         <Row>
                             <Col>
