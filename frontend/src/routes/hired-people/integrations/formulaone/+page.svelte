@@ -31,10 +31,8 @@
         });
         try{
             const valores = await res.json();
-            console.log(valores);
             let datos = valores.teams.map(({teamName, points}) => ({teamName, points}));
             graph = datos;
-            console.log(graph);
         }catch(error){
             console.log(`Error parseando el resultado: ${error}`);
         }

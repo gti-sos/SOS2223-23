@@ -1,5 +1,4 @@
 <svelte:head>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/cylinder.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -12,38 +11,28 @@
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
 
-    let API = '/api/v2/hired-people';    
-    if(dev)
-        API = 'http://localhost:12345'+API;
 
     const delay = ms => new Promise(res => setTimeout(res, ms));
     let graph = [];
-    let provincia_año = [];
-    let employed_person = [];
-    let inactive_person = [];
-    let unemployed_person = [];
+
     onMount(async () =>{
         getGraph()
     });
+
     async function getGraph(){
-            const res = await fetch(
-                "https://sos2223-13.appspot.com/api/v2/employment"
-            );
-            if(res.ok){
-                    const valores = await res.json();
-                    graph = valores;
-                    graph.forEach(graph =>{
-                        provincia_año.push(graph.region+"-"+graph.year);
-                        employed_person.push(graph["employed_person"]);
-                        inactive_person.push(graph["inactive_person"]);
-                        unemployed_person.push(graph["unemployed_person"]);
-                        
-                    });
-                    await delay(500);
-                    loadChart(); 
-            }else{
-                console.log("Error al cargar la gráfica");
-            }
+        const res = await fetch(
+            "https://sos2223-13.appspot.com/api/v2/employment"
+        );
+        try{
+            const valores = await res.json();
+            let datos = valores.map(({region, year, employed_person, inactive_person, unemployed_person}) => 
+                                    ({region, year, employed_person, inactive_person, unemployed_person}));
+            graph = datos;
+        }catch(error){
+            console.log(`Error parseando el resultado: ${error}`);
+        }
+        await delay(500);
+        loadChart(); 
     }
     async function loadChart(){  
         Highcharts.chart('container', {
@@ -58,17 +47,18 @@
                 }
             },
             title: {
-                text: 'Gráfica Datos Jose López'
+                text: 'Gráfica Datos Jose López (G13)'
             },
             xAxis: {
-                categories: provincia_año,
+                categories: graph.map(n => n.year+"-"+n.region),
                 title: {
-                    text: 'Provincia-Año'
+                    margin: 50,
+                    text: 'Año-Provincia'
                 }
             },
             yAxis: {
                 title: {
-                    margin: 20,
+                    margin: 40,
                     text: 'Personas'
                 }
             },
@@ -83,13 +73,13 @@
             },
             series: [{
                 name: 'Personas Activas',
-                data: employed_person 
+                data: graph.map(n => n.employed_person)
             }, {
                 name: 'Personas Inactivas',
-                data: inactive_person 
+                data: graph.map(n => n.inactive_person)
             }, {
                 name: 'Personas Desempleadas',
-                data: unemployed_person 
+                data: graph.map(n => n.unemployed_person)
             }],
         });
     }

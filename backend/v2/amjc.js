@@ -1,11 +1,23 @@
 const BASE_API_URL_AMJC = "/api/v2/hired-people";
+const BASE_API_CALORIAS = "api/v2/calories"
 import { data_amjc } from '../data/data_amjc.js';
 import { config } from '../data/config.js';
 import Papa from 'papaparse';
 import Datastore from 'nedb';
+import request from 'request';
 var db = new Datastore();
 
 function amjc2(app){
+    //_____________PROXY_______________
+        app.use(`${BASE_API_CALORIAS}`, function(req, res){
+            var url = "https://calories-burned-by-api-ninjas.p.rapidapi.com/v1/caloriesburned?activity=skiing";
+            var head = {
+                'X-RapidAPI-Key': '4e84fcead5msh2c5615507183a12p16c783jsn73fec713d82b',
+                'X-RapidAPI-Host': 'calories-burned-by-api-ninjas.p.rapidapi.com'
+            };
+            req.pipe(request({ url: url, headers: head })).pipe(res);
+        });
+
     //_____________GET_______________
         //GET a docs
         app.get(`${BASE_API_URL_AMJC}/docs`, (request, response) => {

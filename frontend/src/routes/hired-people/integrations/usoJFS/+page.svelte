@@ -1,5 +1,4 @@
 <svelte:head>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -10,16 +9,8 @@
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
 
-    let API = '/api/v2/hired-people';    
-    if(dev)
-        API = 'http://localhost:12345'+API;
-
     const delay = ms => new Promise(res => setTimeout(res, ms));
     let graph = [];
-    let provincia_año = [];
-    let pib_current_price = [];
-    let pib_percentage_structure = [];
-    let pib_variation_rate = [];
     onMount(async () =>{
         getGraph()
     });
@@ -27,21 +18,16 @@
             const res = await fetch(
                 "https://sos2223-21.appspot.com/api/v3/market-prices-stats/"
             );
-            if(res.ok){
-                    const valores = await res.json();
-                    graph = valores;
-                    graph.forEach(graph =>{
-                        provincia_año.push(graph.province+"-"+graph.year);
-                        pib_current_price.push(graph["pib_current_price"]);
-                        pib_percentage_structure.push(graph["pib_percentage_structure"]);
-                        pib_variation_rate.push(graph["pib_variation_rate"]);
-                        
-                    });
-                    await delay(500);
-                    loadChart(); 
-            }else{
-                console.log("Error al cargar la gráfica");
+            try{
+            const valores = await res.json();
+            let datos = valores.map(({province, year, pib_variation_rate, pib_percentage_structure}) => 
+                                    ({province, year, pib_variation_rate, pib_percentage_structure}));
+            graph = datos;
+            }catch(error){
+                console.log(`Error parseando el resultado: ${error}`);
             }
+            await delay(500);
+            loadChart(); 
     }
     async function loadChart(){  
         Highcharts.chart('container', {
@@ -49,7 +35,7 @@
             type: 'spline'
         },
         title: {
-            text: 'Gráfica Datos Jorge Florentino',
+            text: 'Gráfica Datos Jorge Florentino (G21)',
             style: {
                 fontWeight: 'bold',
                 fontFamily: 'Times New Roman',
@@ -59,17 +45,17 @@
         
         xAxis: {
             title:{
-                text: "Provincia-Año",
+                text: "Año-Provincia",
                 style: {
                     fontWeight: 'bold'
                 }
             },
-            categories: provincia_año,
+            categories: graph.map(n => n.year+"-"+n.province),
             crosshair: true
         },
         yAxis: {
-            min: 0,
-            max: 50000000,
+            min: -10,
+            max: 30,
             title: {
                 text: 'Datos',
                 style: {
@@ -93,14 +79,11 @@
             }
         },
         series: [{
-            name: 'Precio Actual del Pib',
-            data: pib_current_price 
+            name: 'Ratio de Variación del PIB',
+            data: graph.map(n => n.pib_variation_rate) 
         }, {
-            name: 'Estructura de porcentaje de Pib',
-            data: pib_percentage_structure 
-        }, {
-            name: 'Ratio de variación del Pib',
-            data: pib_variation_rate 
+            name: 'Estructura de porcentaje del PIB',
+            data: graph.map(n => n.pib_percentage_structure)  
         }],
         responsive: {
                 rules: [{
@@ -118,10 +101,8 @@
             }
         });
     }
-    
 </script>
 
- 
 <main>
     <figure class="highcharts-figure">
         <div id="container"></div>
