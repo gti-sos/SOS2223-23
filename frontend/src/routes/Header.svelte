@@ -61,6 +61,7 @@
             </DropdownMenu>
         </Dropdown>
         <NavLink href="/integrations">Integraciones</NavLink>
+        <NavLink href="/about">Sobre Nosotros</NavLink>
     </Nav>
 </main>
         
