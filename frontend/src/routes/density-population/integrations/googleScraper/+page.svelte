@@ -15,7 +15,7 @@
     let v_wait = false;
     const delay = ms => new Promise(res => setTimeout(res, ms));
     let dataGoogle = [];
-    const APIGoogle = 'https://google-data-scraper.p.rapidapi.com/search/shop/NVIDIA%20GeForce%20RTX%204090?api_key=5dd4daa4ca18889f01522cf2321ee30a';
+    const APIGoogle = 'https://google-data-scraper.p.rapidapi.com/search/shop/NVIDIA%20GeForce%20RTX%204090?api_key=0d077c2731610f34189be609283f2a2e';
     const options = {
         method: 'GET',
         headers: {
@@ -29,6 +29,7 @@
         });
         try{
             const data = await res.json();
+            console.log(data)
             dataGoogle = data.shopping_results.filter(n=> n.rating!=null && n.title.includes("4090")==true && 
             (n.price.charAt(0)=="$" || n.price.charAt(0)=="€"))
             .map(({title,source,extracted_price,price}) => ({title,source,extracted_price,price}))

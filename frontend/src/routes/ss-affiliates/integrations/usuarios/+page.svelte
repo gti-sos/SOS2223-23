@@ -31,7 +31,7 @@
         <!--______________________________________Cabecera_____________________________________-->
         <Container>
             <Row>
-                <Col sm={{ size: 'auto', offset: 2 }}><h1> Pokemons </h1></Col>
+                <Col sm={{ size: 'auto', offset: 2 }}><h1> Usuarios </h1></Col>
             </Row>
         </Container>
     
