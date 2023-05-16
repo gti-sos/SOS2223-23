@@ -4,13 +4,14 @@
     <br>
     <h1 style="padding-left: 10px;">Integraciones y Usos</h1>
     <ul>
-        <ul><b>Grupal:</b><a href='../analytics'>Integración del grupo</a></ul>
+        <ul><b>Grupal: </b><a href='../analytics'>Integración del grupo</a></ul>
         <br>
         <li><b>Ricardo:</b></li>
         <br>
         <ul>
             <li><a href="/ss-affiliates/integrations/job-offers">Ofertas de Trabajo Andalucía</li>
-            <li><a href="/ss-affiliates/integrations/courses">Cursos de Formacion</a></li>
+            <li><a href="/ss-affiliates/integrations/buses">Lineas de bus públicas en Andalucía</li>
+            <li><a href="/ss-affiliates/integrations/courses">Cursos de Formación</a></li>
             <li><a href="/ss-affiliates/integrations/pokemon">Pokemons</a></li>
             <li><a href="/ss-affiliates/integrations/usuarios">Usuarios</a></li>
         </ul>

@@ -174,6 +174,7 @@
     {/if}
         <Row><Col><h3> Gráfica Afiliados en Andalucía</h3></Col></Row>
         <Row><Col><div id="container" style="width:100%; height:400px;"></div></Col></Row>
+        <br/>
         <Row><Col><h3> Gráfica Nuevos contratos Sevilla</h3></Col></Row>
         <Row><Col><div id="chart" style="width:100%; height:400px;"></div></Col></Row>
     </Container>
@@ -255,7 +256,7 @@
                 const data4 = sevilla_indef 
 
                 var chart = c3.generate({
-                    bindto: document.getElementById('chart'),
+                    bindto: '#chart',
                     data: {
                         x : 'date',
                         xFormat: '%Y', 

@@ -11,12 +11,14 @@
 
     <Container>
         <Row>
-            <Col sm={{ size: 'auto', offset: 2 }}><h1> Cursos de formación en los últimos años</h1></Col>
+            <Col sm={{ size: 'auto', offset: 2 }}><h1> Cursos de formación</h1></Col>
         </Row>
     </Container>
+    <br/>
 
     <Container>
-        <Row><Col><h3> Gráfica Cursos Ofrecidos Últimos Años</h3></Col></Row>
+        <Row><Col><h3>Número de cursos de formación ofrecidos de forma pública en los últimos años</h3></Col></Row>
+        <br/>
         <Row><Col><div id="chart" style="width:100%; height:400px;"></div></Col></Row>
     </Container>
 

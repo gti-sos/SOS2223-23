@@ -396,42 +396,44 @@
 
     <Container>
         <Row>
-            <Col sm={{ size: 'auto', offset: 2 }}><h1> Gráficas ofertas de trabajo públicas en Andalucía</h1></Col>
+            <Col sm={{ size: 'auto', offset: 2 }}><h1>Ofertas de trabajo público en los últimos años</h1></Col>
         </Row>
     </Container>
+
+    <br/>
 
     <Container>
         <Row cols={{ xs:1,sm: 1, md: 2, lg: 2, xl:2}}>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Sevilla</strong></h3></Row>
                 <Row><div id="containerSev" style="width:100%; height:400px;"></div></Row>
             </Col>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Huelva</strong></h3></Row>
                 <Row><div id="containerHue" style="width:100%; height:400px;"></div></Row>
             </Col>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Granada</strong></h3></Row>
                 <Row><div id="containerGra" style="width:100%; height:400px;"></div></Row>
             </Col>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Cádiz</strong></h3></Row>
                 <Row><div id="containerCad" style="width:100%; height:400px;"></div></Row>
             </Col>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Almería</strong></h3></Row>
                 <Row><div id="containerAlm" style="width:100%; height:400px;"></div></Row>
             </Col>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Jaén</strong></h3></Row>
                 <Row><div id="containerJa" style="width:100%; height:400px;"></div></Row>
             </Col>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Córdoba</strong></h3></Row>
                 <Row><div id="containerCor" style="width:100%; height:400px;"></div></Row>
             </Col>
             <Col class = 'mb-3'>
-                <Row><h3> Ofertas de trabajo en los últimos años</h3></Row>
+                <Row><h3> Ofertas en <strong>Málaga</strong></h3></Row>
                 <Row><div id="containerMal" style="width:100%; height:400px;"></div></Row>
             </Col>
         </Row>
