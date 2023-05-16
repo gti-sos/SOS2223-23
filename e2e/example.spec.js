@@ -43,3 +43,17 @@ test('Pablo test data', async ({ page }) => {
 
   await expect((await page.locator(".dataTable").all()).length).toBeGreaterThan(8);
 });
+
+test('Agustin Test', async ({ page }) => {
+
+  await page.goto('localhost:12345/api/v2/hired-people/loadInitialData');
+
+  await page.goto('localhost:12345/hired-people');
+
+  await page.waitForLoadState('load');
+
+  await page.waitForTimeout(1000);
+
+  await expect((await page.locator(".tarjeta").all()).length).toBeGreaterThan(5);
+
+});

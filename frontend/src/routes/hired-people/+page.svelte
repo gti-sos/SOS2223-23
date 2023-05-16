@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>Personas Contratadas</title>
+</svelte:head>
+
 <script>
     // @ts-nocheck
     
@@ -707,7 +711,7 @@
                     <CardHeader>
                         <CardTitle>{hired.year} {hired.province} {hired.gender}</CardTitle>
                     </CardHeader>
-                    <CardBody>
+                    <CardBody class = 'tarjeta'>
                         <CardText>
                             Contratos Indefinidos: {hired.indefinite_contract} <br>
                             Contratos Únicos de Construcción: {hired.single_construction_contract} <br>

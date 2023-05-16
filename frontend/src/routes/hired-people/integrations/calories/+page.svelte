@@ -12,7 +12,7 @@
 
     const delay = ms => new Promise(res => setTimeout(res, ms));
     let graph = [];
-
+/*
     const API = 'https://calories-burned-by-api-ninjas.p.rapidapi.com/v1/caloriesburned?activity=skiing';
     const options = {
         method: 'GET',
@@ -21,13 +21,18 @@
             'X-RapidAPI-Host': 'calories-burned-by-api-ninjas.p.rapidapi.com'
         }
     };
+*/
+    let API = "/api/v2/calories";
+        
+    if(dev)
+        API = 'http://localhost:12345'+API
 
     onMount(async () =>{
         getData();
     });
 
     async function getData(){
-        const res = await fetch(API, options, {
+        const res = await fetch(`${API}`, {
             method: "GET"
         });
         try{

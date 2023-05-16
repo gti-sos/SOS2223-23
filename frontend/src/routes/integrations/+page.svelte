@@ -38,6 +38,8 @@
             <li><a href="/hired-people/integrations/work-stats">Estadísticas Empleo</li>
             <li><a href="/hired-people/integrations/formulaone">Formula 1</li>
             <li><a href="/hired-people/integrations/calories">Calorias</li>
+            <li><a href="/hired-people/integrations/volley">Volleyball</li>
+            <li><a href="/hired-people/integrations/baloncesto">Baloncesto</li>
         </ul>
         <br>
         <br>
