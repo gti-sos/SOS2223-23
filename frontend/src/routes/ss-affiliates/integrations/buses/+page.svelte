@@ -87,7 +87,7 @@
             let list = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
 
             for(let i = 1; i < 10; i++){
-                const res = await fetch(`http://api.ctan.es/v1/Consorcios/${i}/lineas`, {
+                const res = await fetch(`https://api.ctan.es/v1/Consorcios/${i}/lineas`, {
                     method: 'GET'
                 });
                 try{
