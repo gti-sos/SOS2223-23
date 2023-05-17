@@ -56,7 +56,7 @@
             <DropdownToggle nav class="nav-link" caret>Vistas</DropdownToggle>
             <DropdownMenu>
                 <DropdownItem href = "/ss-affiliates/vistas">Afiliados Andalucía</DropdownItem>
-                <DropdownItem href = "/hired-people/vistas">hired-people (Agustín)</DropdownItem>
+                <DropdownItem href = "/hired-people/vistas">Personas Contratadas en Andalucía</DropdownItem>
                 <DropdownItem href = "/density-population/vistas">Densidad de Población en Andalucía</DropdownItem>
             </DropdownMenu>
         </Dropdown>

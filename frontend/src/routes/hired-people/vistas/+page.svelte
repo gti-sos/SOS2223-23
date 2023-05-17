@@ -120,8 +120,8 @@
         
         var data = [trace_indefinite_contract_hombres, trace_indefinite_contract_mujeres];
         var layout = {
-            barmode: 'group',
-            title: 'Contratos Indefinidos en Sevilla'
+            title: 'Contratos Indefinidos en Sevilla',
+            barmode: 'group'
         };
         Plotly.newPlot('myDiv', data, layout);
     }

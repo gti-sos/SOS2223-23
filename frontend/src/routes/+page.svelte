@@ -74,8 +74,8 @@
         <br>
         <ul>
             <li><a href="https://youtu.be/Knl9IHW5sDM">Vídeo ss-affiliates</a> (Realizado por Ricardo Vaz Rodriguez)</li>
-            <li><a href="/density-population">Frontend de density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
-            <li><a href="/hired-people">Frontend de hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
+            <li><a href="https://youtu.be/SzrGGParchU">Vídeo density-population</a> (Realizado por Pablo Antonio Perez Ortega)</li>
+            <li><a href="/hired-people">Vídeo hired-people</a> (Realizado por Agustín Manuel Jiménez Casas)</li>
         </ul>
     </ul>
 </main>
