@@ -1,0 +1,80 @@
+﻿User,Description,Duration
+Agustín Manuel Jiménez Casas,#1 Update readme with the real data,00:00:04
+Agustín Manuel Jiménez Casas,#11 PostMan Profile and Git Check,00:18:14
+Agustín Manuel Jiménez Casas,#13 Upgrade Data Proposal,00:51:25
+Agustín Manuel Jiménez Casas,#15 First index-amjc.js Script,00:58:29
+Agustín Manuel Jiménez Casas,#18 Creación módulo y ruta /samples/amjc,00:22:01
+Agustín Manuel Jiménez Casas,#20 Replicar algoritmo index-YYY.js,00:21:54
+Agustín Manuel Jiménez Casas,#22 Comprobación funcionalidad /cool,00:17:45
+Agustín Manuel Jiménez Casas,#27 Desplegar API REST /api/v1/FFFFF,00:53:07
+Agustín Manuel Jiménez Casas,#30 GET recurso loadInitialData,01:48:41
+Agustín Manuel Jiménez Casas,#31 Llamadas en POSTMAN,02:10:14
+Agustín Manuel Jiménez Casas,#39 NeDB y GET insertar 10 datos,00:55:47
+Agustín Manuel Jiménez Casas,#40 Implementación en la API,01:45:05
+Agustín Manuel Jiménez Casas,#41 Redirect y limpieza de código,00:24:51
+Agustín Manuel Jiménez Casas,#5 Update Repository Information,00:35:16
+Agustín Manuel Jiménez Casas,#50 Configuración POSTMAN,02:17:08
+Agustín Manuel Jiménez Casas,#51 Configuración Código,00:49:20
+Agustín Manuel Jiménez Casas,#52 Lanzamiento Newman,00:52:30
+Agustín Manuel Jiménez Casas,#60 Backend API,00:19:26
+Agustín Manuel Jiménez Casas,#61 Frontend Svelte,03:36:53
+Agustín Manuel Jiménez Casas,#62 Peticiones Frontend,02:08:57
+Agustín Manuel Jiménez Casas,#69 Buscar Recursos API,02:48:30
+Agustín Manuel Jiménez Casas,#70 Paginación Recursos API,01:09:25
+Agustín Manuel Jiménez Casas,#71 Recarga Automatozada API,01:25:50
+Agustín Manuel Jiménez Casas,"#82 Entregables anteriores, vídeo, informe y entrega",00:53:21
+Agustín Manuel Jiménez Casas,#83 Visualización e Integración,12:45:06
+Agustín Manuel Jiménez Casas,#84 Soporte y Suministro de API para Consumo de Compañeros,01:36:24
+Agustín Manuel Jiménez Casas,Data Proposal,01:08:34
+Pablo Pérez Ortega,#12 Upgrade Data Proposal,01:25:09
+Pablo Pérez Ortega,#14 Create Index-PPO.js Script,01:42:30
+Pablo Pérez Ortega,#17 Replicar mi algoritmo index-YYY.js,00:40:33
+Pablo Pérez Ortega,#19 Hacer accesible el calculo del algoritmo a través del navegador,00:17:57
+Pablo Pérez Ortega,#21 Comprobación de funcionalidad del calculo a través del navegador y módulo /cool,01:13:36
+Pablo Pérez Ortega,#26 Tener desplegado API REST ofreciendo la fuente de datos,00:51:37
+Pablo Pérez Ortega,#28 Hacer GET al recurso,01:24:01
+Pablo Pérez Ortega,#29 Desarrollar llamadas a Postman,01:57:04
+Pablo Pérez Ortega,#4 Update Repository Information,00:35:05
+Pablo Pérez Ortega,#44 Implementar búsquedas GET por todos los campos,00:57:32
+Pablo Pérez Ortega,#45 Documentación y refactorizar persistencia,01:38:25
+Pablo Pérez Ortega,#46 Limpiar código y corregir errores,00:28:08
+Pablo Pérez Ortega,#53 Configuración Final POSTMAN,01:30:54
+Pablo Pérez Ortega,#54 Configurar Newman y eliminar _id,00:40:06
+Pablo Pérez Ortega,#55 Refactorizar código,01:16:39
+Pablo Pérez Ortega,#63 Funcionalidades Frontend,04:42:51
+Pablo Pérez Ortega,#64 Frontend Informativo Svelte,02:38:02
+Pablo Pérez Ortega,#65 Errores personalizados,00:15:07
+Pablo Pérez Ortega,#66 Funcionalidad Busqueda como API,03:47:15
+Pablo Pérez Ortega,#67 Paginación,01:13:27
+Pablo Pérez Ortega,#68 Recarga automatizada y corrección de errores,02:03:30
+Pablo Pérez Ortega,#79 Crear visualizaciones propias,05:30:03
+Pablo Pérez Ortega,#81 Crear integraciones con API externas y usos con las API de compañeros,20:36:01
+Pablo Pérez Ortega,PostMan Profile and Git Check,00:15:32
+Ricardo Vaz,#16 Creación módulo y ruta /samples/rvr,01:20:41
+Ricardo Vaz,#2 Finish Data Proposal,01:35:29
+Ricardo Vaz,#23 Replicando el algoritmo en /samples/rvr,00:45:00
+Ricardo Vaz,#25 Despliegue en Google Cloud - rvr,00:43:01
+Ricardo Vaz,#3 Update Repository Information,00:19:01
+Ricardo Vaz,#32 Recurso LoadInitialData,02:05:00
+Ricardo Vaz,#33 Disponibilidad recurso /api/v1/FFFFF,04:19:11
+Ricardo Vaz,#34 Collection API Request PostMan,00:44:00
+Ricardo Vaz,#35 Despliegue en Google Cloud,00:15:38
+Ricardo Vaz,#36 Update Readme (F06) y HTML estático,03:58:41
+Ricardo Vaz,#37 Paginación y Busquedas,02:26:00
+Ricardo Vaz,"#38 Documentacion, redirect y limpieza de código",01:44:26
+Ricardo Vaz,#47 Organización defensa,00:17:00
+Ricardo Vaz,#48 Coleccion Postman Final,02:02:28
+Ricardo Vaz,#49 Comprobaciones funcionalidades,00:55:03
+Ricardo Vaz,#57 Vista del grupo,02:37:46
+Ricardo Vaz,#58 Front-End Svelte,04:00:00
+Ricardo Vaz,#59 Back-end version 2,02:05:00
+Ricardo Vaz,#7 PostMan Profile and Git Check,00:15:28
+Ricardo Vaz,#73 Busquedas,02:01:02
+Ricardo Vaz,#74 Vista principal mejorada,02:07:00
+Ricardo Vaz,#75 Vista particular mejorada,02:42:00
+Ricardo Vaz,"#76 Entregables anteriores, video y reportes",01:34:13
+Ricardo Vaz,#77 Visualización e Integración Parte 1,04:12:08
+Ricardo Vaz,#78 Visualización e Integración Parte 2,02:43:21
+Ricardo Vaz,#9 First Index-RVR.js Script,02:43:45
+Ricardo Vaz,Upgrade data Proposal Upgrade data Proposal,00:16:40
+Ricardo Vaz,,00:00:02
